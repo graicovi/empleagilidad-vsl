@@ -14,6 +14,10 @@ Abre `index.html` en un navegador moderno. Es una página estática y no necesit
 - `vsl_hero_referencia_aprobada.png`: imagen principal del video.
 - `giancarlo_raicovi_doctor_cv.webp`: fotografía del autor y director del programa.
 - `libro_empleagilidad_3d.png`: mockup tridimensional del libro.
+- `libro_empleagilidad_editorial.png`: fotografía editorial del libro para la tarjeta de metodología.
+- `acompanamiento_videollamada.png`: imagen de acompañamiento mediante videollamada.
+- `jobbox_tablet_mockup.png`: pantalla real de jobbox presentada en un mockup de tablet.
+- `plan_90_dias_visual.png`: representación visual del plan personal de 90 días.
 - `logo_bid_lab.png`: logotipo oficial de BID Lab.
 - `logo_startup_peru.png`: logotipo oficial de StartUp Perú.
 - `preview.png`: captura de referencia de la página completa.

@@ -591,40 +591,6 @@
       transform: translate(3px, -3px);
     }
 
-    .award-logos {
-      display: flex;
-      align-items: stretch;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-top: 34px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(255,255,255,.18);
-    }
-
-    .award-logo {
-      display: flex;
-      flex: 0 1 230px;
-      align-items: center;
-      justify-content: center;
-      min-height: 86px;
-      padding: 16px 22px;
-      border-radius: 14px;
-      background: #fff;
-      box-shadow: 0 12px 32px rgba(0,0,0,.18);
-    }
-
-    .award-logo img {
-      display: block;
-      width: auto;
-      max-width: 100%;
-      max-height: 52px;
-      object-fit: contain;
-    }
-
-    .award-logo--startup img {
-      max-height: 48px;
-    }
-
     .audience {
       color: #fff;
       background: linear-gradient(135deg, #171714 0%, #29251f 63%, #5a2b17 100%);
@@ -740,24 +706,27 @@
 
     .value-grid {
       display: grid;
-      grid-template-columns: 1.12fr .88fr;
-      gap: 90px;
-      align-items: center;
+      grid-template-columns: minmax(0, 1.18fr) minmax(390px, .82fr);
+      gap: 64px;
+      align-items: start;
     }
 
     .value-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 44px;
+      gap: 16px;
+      margin-top: 34px;
     }
 
     .value-item {
-      min-height: 182px;
-      padding: 28px;
+      display: flex;
+      min-height: 336px;
+      padding: 12px 12px 20px;
+      flex-direction: column;
       border: 1px solid rgba(157,67,30,.18);
       border-radius: 20px;
       background: rgba(255,255,255,.58);
+      overflow: hidden;
     }
 
     .js .motion-reveal {
@@ -774,15 +743,43 @@
 
     .value-item b {
       display: block;
-      margin-bottom: 12px;
+      margin: 17px 12px 8px;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 25px;
     }
 
     .value-item p {
-      margin: 0;
-      font-size: 16px;
+      margin: 0 12px;
+      font-size: 14px;
       line-height: 1.42;
+    }
+
+    .value-media {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 1px solid rgba(157,67,30,.12);
+      border-radius: 14px;
+      background: #eee6dc;
+    }
+
+    .value-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .value-media--book img {
+      object-position: center;
+    }
+
+    .value-media--jobbox img {
+      object-position: center;
+    }
+
+    .value-media--plan img {
+      object-position: center 48%;
     }
 
     .value-item--jobbox p {
@@ -790,9 +787,52 @@
       line-height: 1.4;
     }
 
+    .jobbox-awards {
+      margin: auto 12px 0;
+      padding-top: 15px;
+      border-top: 1px solid rgba(157,67,30,.16);
+    }
+
+    .jobbox-awards-label {
+      display: block;
+      margin-bottom: 11px;
+      color: #746b62;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .jobbox-awards-logos {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .jobbox-award-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+
+    .jobbox-award-logo img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: 25px;
+      object-fit: contain;
+    }
+
+    .jobbox-award-logo--startup img {
+      height: 28px;
+    }
+
     .book-stage {
       position: relative;
-      min-height: 850px;
+      align-self: stretch;
+      min-height: 900px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -802,11 +842,12 @@
       position: absolute;
       z-index: 1;
       left: 50%;
-      top: 43%;
+      top: auto;
+      bottom: -156px;
       width: 900px;
       max-width: none;
       height: auto;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       filter: drop-shadow(0 34px 32px rgba(51, 38, 27, .20));
     }
 
@@ -814,25 +855,51 @@
       position: absolute;
       z-index: 2;
       left: 50%;
-      bottom: 0;
-      width: min(440px, 90%);
-      padding: 22px 24px;
+      bottom: -146px;
+      width: min(500px, 92%);
+      padding: 20px 24px;
       border-radius: 16px;
       background: #fff;
       box-shadow: 0 16px 40px rgba(51, 38, 27, .12);
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      font-size: 18px;
       line-height: 1.25;
-      text-align: center;
+      text-align: left;
       transform: translateX(-50%);
     }
 
     .book-caption span { color: var(--orange); }
 
+    .book-amazon-link {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      color: #171714;
+      text-decoration: none;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+
+    .book-amazon-link:hover,
+    .book-amazon-link:focus-visible {
+      opacity: .72;
+      transform: translateY(-2px);
+    }
+
+    .book-amazon-link svg {
+      display: block;
+      width: 68px;
+      height: 31px;
+      overflow: visible;
+    }
+
     .program-includes {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      margin-top: 74px;
+      margin-top: 188px;
       border-top: 1px solid rgba(23,23,20,.18);
       border-bottom: 1px solid rgba(23,23,20,.18);
     }
@@ -1049,11 +1116,25 @@
       .video-frame { height: 36vw; min-height: 0; max-height: none; background-size: 98vw auto; background-position: -2vw -21vw; }
       .outcome { grid-template-columns: 70px 1fr; }
       .outcome .tag { display: none; }
-      .award-logo { flex: 1 1 150px; min-width: 0; padding-inline: 14px; }
+      .jobbox-awards-logos { gap: 20px; }
+      .jobbox-award-logo img { height: 27px; }
+      .jobbox-award-logo--startup img { height: 30px; }
+      .value-item { min-height: 0; }
+      .value-media { aspect-ratio: 16 / 8.7; }
       .book-stage img { width: 620px; }
-      .book-stage { min-height: 720px; }
-      .book-stage img { top: 42%; }
-      .book-caption { bottom: 8px; width: min(320px, 92%); }
+      .book-stage { min-height: 720px; align-self: auto; }
+      .book-stage img { top: 42%; bottom: auto; transform: translate(-50%, -50%); }
+      .book-caption {
+        bottom: 8px;
+        width: min(340px, 92%);
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 9px;
+        padding: 16px 18px;
+        font-size: 16px;
+        text-align: center;
+      }
+      .program-includes { margin-top: 74px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1203,14 +1284,6 @@
               </svg>
             </a>
           </div>
-          <div class="award-logos" aria-label="Reconocimientos de jobbox">
-            <a class="award-logo award-logo--bid" href="https://bidlab.org/es" target="_blank" rel="noopener noreferrer" aria-label="BID Lab">
-              <img src="logo_bid_lab.png" alt="Logo de BID Lab" />
-            </a>
-            <a class="award-logo award-logo--startup" href="https://startup.proinnovate.gob.pe/" target="_blank" rel="noopener noreferrer" aria-label="StartUp Perú">
-              <img src="logo_startup_peru.png" alt="Logo de StartUp Perú" />
-            </a>
-          </div>
         </div>
       </div>
     </section>
@@ -1268,16 +1341,60 @@
           <p>La estrategia no queda en una clase. Se convierte en ejecución, seguimiento y aprendizaje acompañado.</p>
 
           <div class="value-list">
-            <article class="value-item"><b>Metodología</b><p>Convierte incertidumbre en decisiones y decisiones en acciones.</p></article>
-            <article class="value-item"><b>Acompañamiento</b><p>Evita que los bloqueos detengan tu avance y ajusta la ejecución.</p></article>
-            <article class="value-item value-item--jobbox"><b>jobbox</b><p>Plataforma de empleabilidad ganadora de Startup Perú y Worktech del Banco Interamericano de Desarrollo. Convierte tu estrategia profesional en oportunidades, ejecución y avance medible.</p></article>
-            <article class="value-item"><b>Plan de 90 días</b><p>Mantiene el movimiento después del programa con una ruta personal de ejecución.</p></article>
+            <article class="value-item">
+              <div class="value-media value-media--book">
+                <img src="libro_empleagilidad_editorial.png" alt="Libro Empleagilidad sobre una superficie de papel" loading="lazy" />
+              </div>
+              <b>Metodología</b>
+              <p>Convierte incertidumbre en decisiones y decisiones en acciones.</p>
+            </article>
+            <article class="value-item">
+              <div class="value-media value-media--call">
+                <img src="acompanamiento_videollamada.png" alt="Sesión de acompañamiento mediante videollamada" loading="lazy" />
+              </div>
+              <b>Acompañamiento</b>
+              <p>Evita que los bloqueos detengan tu avance y ajusta la ejecución.</p>
+            </article>
+            <article class="value-item value-item--jobbox">
+              <div class="value-media value-media--jobbox">
+                <img src="jobbox_tablet_mockup.png" alt="Plataforma jobbox presentada en una tablet sobre un escritorio" loading="lazy" />
+              </div>
+              <b>jobbox</b>
+              <p>Convierte tu estrategia profesional en oportunidades, ejecución y avance medible.</p>
+              <div class="jobbox-awards" aria-label="Plataforma premiada por BID Lab y StartUp Perú">
+                <span class="jobbox-awards-label">Plataforma premiada por</span>
+                <div class="jobbox-awards-logos">
+                  <a class="jobbox-award-logo" href="https://bidlab.org/es" target="_blank" rel="noopener noreferrer" aria-label="BID Lab">
+                    <img src="logo_bid_lab.png" alt="Logo de BID Lab" />
+                  </a>
+                  <a class="jobbox-award-logo jobbox-award-logo--startup" href="https://startup.proinnovate.gob.pe/" target="_blank" rel="noopener noreferrer" aria-label="StartUp Perú">
+                    <img src="logo_startup_peru.png" alt="Logo de StartUp Perú" />
+                  </a>
+                </div>
+              </div>
+            </article>
+            <article class="value-item">
+              <div class="value-media value-media--plan">
+                <img src="plan_90_dias_visual.png" alt="Plan de 90 días organizado en tres fases" loading="lazy" />
+              </div>
+              <b>Plan de 90 días</b>
+              <p>Mantiene el movimiento después del programa con una ruta personal de ejecución.</p>
+            </article>
           </div>
         </div>
 
         <div class="book-stage">
           <img src="libro_empleagilidad_3d.png" alt="Libro Empleagilidad en presentación tridimensional" />
-          <div class="book-caption">El programa está basado en la metodología de <span>Empleagilidad.</span></div>
+          <div class="book-caption">
+            <div>El programa está basado en la metodología <span>Empleagilidad</span>, desarrollada en el libro del mismo título.</div>
+            <a class="book-amazon-link" href="https://www.amazon.com/-/es/dp/B0HKGQ13J8/" target="_blank" rel="noopener noreferrer" aria-label="Ver el libro Empleagilidad en Amazon">
+              <svg viewBox="0 0 76 34" role="img" aria-hidden="true">
+                <text x="0" y="20" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">amazon</text>
+                <path d="M12 25c13 7 31 7 45 1" fill="none" stroke="#ff9900" stroke-width="2.3" stroke-linecap="round" />
+                <path d="m53 24 5 1-3 4" fill="none" stroke="#ff9900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -1356,7 +1473,7 @@
         { trigger: '.method-head', selector: '.method-head .eyebrow, .method-head h2, .method-head > p' },
         { trigger: '.method-cta', selector: '.method-cta' },
         { trigger: '.first-session', selector: '.first-session .eyebrow, .first-session h2, .first-session .lead' },
-        { trigger: '.authority', selector: '.authority-portrait, .authority .eyebrow, .authority h2, .authority .lead, .authority-name, .authority-role-row, .award-logos' },
+        { trigger: '.authority', selector: '.authority-portrait, .authority .eyebrow, .authority h2, .authority .lead, .authority-name, .authority-role-row' },
         { trigger: '.audience', selector: '.audience .eyebrow, .audience h2, .audience .split > div:first-child > p, .audience-note' },
         { trigger: '.audience-qualifier', selector: '.qualifier-block' },
         { trigger: '.outcomes', selector: '.outcomes .eyebrow, .outcomes h2, .outcomes .lead' },
