@@ -1006,14 +1006,39 @@
     }
 
     .field {
+      display: block;
+      width: 100%;
       height: 62px;
       margin-bottom: 13px;
       padding: 21px 20px;
       border: 1px solid #d8cfc3;
       border-radius: 12px;
       color: #746d64;
+      font-family: inherit;
       font-size: 16px;
       background: #fcf8f2;
+    }
+
+    .field::placeholder {
+      color: #746d64;
+      opacity: 1;
+    }
+
+    .field:focus-visible {
+      border-color: var(--orange);
+      outline: 3px solid rgba(232,93,12,.16);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .field-label {
@@ -1048,11 +1073,6 @@
       appearance: none;
       font-family: inherit;
       cursor: pointer;
-    }
-
-    .field-select:focus-visible {
-      border-color: var(--orange);
-      outline: 3px solid rgba(232,93,12,.16);
     }
 
     .form-card .button {
@@ -1411,9 +1431,12 @@
         <div class="form-card">
           <h3>Postula a la próxima cohorte</h3>
           <p>Déjanos tus datos e indica cuál describe mejor tu situación profesional. Revisaremos tu perfil y te contactaremos para validar si Empleagilidad es adecuado para este momento de tu carrera.</p>
-          <div class="field">Nombre y apellido</div>
-          <div class="field">Correo electrónico</div>
-          <div class="field">WhatsApp</div>
+          <label class="sr-only" for="nombre-completo">Nombre y apellido</label>
+          <input class="field" id="nombre-completo" name="nombre-completo" type="text" placeholder="Nombre y apellido" autocomplete="name" required />
+          <label class="sr-only" for="correo-electronico">Correo electrónico</label>
+          <input class="field" id="correo-electronico" name="correo-electronico" type="email" placeholder="Correo electrónico" autocomplete="email" inputmode="email" required />
+          <label class="sr-only" for="whatsapp">WhatsApp</label>
+          <input class="field" id="whatsapp" name="whatsapp" type="tel" placeholder="WhatsApp" autocomplete="tel" inputmode="tel" required />
           <label class="field-label" for="situacion-profesional">¿Cuál describe mejor tu situación actual?</label>
           <div class="select-wrap">
             <select class="field field-select" id="situacion-profesional" name="situacion-profesional">
