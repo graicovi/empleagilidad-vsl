@@ -1,0 +1,1464 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Empleagilidad — propuesta VSL completa · postulación</title>
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root {
+      --paper: #f4ede1;
+      --paper-bright: #fffaf2;
+      --ink: #171714;
+      --ink-soft: #403b34;
+      --violet: #9d431e;
+      --violet-dark: #1d1c19;
+      --violet-soft: #eadcca;
+      --orange: #e85d0c;
+      --orange-soft: #ffe8d4;
+      --line: rgba(23, 23, 20, .18);
+      --shadow: 0 24px 70px rgba(35, 27, 20, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 2%, rgba(255,255,255,.94), transparent 24%),
+        var(--paper);
+    }
+
+    .shell {
+      width: calc(100% - 96px);
+      max-width: 1490px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 26px;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .42em;
+      color: var(--violet);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1, h2, .display {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -.045em;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin-bottom: 34px;
+      font-size: 70px;
+      line-height: .98;
+    }
+
+    p {
+      font-size: 23px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+
+    .accent { color: var(--orange); }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 410px;
+      min-height: 68px;
+      padding: 18px 34px;
+      border: 0;
+      border-radius: 16px;
+      color: #fff;
+      background: linear-gradient(135deg, #f06b13 0%, #db5108 100%);
+      box-shadow: 0 18px 34px rgba(223, 83, 10, .23);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      text-decoration: none;
+      transition: transform .32s cubic-bezier(.2,.75,.25,1), box-shadow .32s ease, filter .32s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      box-shadow: 0 22px 42px rgba(223, 83, 10, .28);
+      filter: brightness(1.04);
+      transform: translateY(-3px) scale(1.015);
+    }
+
+    .button.light {
+      color: var(--ink);
+      background: #fff;
+      box-shadow: 0 18px 42px rgba(30, 25, 20, .25);
+    }
+
+    .brandline {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 28px;
+      align-items: center;
+      padding: 16px 0 24px;
+    }
+
+    .brandline::before,
+    .brandline::after {
+      content: "";
+      height: 1px;
+      background: rgba(23, 23, 20, .33);
+    }
+
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 35px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -.04em;
+    }
+
+    .brand span { color: var(--orange); }
+
+    .hero {
+      min-height: 100svh;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
+    .hero > .shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100svh;
+    }
+
+    .hero-copy {
+      max-width: 1320px;
+      margin: 8px auto 26px;
+    }
+
+    .hero .eyebrow {
+      margin-bottom: 22px;
+      color: var(--ink);
+      font-size: 13px;
+      letter-spacing: .43em;
+    }
+
+    .hero h1 {
+      margin: 0 auto 22px;
+      font-size: clamp(54px, 4vw, 66px);
+      line-height: .97;
+    }
+
+    .hero-accent-fade { display: inline-block; }
+
+    .js .hero-accent-fade {
+      opacity: 0;
+      animation: hero-accent-fade 1.05s ease-in-out .18s forwards;
+    }
+
+    @keyframes hero-accent-fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .ai-cause {
+      margin: 0 auto 2px;
+      max-width: 1180px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(20px, 1.45vw, 24px);
+      line-height: 1.28;
+      letter-spacing: -.014em;
+      font-weight: 400;
+      color: var(--ink-soft);
+    }
+
+    .ai-cause strong {
+      color: #2d2c29;
+      font-weight: 700;
+    }
+
+    .hero-promise {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 31px;
+      line-height: 1.25;
+      color: var(--ink-soft);
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      height: auto;
+      min-height: 330px;
+      max-height: 410px;
+      flex: 1 1 330px;
+      margin: 24px auto 14px;
+      overflow: hidden;
+      border-radius: 18px;
+      background-image: url("vsl_hero_referencia_aprobada.png");
+      background-repeat: no-repeat;
+      background-size: 1558px auto;
+      background-position: -32px -332px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero .button {
+      align-self: center;
+      min-height: 58px;
+      margin-top: 0;
+      padding-block: 14px;
+      font-size: 23px;
+    }
+
+    .microcopy {
+      margin-top: 14px;
+      margin-bottom: 34px;
+      font-size: 12.5px;
+      letter-spacing: .03em;
+      color: #70695f;
+    }
+
+    .section {
+      padding: 130px 0;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.03fr .97fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .lead {
+      max-width: 920px;
+      font-size: 27px;
+      line-height: 1.45;
+    }
+
+    .problem-intro {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .problem-intro h2 { max-width: 690px; }
+
+    .old-rules {
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,255,255,.45);
+    }
+
+    .old-rules .label {
+      margin-bottom: 28px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .32em;
+      color: var(--orange);
+    }
+
+    .old-rules ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .old-rules li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 15px;
+      padding: 17px 0;
+      border-top: 1px solid var(--line);
+      font-size: 21px;
+      color: var(--ink-soft);
+      border-radius: 12px;
+      transform-origin: left center;
+      transition: transform .34s ease, color .34s ease, background-color .34s ease, padding-left .34s ease;
+    }
+
+    .old-rules li::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      margin-top: 8px;
+      border: 2px solid var(--orange);
+      border-radius: 50%;
+      transition: transform .34s ease, background-color .34s ease;
+    }
+
+    .old-rules li:hover {
+      padding-left: 12px;
+      color: var(--ink);
+      background: rgba(232,93,12,.07);
+      transform: translateX(8px) scale(1.018);
+    }
+
+    .old-rules li:hover::before {
+      background: var(--orange);
+      transform: scale(1.12);
+    }
+
+    .double-change {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,.17);
+    }
+
+    .change-card {
+      position: relative;
+      min-height: 410px;
+      padding: 74px 72px;
+      overflow: hidden;
+      background: var(--violet-dark);
+      color: #fff;
+      transform-origin: center;
+      transition: transform .38s cubic-bezier(.2,.75,.25,1), box-shadow .38s ease, filter .38s ease;
+    }
+
+    .change-card:nth-child(2) { background: #302923; }
+
+    .change-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .38s ease;
+    }
+
+    .change-card:hover {
+      z-index: 1;
+      transform: translateY(-8px) scale(1.012);
+      box-shadow: 0 22px 50px rgba(15,12,9,.26);
+      filter: brightness(1.06);
+    }
+
+    .change-card:hover::after { transform: scaleX(1); }
+
+    .change-card .num {
+      display: block;
+      margin-bottom: 45px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 62px;
+      color: #f48a47;
+    }
+
+    .change-card h3 {
+      margin-bottom: 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 38px;
+      letter-spacing: -.025em;
+    }
+
+    .change-card p {
+      margin: 0;
+      max-width: 570px;
+      color: rgba(255,255,255,.78);
+      font-size: 21px;
+    }
+
+    .method {
+      background: var(--paper-bright);
+    }
+
+    .method-head {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 88px;
+    }
+
+    .method-head h2 { margin: 0; }
+
+    .method-head h2 .accent {
+      font-weight: 700;
+    }
+
+    .method-impact {
+      font-weight: 900;
+      font-style: normal;
+      color: var(--ink);
+    }
+
+    .method-head p {
+      margin: 0 0 5px;
+      font-size: 25px;
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step {
+      position: relative;
+      min-height: 280px;
+      padding: 34px 42px 38px;
+      border-left: 1px solid var(--line);
+      transition: transform .35s cubic-bezier(.2,.75,.25,1), background-color .35s ease, box-shadow .35s ease;
+    }
+
+    .step:first-child { border-left: 0; }
+
+    .step:hover {
+      z-index: 1;
+      background: #fffdf8;
+      box-shadow: 0 20px 45px rgba(42,31,21,.10);
+      transform: translateY(-8px);
+    }
+
+    .step .number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      margin-bottom: 62px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--orange);
+      font-weight: 700;
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+    .step:hover .number {
+      box-shadow: 0 10px 24px rgba(232,93,12,.24);
+      transform: scale(1.1);
+    }
+
+    .step h3 {
+      margin-bottom: 13px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.02;
+      letter-spacing: -.025em;
+    }
+
+    .step p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .method-manifesto {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 44px;
+      overflow: hidden;
+      border-radius: 22px;
+      color: #fff;
+      background: var(--ink);
+    }
+
+    .method-manifesto span {
+      padding: 30px 34px;
+      border-left: 1px solid rgba(255,255,255,.14);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .method-manifesto span:first-child { border-left: 0; }
+
+    .method-manifesto b {
+      color: #f28743;
+      font-weight: 800;
+    }
+
+    .method-cta {
+      padding-top: 66px;
+      text-align: center;
+    }
+
+    .first-session {
+      position: relative;
+      background: linear-gradient(135deg, #fff0e3 0%, #f4ede1 54%, #eadcca 100%);
+    }
+
+    .first-session::after {
+      content: "01";
+      position: absolute;
+      right: 60px;
+      top: 24px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 280px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(233, 95, 11, .07);
+    }
+
+    .first-session .split { align-items: center; }
+
+    .session-system {
+      position: relative;
+      z-index: 1;
+      padding: 48px;
+      border-radius: 26px;
+      color: #fff;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+    }
+
+    .session-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 22px;
+      padding: 25px 0;
+      border-top: 1px solid rgba(255,255,255,.18);
+      border-radius: 14px;
+      transform-origin: left center;
+      transition: transform .34s cubic-bezier(.2,.75,.25,1), background-color .34s ease, box-shadow .34s ease;
+    }
+
+    .session-row:first-child { border-top: 0; }
+
+    .session-row:hover {
+      background: rgba(255,255,255,.07);
+      box-shadow: inset 3px 0 0 var(--orange);
+      transform: translateX(10px) scale(1.018);
+    }
+
+    .session-row b {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 35px;
+      color: #f28743;
+    }
+
+    .session-row span {
+      font-size: 19px;
+      line-height: 1.38;
+      color: rgba(255,255,255,.82);
+    }
+
+    .authority {
+      color: #fff;
+      background: #01040a;
+    }
+
+    .authority .eyebrow { color: #f3a36f; }
+    .authority h2,
+    .authority .authority-name { color: #fff; }
+    .authority p { color: rgba(255,255,255,.8); }
+
+    .authority-grid {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 90px;
+      align-items: center;
+    }
+
+    .authority-portrait {
+      position: relative;
+      min-height: 610px;
+      overflow: hidden;
+      border-radius: 28px;
+      background: #01040a;
+      box-shadow: var(--shadow);
+    }
+
+    .authority-portrait::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, transparent 70%, rgba(1,4,10,.42) 88%, #01040a 100%),
+        radial-gradient(ellipse at center, transparent 58%, rgba(1,4,10,.13) 74%, rgba(1,4,10,.72) 100%);
+      box-shadow: inset 0 0 34px 8px rgba(1,4,10,.38);
+    }
+
+    .authority-portrait img {
+      width: 100%;
+      height: 100%;
+      min-height: 610px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .authority-copy h2 {
+      max-width: 760px;
+    }
+
+    .authority-name {
+      margin: 36px 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 33px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .authority-role {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: var(--orange);
+    }
+
+    .authority-role-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 11px;
+      margin: 0 0 30px;
+    }
+
+    .book-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .01em;
+      text-decoration: underline;
+      text-decoration-color: var(--orange);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 5px;
+      transition: color .2s ease;
+    }
+
+    .book-link:hover,
+    .book-link:focus-visible {
+      color: var(--orange);
+      outline: 2px solid transparent;
+    }
+
+    .book-link svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+      transition: transform .24s ease;
+    }
+
+    .book-link:hover svg,
+    .book-link:focus-visible svg {
+      transform: translate(3px, -3px);
+    }
+
+    .award-proof {
+      margin-top: 34px;
+      padding: 25px 28px;
+      border-left: 4px solid var(--orange);
+      border-radius: 0 16px 16px 0;
+      background: var(--orange-soft);
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+    }
+
+    .audience {
+      color: #fff;
+      background: linear-gradient(135deg, #171714 0%, #29251f 63%, #5a2b17 100%);
+    }
+
+    .audience .eyebrow { color: #f3a36f; }
+    .audience h2 { max-width: 760px; }
+    .audience p { color: rgba(255,255,255,.8); }
+
+    .audience-list {
+      display: grid;
+      gap: 1px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .audience-item {
+      position: relative;
+      padding: 30px 36px;
+      background: rgba(255,255,255,.065);
+      font-size: 21px;
+      line-height: 1.35;
+      transform-origin: center;
+      transition: transform .34s cubic-bezier(.2,.75,.25,1), background-color .34s ease, box-shadow .34s ease;
+    }
+
+    .audience-item:hover {
+      z-index: 1;
+      background: rgba(255,255,255,.115);
+      box-shadow: 0 16px 32px rgba(0,0,0,.15);
+      transform: scale(1.018);
+    }
+
+    .audience-note {
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,.25);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 32px;
+      line-height: 1.28;
+      color: #fff;
+    }
+
+    .audience-qualifier {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column: 1 / -1;
+      gap: 1px;
+      margin-top: 68px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 22px;
+      background: rgba(255,255,255,.16);
+    }
+
+    .qualifier-block {
+      padding: 32px 38px;
+      background: rgba(255,255,255,.065);
+    }
+
+    .qualifier-block b {
+      display: block;
+      margin-bottom: 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      color: #fff;
+    }
+
+    .qualifier-block p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.48;
+    }
+
+    .outcomes h2 { max-width: 900px; }
+
+    .outcome-list {
+      margin-top: 65px;
+      border-top: 1px solid var(--line);
+    }
+
+    .outcome {
+      display: grid;
+      grid-template-columns: 110px 1fr 220px;
+      align-items: center;
+      min-height: 128px;
+      border-bottom: 1px solid var(--line);
+      border-radius: 14px;
+      transform-origin: center;
+      transition: transform .34s cubic-bezier(.2,.75,.25,1), background-color .34s ease, box-shadow .34s ease, padding-inline .34s ease;
+    }
+
+    .outcome:hover {
+      padding-inline: 16px;
+      background: rgba(255,255,255,.48);
+      box-shadow: 0 14px 34px rgba(42,31,21,.08);
+      transform: scale(1.012);
+    }
+
+    .outcome .idx {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 43px;
+      color: var(--orange);
+    }
+
+    .outcome h3 {
+      margin: 0;
+      max-width: 850px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 31px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+
+    .outcome .tag {
+      justify-self: end;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--violet);
+    }
+
+    .value {
+      background: #e9dfd2;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 90px;
+      align-items: center;
+    }
+
+    .value-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 44px;
+    }
+
+    .value-item {
+      min-height: 182px;
+      padding: 28px;
+      border: 1px solid rgba(157,67,30,.18);
+      border-radius: 20px;
+      background: rgba(255,255,255,.58);
+    }
+
+    .js .motion-reveal {
+      opacity: 0;
+      transform: translateY(30px) scale(.975);
+      transform-origin: center bottom;
+    }
+
+    .js .motion-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity .72s ease, transform .72s cubic-bezier(.2,.75,.25,1);
+    }
+
+    .value-item b {
+      display: block;
+      margin-bottom: 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+    }
+
+    .value-item p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.42;
+    }
+
+    .value-item--jobbox p {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .book-stage {
+      position: relative;
+      min-height: 850px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .book-stage img {
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      top: 43%;
+      width: 900px;
+      max-width: none;
+      height: auto;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 34px 32px rgba(51, 38, 27, .20));
+    }
+
+    .book-caption {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      bottom: 0;
+      width: min(440px, 90%);
+      padding: 22px 24px;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 16px 40px rgba(51, 38, 27, .12);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      line-height: 1.25;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+
+    .book-caption span { color: var(--orange); }
+
+    .program-includes {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      margin-top: 74px;
+      border-top: 1px solid rgba(23,23,20,.18);
+      border-bottom: 1px solid rgba(23,23,20,.18);
+    }
+
+    .include-item {
+      min-height: 178px;
+      padding: 29px 25px;
+      border-left: 1px solid rgba(23,23,20,.18);
+    }
+
+    .include-item:first-child { border-left: 0; }
+
+    .include-item strong {
+      display: block;
+      margin-bottom: 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      line-height: 1.05;
+    }
+
+    .include-item p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .faq {
+      background: var(--paper-bright);
+      border-top: 1px solid var(--line);
+    }
+
+    .faq-head {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 90px;
+      align-items: end;
+      margin-bottom: 62px;
+    }
+
+    .faq-head h2 { margin: 0; }
+
+    .faq-head p {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .faq-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .faq-item {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 70px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-item h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      letter-spacing: -.02em;
+    }
+
+    .faq-item p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .decision {
+      padding: 145px 0 150px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 76% 20%, rgba(232,93,12,.26), transparent 29%),
+        linear-gradient(135deg, #11110f 0%, #26211c 55%, #5a2b17 100%);
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 90px;
+      align-items: center;
+    }
+
+    .decision .eyebrow { color: #f39a61; }
+
+    .decision h2 {
+      max-width: 760px;
+      font-size: 77px;
+    }
+
+    .decision p {
+      max-width: 700px;
+      color: rgba(255,255,255,.76);
+    }
+
+    .form-card {
+      padding: 46px;
+      border-radius: 26px;
+      background: #fff;
+      box-shadow: 0 30px 80px rgba(18, 12, 8, .34);
+      color: var(--ink);
+    }
+
+    .form-card h3 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 35px;
+      letter-spacing: -.03em;
+    }
+
+    .form-card > p {
+      margin-bottom: 30px;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    .field {
+      height: 62px;
+      margin-bottom: 13px;
+      padding: 21px 20px;
+      border: 1px solid #d8cfc3;
+      border-radius: 12px;
+      color: #746d64;
+      font-size: 16px;
+      background: #fcf8f2;
+    }
+
+    .form-card .button {
+      width: 100%;
+      min-width: 0;
+      margin-top: 7px;
+    }
+
+    .form-card .legal {
+      margin: 17px 0 0;
+      text-align: center;
+      font-size: 12px;
+      color: #82786e;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 48px;
+      color: rgba(255,255,255,.66);
+      background: #11110f;
+      font-size: 13px;
+    }
+
+    footer .brand {
+      color: #fff;
+      font-size: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .shell { width: calc(100% - 40px); }
+      .brandline { padding: 18px 0 28px; }
+      .hero { min-height: auto; padding-bottom: 52px; }
+      .hero > .shell { display: block; min-height: auto; }
+      .hero h1 { font-size: 44px; }
+      .ai-cause { max-width: 680px; font-size: 21px; line-height: 1.3; }
+      h2, .decision h2 { font-size: 48px; }
+      .split, .method-head, .value-grid, .decision-grid, .authority-grid, .faq-head, .faq-item { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: 1fr; }
+      .step { border-left: 0; border-top: 1px solid var(--line); min-height: auto; }
+      .step .number { margin-bottom: 24px; }
+      .double-change, .value-list, .method-manifesto, .audience-qualifier, .program-includes { grid-template-columns: 1fr; }
+      .method-manifesto span, .include-item { border-left: 0; border-top: 1px solid rgba(255,255,255,.14); }
+      .video-frame { height: 36vw; min-height: 0; max-height: none; background-size: 98vw auto; background-position: -2vw -21vw; }
+      .outcome { grid-template-columns: 70px 1fr; }
+      .outcome .tag { display: none; }
+      .book-stage img { width: 620px; }
+      .book-stage { min-height: 720px; }
+      .book-stage img { top: 42%; }
+      .book-caption { bottom: 8px; width: min(320px, 92%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+      .js .motion-reveal { opacity: 1; transform: none; }
+      .js .hero-accent-fade { opacity: 1; animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="shell">
+        <div class="brandline">
+          <div class="brand">empleagilidad<span>.com</span></div>
+        </div>
+
+        <div class="hero-copy">
+          <div class="eyebrow">Programa para profesionales con experiencia</div>
+          <h1>Intentaste todo.<br>El trabajo que conocías<br><span class="accent hero-accent-fade">ya cambió.</span></h1>
+          <p class="ai-cause">La <strong>inteligencia artificial</strong> está transformando tu profesión —y las reglas por las que las empresas contratan.</p>
+        </div>
+
+        <div class="video-frame" aria-label="Video VSL: mercado, dirección y ejecución"></div>
+        <a class="button" href="#siguiente-paso">Quiero postular a Empleagilidad</a>
+        <div class="microcopy">Postulación para profesionales con experiencia · Revisaremos tu perfil antes de confirmar el siguiente paso</div>
+      </div>
+    </section>
+
+    <section class="section problem-intro">
+      <div class="shell split">
+        <div>
+          <div class="eyebrow">El punto de partida</div>
+          <h2>Aplicaste las reglas que conocías. <span class="accent">El mercado cambió.</span></h2>
+          <p class="lead">Repetir con más intensidad la búsqueda que conocías no resuelve ese cambio. Necesitas una metodología construida para interpretarlo y actuar.</p>
+        </div>
+
+        <div class="old-rules">
+          <div class="label">Lo que probablemente ya intentaste</div>
+          <ul>
+            <li>Actualizar una vez más tu CV.</li>
+            <li>Revisar y ajustar tu perfil de LinkedIn.</li>
+            <li>Postular a más oportunidades.</li>
+            <li>Activar contactos sin una dirección clara.</li>
+            <li>Prepararte para entrevistas aisladas.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="double-change" aria-label="El doble cambio provocado por la inteligencia artificial">
+      <article class="change-card">
+        <span class="num">01</span>
+        <h3>Tu CV creado con IA se parece a todos los demás.</h3>
+        <p>Cuando cualquiera puede producir un CV correcto en minutos, lo correcto deja de diferenciarte.</p>
+      </article>
+      <article class="change-card">
+        <span class="num">02</span>
+        <h3>La IA no solo cambia tu CV. Cambia el valor por el que te contratan.</h3>
+        <p>Se transforman las tareas, las capacidades y los problemas que las organizaciones necesitan resolver.</p>
+      </article>
+    </section>
+
+    <section class="section method">
+      <div class="shell">
+        <div class="method-head">
+          <div>
+            <div class="eyebrow">Una metodología para el mercado actual</div>
+            <h2>Empleagilidad cambia <span class="accent">la metodología <strong class="method-impact">por completo.</strong></span></h2>
+          </div>
+          <p>Lo que funcionaba antes ya no alcanza para interpretar lo que ocurre ahora. Necesitas nuevas preguntas para descubrir dónde está tu siguiente oportunidad.</p>
+        </div>
+
+        <div class="journey">
+          <article class="step">
+            <span class="number">1</span>
+            <h3>¿Qué cambió en tu profesión?</h3>
+            <p>Interpreta cómo la IA está redefiniendo el valor en tu profesión.</p>
+          </article>
+          <article class="step">
+            <span class="number">2</span>
+            <h3>¿Dónde puede volver a ser relevante tu experiencia?</h3>
+            <p>Reconoce dónde tu trayectoria puede responder a problemas que hoy importan.</p>
+          </article>
+          <article class="step">
+            <span class="number">3</span>
+            <h3>¿Qué necesitas demostrar ahora?</h3>
+            <p>Convierte tu trayectoria en una propuesta creíble.</p>
+          </article>
+        </div>
+
+        <div class="method-manifesto" aria-label="Síntesis de la metodología">
+          <span><b>01</b> Interpreta el cambio.</span>
+          <span><b>02</b> Elige una dirección.</span>
+          <span><b>03</b> Construye evidencia.</span>
+        </div>
+
+        <div class="method-cta">
+          <a class="button" href="#siguiente-paso">Quiero postular a Empleagilidad</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section first-session">
+      <div class="shell split">
+        <div>
+          <div class="eyebrow">Un programa 100% práctico</div>
+          <h2>Darás un giro desde la primera sesión.</h2>
+          <p class="lead">Desde el primer encuentro dejarás de acumular actividad sin dirección. Identificarás qué está frenando tu avance y comenzarás a reconstruir tu búsqueda para el mercado que está emergiendo.</p>
+        </div>
+
+        <div class="session-system">
+          <div class="session-row">
+            <b>01</b>
+            <span>Detectarás por qué tu búsqueda actual no está produciendo las oportunidades correctas.</span>
+          </div>
+          <div class="session-row">
+            <b>02</b>
+            <span>Reinterpretarás tu experiencia frente a lo que el mercado empieza a exigir bajo el impacto de la inteligencia artificial.</span>
+          </div>
+          <div class="session-row">
+            <b>03</b>
+            <span>Tomarás decisiones concretas para dejar de repetir lo que ya no funciona y empezar a moverte con dirección.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section authority">
+      <div class="shell authority-grid">
+        <div class="authority-portrait">
+          <img src="giancarlo_raicovi_doctor_cv.webp" alt="Giancarlo Raicovi, Doctor CV" />
+        </div>
+        <div class="authority-copy">
+          <div class="eyebrow">Quién dirige el programa</div>
+          <h2>Una metodología creada <span class="accent">desde la experiencia real</span> del mercado laboral.</h2>
+          <p class="lead">Giancarlo Raicovi, Doctor CV, es autor de <em>Empleagilidad</em> y creador de jobbox. Ha desarrollado una metodología para ayudar a profesionales con experiencia a reinterpretar su trayectoria, reposicionarse y volver a generar oportunidades.</p>
+          <div class="authority-name">Giancarlo Raicovi</div>
+          <div class="authority-role-row">
+            <div class="authority-role">Autor de Empleagilidad · Doctor CV</div>
+            <a class="book-link" href="https://www.amazon.com/-/es/dp/B0HKGQ13J8/" target="_blank" rel="noopener noreferrer">
+              <span>Ver el libro en amazon.com</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14 5h5v5" />
+                <path d="M10 14 19 5" />
+                <path d="M19 13v6H5V5h6" />
+              </svg>
+            </a>
+          </div>
+          <div class="award-proof"><strong>jobbox</strong> es una plataforma de empleabilidad ganadora de Startup Perú y Worktech del Banco Interamericano de Desarrollo.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section audience">
+      <div class="shell split">
+        <div>
+          <div class="eyebrow">Esto es para ti</div>
+          <h2>Tienes experiencia. Ahora necesitas volverla relevante <span class="accent">para lo que viene.</span></h2>
+          <p>Empleagilidad está diseñado para profesionales de nivel medio a ejecutivo que necesitan gestionar una transición, reposicionarse o anticiparse a los cambios.</p>
+          <div class="audience-note">Tu siguiente movimiento exige más que otra versión de tu CV.</div>
+        </div>
+
+        <div class="audience-list">
+          <div class="audience-item">Tu búsqueda está estancada o genera pocas conversaciones relevantes.</div>
+          <div class="audience-item">Necesitas reposicionar una trayectoria que ya tiene profundidad.</div>
+          <div class="audience-item">Quieres anticiparte al impacto de la inteligencia artificial.</div>
+          <div class="audience-item">Estás dispuesto a investigar, conversar, ejecutar y ajustar.</div>
+        </div>
+
+        <div class="audience-qualifier">
+          <div class="qualifier-block">
+            <b>Este programa requiere de ti</b>
+            <p>Apertura para cuestionar lo que venías haciendo, disposición para conversar con el mercado y compromiso para ejecutar.</p>
+          </div>
+          <div class="qualifier-block">
+            <b>No es para quien</b>
+            <p>Busca únicamente una plantilla de CV, espera que otra persona haga la búsqueda o necesita una garantía de contratación.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section outcomes">
+      <div class="shell">
+        <div class="eyebrow">Lo que construirás</div>
+        <h2>No vienes a mejorar tu CV. <span class="accent">Vienes a recuperar el control de tu carrera.</span></h2>
+        <p class="lead">Porque un mejor documento no corrige una estrategia desactualizada. Empleagilidad transforma la forma en que interpretas el mercado, comunicas tu valor y generas oportunidades.</p>
+
+        <div class="outcome-list">
+          <div class="outcome"><span class="idx">01</span><h3>Una dirección profesional clara y conectada con el mercado.</h3><span class="tag">Dirección</span></div>
+          <div class="outcome"><span class="idx">02</span><h3>Una propuesta de valor que conecte tu experiencia con lo que las empresas necesitarán.</h3><span class="tag">Posicionamiento</span></div>
+          <div class="outcome"><span class="idx">03</span><h3>LinkedIn, CV y narrativa alineados con esa dirección.</h3><span class="tag">Evidencia</span></div>
+          <div class="outcome"><span class="idx">04</span><h3>Un sistema de conversaciones, oportunidades y seguimiento.</h3><span class="tag">Ejecución</span></div>
+          <div class="outcome"><span class="idx">05</span><h3>Un plan personal de noventa días para sostener tu avance.</h3><span class="tag">Continuidad</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section value">
+      <div class="shell value-grid">
+        <div>
+          <div class="eyebrow">Todo el valor, integrado</div>
+          <h2>Método para decidir. Herramientas para <span class="accent">actuar.</span></h2>
+          <p>La estrategia no queda en una clase. Se convierte en ejecución, seguimiento y aprendizaje acompañado.</p>
+
+          <div class="value-list">
+            <article class="value-item"><b>Metodología</b><p>Convierte incertidumbre en decisiones y decisiones en acciones.</p></article>
+            <article class="value-item"><b>Acompañamiento</b><p>Evita que los bloqueos detengan tu avance y ajusta la ejecución.</p></article>
+            <article class="value-item value-item--jobbox"><b>jobbox</b><p>Plataforma de empleabilidad ganadora de Startup Perú y Worktech del Banco Interamericano de Desarrollo. Convierte tu estrategia profesional en oportunidades, ejecución y avance medible.</p></article>
+            <article class="value-item"><b>Plan de 90 días</b><p>Mantiene el movimiento después del programa con una ruta personal de ejecución.</p></article>
+          </div>
+        </div>
+
+        <div class="book-stage">
+          <img src="libro_empleagilidad_3d.png" alt="Libro Empleagilidad en presentación tridimensional" />
+          <div class="book-caption">El programa está basado en la metodología de <span>Empleagilidad.</span></div>
+        </div>
+      </div>
+
+      <div class="shell program-includes" aria-label="Qué incluye el programa">
+        <article class="include-item"><strong>8 sesiones en vivo</strong><p>Para transformar la forma en que gestionas tu carrera.</p></article>
+        <article class="include-item"><strong>2 mentorías grupales</strong><p>Para resolver bloqueos y ajustar la ejecución.</p></article>
+        <article class="include-item"><strong>jobbox durante 3 meses</strong><p>Para convertir la estrategia en seguimiento medible.</p></article>
+        <article class="include-item"><strong>Libro Empleagilidad</strong><p>Como fundamento y material de consulta.</p></article>
+        <article class="include-item"><strong>Plan personal de 90 días</strong><p>Para sostener el movimiento después del programa.</p></article>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="shell">
+        <div class="faq-head">
+          <div>
+            <div class="eyebrow">Antes de postular</div>
+            <h2>Preguntas importantes.</h2>
+          </div>
+          <p>Empleagilidad propone un proceso exigente y acompañado. Estas respuestas te ayudarán a decidir si corresponde a tu momento profesional.</p>
+        </div>
+
+        <div class="faq-list">
+          <article class="faq-item"><h3>¿Empleagilidad garantiza empleo?</h3><p>No. El programa te ayuda a convertir una búsqueda incierta en un sistema estratégico, ejecutable y conectado con el mercado; ninguna contratación puede garantizarse.</p></article>
+          <article class="faq-item"><h3>¿Puedo participar si actualmente estoy trabajando?</h3><p>Sí. Está diseñado tanto para profesionales en transición como para quienes quieren anticiparse, reposicionarse o fortalecer preventivamente su empleabilidad.</p></article>
+          <article class="faq-item"><h3>¿Es un programa para mejorar mi CV?</h3><p>No solamente. LinkedIn, CV y narrativa se reconstruyen después de definir una dirección profesional conectada con el mercado.</p></article>
+          <article class="faq-item"><h3>¿Qué ocurre después de enviar mi postulación?</h3><p>Revisaremos tu información y te contactaremos para validar el encaje con el programa antes de indicarte el siguiente paso.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="decision" id="siguiente-paso">
+      <div class="shell decision-grid">
+        <div>
+          <div class="eyebrow">Tu siguiente movimiento</div>
+          <h2>El mercado cambió. <span class="accent">Tu estrategia profesional también tiene que cambiar.</span></h2>
+          <p class="lead">Actualiza tu forma de buscar. Reconecta tu experiencia con el mercado que está emergiendo. Construye tu siguiente movimiento con una metodología creada para este momento.</p>
+        </div>
+
+        <div class="form-card">
+          <h3>Postula a la próxima cohorte</h3>
+          <p>Cuéntanos brevemente tu situación profesional. Revisaremos tu perfil y te contactaremos para validar si Empleagilidad es adecuado para este momento de tu carrera.</p>
+          <div class="field">Nombre y apellido</div>
+          <div class="field">Correo electrónico</div>
+          <div class="field">WhatsApp</div>
+          <div class="field">Situación profesional actual</div>
+          <a class="button" href="#">Quiero postular a Empleagilidad</a>
+          <p class="legal">Empleagilidad no garantiza empleo. Tus datos serán utilizados para orientarte sobre el programa.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="brand">empleagilidad<span>.com</span></div>
+      <div>Programa para profesionales con experiencia · Perú y Chile</div>
+    </footer>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const sequences = [
+        { trigger: '.problem-intro', selector: '.problem-intro .eyebrow, .problem-intro h2, .problem-intro .lead' },
+        { trigger: '.old-rules', selector: '.old-rules .label, .old-rules li' },
+        { trigger: '.double-change', selector: '.change-card' },
+        { trigger: '.method-head', selector: '.method-head .eyebrow, .method-head h2, .method-head > p' },
+        { trigger: '.journey', selector: '.step' },
+        { trigger: '.method-manifesto', selector: '.method-manifesto span, .method-cta' },
+        { trigger: '.first-session', selector: '.first-session .eyebrow, .first-session h2, .first-session .lead' },
+        { trigger: '.session-system', selector: '.session-row' },
+        { trigger: '.authority', selector: '.authority-portrait, .authority .eyebrow, .authority h2, .authority .lead, .authority-name, .authority-role-row, .award-proof' },
+        { trigger: '.audience', selector: '.audience .eyebrow, .audience h2, .audience .split > div:first-child > p, .audience-note' },
+        { trigger: '.audience-list', selector: '.audience-item' },
+        { trigger: '.audience-qualifier', selector: '.qualifier-block' },
+        { trigger: '.outcomes', selector: '.outcomes .eyebrow, .outcomes h2, .outcomes .lead' },
+        { trigger: '.outcome-list', selector: '.outcome' },
+        { trigger: '.value', selector: '.value .eyebrow, .value h2, .value-grid > div:first-child > p' },
+        { trigger: '.value-list', selector: '.value-item' },
+        { trigger: '.book-stage', selector: '.book-stage' },
+        { trigger: '.program-includes', selector: '.include-item' },
+        { trigger: '.faq-head', selector: '.faq .eyebrow, .faq h2, .faq-head > p' },
+        { trigger: '.faq-list', selector: '.faq-item' },
+        { trigger: '.decision', selector: '.decision .eyebrow, .decision h2, .decision .lead, .form-card' }
+      ].map((sequence) => ({
+        ...sequence,
+        triggerElement: document.querySelector(sequence.trigger),
+        elements: Array.from(document.querySelectorAll(sequence.selector))
+      })).filter((sequence) => sequence.triggerElement && sequence.elements.length);
+
+      const allElements = sequences.flatMap((sequence) => sequence.elements);
+
+      allElements.forEach((element) => element.classList.add('motion-reveal'));
+
+      const reveal = (elements) => {
+        elements.forEach((element) => element.classList.add('is-visible'));
+      };
+
+      const finalize = (elements) => {
+        reveal(elements);
+        elements.forEach((element) => element.classList.remove('motion-reveal', 'is-visible'));
+      };
+
+      if (reduceMotion) {
+        finalize(allElements);
+        return;
+      }
+
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        sequences.forEach(({ triggerElement, elements }) => {
+          gsap.fromTo(elements, {
+            autoAlpha: 0,
+            y: 28,
+            scale: .985
+          }, {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: .72,
+            stagger: .085,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: triggerElement,
+              start: 'top 84%',
+              once: true
+            },
+            onComplete: () => {
+              gsap.set(elements, { clearProps: 'opacity,visibility,transform' });
+              finalize(elements);
+            }
+          });
+        });
+
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const sequence = sequences.find(({ triggerElement }) => triggerElement === entry.target);
+          if (!sequence) return;
+          sequence.elements.forEach((element, index) => {
+            window.setTimeout(() => {
+              element.classList.add('is-visible');
+              window.setTimeout(() => element.classList.remove('motion-reveal', 'is-visible'), 780);
+            }, index * 85);
+          });
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: .12 });
+
+      sequences.forEach(({ triggerElement }) => observer.observe(triggerElement));
+    })();
+  </script>
+</body>
+</html>
