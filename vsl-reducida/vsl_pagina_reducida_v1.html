@@ -38,6 +38,8 @@
     .ai-cause { margin:0 auto 2px; max-width:1180px; font-family:Georgia,"Times New Roman",serif; font-size:clamp(20px,1.45vw,24px); line-height:1.28; letter-spacing:-.014em; font-weight:400; color:var(--ink-soft); }
     .ai-cause strong { color:#2d2c29; font-weight:700; }
     .video-frame { position:relative; width:100%; height:clamp(330px,34vw,410px); min-height:0; max-height:none; flex:0 0 auto; margin:24px auto 14px; overflow:hidden; border-radius:18px; background-image:url("vsl_hero_referencia_aprobada.png"); background-repeat:no-repeat; background-size:1558px auto; background-position:center -332px; box-shadow:var(--shadow); }
+    .video-frame::after { content:""; position:absolute; z-index:1; left:50%; top:59%; width:clamp(74px,7vw,104px); aspect-ratio:1; border:2px solid rgba(255,255,255,.88); border-radius:50%; pointer-events:none; opacity:0; transform:translate(-50%,-50%) scale(.94); animation:play-pulse 5s cubic-bezier(.2,.75,.25,1) infinite; }
+    @keyframes play-pulse { 0%,74%,100% { opacity:0; transform:translate(-50%,-50%) scale(.94); } 78% { opacity:.72; transform:translate(-50%,-50%) scale(1); } 91% { opacity:0; transform:translate(-50%,-50%) scale(1.36); } }
     .hero .button { align-self:center; min-height:58px; margin-top:0; padding-block:14px; font-size:23px; }
     .microcopy { margin-top:14px; margin-bottom:34px; font-size:12.5px; letter-spacing:.03em; color:#70695f; }
     .section { padding:130px 0; }
