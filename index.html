@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Empleagilidad — propuesta VSL completa · postulación</title>
+  <title>Programa empleagilidad</title>
   <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
@@ -288,8 +288,6 @@
       font-size: 21px;
       color: var(--ink-soft);
       border-radius: 12px;
-      transform-origin: left center;
-      transition: transform .34s ease, color .34s ease, background-color .34s ease, padding-left .34s ease;
     }
 
     .old-rules li::before {
@@ -299,19 +297,6 @@
       margin-top: 8px;
       border: 2px solid var(--orange);
       border-radius: 50%;
-      transition: transform .34s ease, background-color .34s ease;
-    }
-
-    .old-rules li:hover {
-      padding-left: 12px;
-      color: var(--ink);
-      background: rgba(232,93,12,.07);
-      transform: translateX(8px) scale(1.018);
-    }
-
-    .old-rules li:hover::before {
-      background: var(--orange);
-      transform: scale(1.12);
     }
 
     .old-rules-cost {
@@ -340,33 +325,9 @@
       overflow: hidden;
       background: var(--violet-dark);
       color: #fff;
-      transform-origin: center;
-      transition: transform .38s cubic-bezier(.2,.75,.25,1), box-shadow .38s ease, filter .38s ease;
     }
 
     .change-card:nth-child(2) { background: #302923; }
-
-    .change-card::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 5px;
-      background: var(--orange);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .38s ease;
-    }
-
-    .change-card:hover {
-      z-index: 1;
-      transform: translateY(-8px) scale(1.012);
-      box-shadow: 0 22px 50px rgba(15,12,9,.26);
-      filter: brightness(1.06);
-    }
-
-    .change-card:hover::after { transform: scaleX(1); }
 
     .change-card .num {
       display: block;
@@ -431,17 +392,9 @@
       min-height: 280px;
       padding: 34px 42px 38px;
       border-left: 1px solid var(--line);
-      transition: transform .35s cubic-bezier(.2,.75,.25,1), background-color .35s ease, box-shadow .35s ease;
     }
 
     .step:first-child { border-left: 0; }
-
-    .step:hover {
-      z-index: 1;
-      background: #fffdf8;
-      box-shadow: 0 20px 45px rgba(42,31,21,.10);
-      transform: translateY(-8px);
-    }
 
     .step .number {
       display: inline-flex;
@@ -454,12 +407,6 @@
       color: #fff;
       background: var(--orange);
       font-weight: 700;
-      transition: transform .35s ease, box-shadow .35s ease;
-    }
-
-    .step:hover .number {
-      box-shadow: 0 10px 24px rgba(232,93,12,.24);
-      transform: scale(1.1);
     }
 
     .step h3 {
@@ -517,17 +464,9 @@
       padding: 25px 0;
       border-top: 1px solid rgba(255,255,255,.18);
       border-radius: 14px;
-      transform-origin: left center;
-      transition: transform .34s cubic-bezier(.2,.75,.25,1), background-color .34s ease, box-shadow .34s ease;
     }
 
     .session-row:first-child { border-top: 0; }
-
-    .session-row:hover {
-      background: rgba(255,255,255,.07);
-      box-shadow: inset 3px 0 0 var(--orange);
-      transform: translateX(10px) scale(1.018);
-    }
 
     .session-row b {
       font-family: Georgia, "Times New Roman", serif;
@@ -652,15 +591,38 @@
       transform: translate(3px, -3px);
     }
 
-    .award-proof {
+    .award-logos {
+      display: flex;
+      align-items: stretch;
+      gap: 18px;
+      flex-wrap: wrap;
       margin-top: 34px;
-      padding: 25px 28px;
-      border-left: 4px solid var(--orange);
-      border-radius: 0 16px 16px 0;
-      background: var(--orange-soft);
-      font-size: 18px;
-      line-height: 1.45;
-      color: var(--ink-soft);
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,.18);
+    }
+
+    .award-logo {
+      display: flex;
+      flex: 0 1 230px;
+      align-items: center;
+      justify-content: center;
+      min-height: 86px;
+      padding: 16px 22px;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 12px 32px rgba(0,0,0,.18);
+    }
+
+    .award-logo img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: 52px;
+      object-fit: contain;
+    }
+
+    .award-logo--startup img {
+      max-height: 48px;
     }
 
     .audience {
@@ -687,15 +649,6 @@
       background: rgba(255,255,255,.065);
       font-size: 21px;
       line-height: 1.35;
-      transform-origin: center;
-      transition: transform .34s cubic-bezier(.2,.75,.25,1), background-color .34s ease, box-shadow .34s ease;
-    }
-
-    .audience-item:hover {
-      z-index: 1;
-      background: rgba(255,255,255,.115);
-      box-shadow: 0 16px 32px rgba(0,0,0,.15);
-      transform: scale(1.018);
     }
 
     .audience-note {
@@ -753,15 +706,6 @@
       min-height: 128px;
       border-bottom: 1px solid var(--line);
       border-radius: 14px;
-      transform-origin: center;
-      transition: transform .34s cubic-bezier(.2,.75,.25,1), background-color .34s ease, box-shadow .34s ease, padding-inline .34s ease;
-    }
-
-    .outcome:hover {
-      padding-inline: 16px;
-      background: rgba(255,255,255,.48);
-      box-shadow: 0 14px 34px rgba(42,31,21,.08);
-      transform: scale(1.012);
     }
 
     .outcome .idx {
@@ -1105,6 +1049,7 @@
       .video-frame { height: 36vw; min-height: 0; max-height: none; background-size: 98vw auto; background-position: -2vw -21vw; }
       .outcome { grid-template-columns: 70px 1fr; }
       .outcome .tag { display: none; }
+      .award-logo { flex: 1 1 150px; min-width: 0; padding-inline: 14px; }
       .book-stage img { width: 620px; }
       .book-stage { min-height: 720px; }
       .book-stage img { top: 42%; }
@@ -1258,7 +1203,14 @@
               </svg>
             </a>
           </div>
-          <div class="award-proof"><strong>jobbox</strong> es una plataforma de empleabilidad ganadora de Startup Perú y Worktech del Banco Interamericano de Desarrollo.</div>
+          <div class="award-logos" aria-label="Reconocimientos de jobbox">
+            <a class="award-logo award-logo--bid" href="https://bidlab.org/es" target="_blank" rel="noopener noreferrer" aria-label="BID Lab">
+              <img src="logo_bid_lab.png" alt="Logo de BID Lab" />
+            </a>
+            <a class="award-logo award-logo--startup" href="https://startup.proinnovate.gob.pe/" target="_blank" rel="noopener noreferrer" aria-label="StartUp Perú">
+              <img src="logo_startup_peru.png" alt="Logo de StartUp Perú" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1400,19 +1352,14 @@
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const sequences = [
         { trigger: '.problem-intro', selector: '.problem-intro .eyebrow, .problem-intro h2, .problem-intro .lead' },
-        { trigger: '.old-rules', selector: '.old-rules .label, .old-rules li, .old-rules-cost' },
-        { trigger: '.double-change', selector: '.change-card' },
+        { trigger: '.old-rules', selector: '.old-rules .label, .old-rules-cost' },
         { trigger: '.method-head', selector: '.method-head .eyebrow, .method-head h2, .method-head > p' },
-        { trigger: '.journey', selector: '.step' },
         { trigger: '.method-cta', selector: '.method-cta' },
         { trigger: '.first-session', selector: '.first-session .eyebrow, .first-session h2, .first-session .lead' },
-        { trigger: '.session-system', selector: '.session-row' },
-        { trigger: '.authority', selector: '.authority-portrait, .authority .eyebrow, .authority h2, .authority .lead, .authority-name, .authority-role-row, .award-proof' },
+        { trigger: '.authority', selector: '.authority-portrait, .authority .eyebrow, .authority h2, .authority .lead, .authority-name, .authority-role-row, .award-logos' },
         { trigger: '.audience', selector: '.audience .eyebrow, .audience h2, .audience .split > div:first-child > p, .audience-note' },
-        { trigger: '.audience-list', selector: '.audience-item' },
         { trigger: '.audience-qualifier', selector: '.qualifier-block' },
         { trigger: '.outcomes', selector: '.outcomes .eyebrow, .outcomes h2, .outcomes .lead' },
-        { trigger: '.outcome-list', selector: '.outcome' },
         { trigger: '.value', selector: '.value .eyebrow, .value h2, .value-grid > div:first-child > p' },
         { trigger: '.value-list', selector: '.value-item' },
         { trigger: '.book-stage', selector: '.book-stage' },
