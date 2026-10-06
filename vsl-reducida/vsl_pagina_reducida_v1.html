@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="https://www.empleagilidad.com/favicon.svg" type="image/svg+xml" />
+  <title>Programa empleagilidad</title>
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root { --paper:#f4ede1; --paper-bright:#fffaf2; --ink:#171714; --ink-soft:#403b34; --violet:#9d431e; --violet-dark:#1d1c19; --orange:#e85d0c; --line:rgba(23,23,20,.18); --shadow:0 24px 70px rgba(35,27,20,.14); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:Inter,"Segoe UI",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+    body.modal-open { overflow:hidden; }
+    .page { width:100%; overflow:hidden; background:radial-gradient(circle at 12% 2%,rgba(255,255,255,.94),transparent 24%),var(--paper); }
+    .shell { width:calc(100% - 96px); max-width:1490px; margin:0 auto; }
+    .eyebrow { margin:0 0 26px; font-size:14px; line-height:1; font-weight:700; text-transform:uppercase; letter-spacing:.42em; color:var(--violet); }
+    h1,h2,h3,p { margin-top:0; }
+    h1,h2,.display { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.045em; font-weight:700; }
+    h2 { margin-bottom:34px; font-size:70px; line-height:.98; }
+    p { font-size:23px; line-height:1.5; color:var(--ink-soft); }
+    .accent { color:var(--orange); }
+    .button { display:inline-flex; justify-content:center; align-items:center; min-width:410px; min-height:68px; padding:18px 34px; border:0; border-radius:16px; color:#fff; background:linear-gradient(135deg,#f06b13 0%,#db5108 100%); box-shadow:0 18px 34px rgba(223,83,10,.23); font-family:Georgia,"Times New Roman",serif; font-size:25px; text-decoration:none; transition:transform .32s cubic-bezier(.2,.75,.25,1),box-shadow .32s ease,filter .32s ease; }
+    .button:hover,.button:focus-visible { box-shadow:0 22px 42px rgba(223,83,10,.28); filter:brightness(1.04); transform:translateY(-3px) scale(1.015); }
+    .brandline { display:grid; grid-template-columns:1fr auto 1fr; gap:28px; align-items:center; padding:16px 0 24px; }
+    .brandline::before,.brandline::after { content:""; height:1px; background:rgba(23,23,20,.33); }
+    .brand { font-family:Georgia,"Times New Roman",serif; font-size:35px; line-height:1; font-weight:700; letter-spacing:-.04em; }
+    .brand span { color:var(--orange); }
+    .brand-trigger { padding:0; border:0; background:transparent; color:inherit; cursor:pointer; }
+    .hero { min-height:100svh; padding-bottom:0; text-align:center; }
+    .hero > .shell { display:flex; flex-direction:column; min-height:100svh; }
+    .hero-copy { max-width:1320px; margin:8px auto 26px; }
+    .hero .eyebrow { margin-bottom:22px; color:var(--ink); font-size:13px; letter-spacing:.43em; }
+    .hero h1 { margin:0 auto 22px; font-size:clamp(54px,4vw,66px); line-height:.97; }
+    .hero-accent-fade { display:inline-block; }
+    .js .hero-accent-fade { opacity:0; animation:hero-accent-fade 1.05s ease-in-out .18s forwards; }
+    @keyframes hero-accent-fade { from { opacity:0; } to { opacity:1; } }
+    .ai-cause { margin:0 auto 2px; max-width:1180px; font-family:Georgia,"Times New Roman",serif; font-size:clamp(20px,1.45vw,24px); line-height:1.28; letter-spacing:-.014em; font-weight:400; color:var(--ink-soft); }
+    .ai-cause strong { color:#2d2c29; font-weight:700; }
+    .video-frame { position:relative; width:100%; height:clamp(330px,34vw,410px); min-height:0; max-height:none; flex:0 0 auto; margin:24px auto 14px; overflow:hidden; border-radius:18px; background-image:url("vsl_hero_referencia_aprobada.png"); background-repeat:no-repeat; background-size:1558px auto; background-position:center -332px; box-shadow:var(--shadow); }
+    .hero .button { align-self:center; min-height:58px; margin-top:0; padding-block:14px; font-size:23px; }
+    .microcopy { margin-top:14px; margin-bottom:34px; font-size:12.5px; letter-spacing:.03em; color:#70695f; }
+    .section { padding:130px 0; }
+    .split { display:grid; grid-template-columns:1.03fr .97fr; gap:100px; align-items:start; }
+    .lead { max-width:920px; font-size:27px; line-height:1.45; }
+    .problem-intro { border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .problem-intro h2 { max-width:690px; }
+    .problem-intro h2 .market-line { display:block; }
+    .old-rules { padding:42px; border:1px solid var(--line); border-radius:24px; background:rgba(255,255,255,.45); }
+    .old-rules .label { margin-bottom:28px; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:.32em; color:var(--orange); }
+    .old-rules ul { margin:0; padding:0; list-style:none; }
+    .old-rules li { display:grid; grid-template-columns:34px 1fr; gap:15px; padding:17px 0; border-top:1px solid var(--line); font-size:21px; color:var(--ink-soft); border-radius:12px; }
+    .old-rules li::before { content:""; width:12px; height:12px; margin-top:8px; border:2px solid var(--orange); border-radius:50%; }
+    .old-rules-cost { margin:24px 0 0; padding:24px 0 0; border-top:1px solid var(--line); font-family:Georgia,"Times New Roman",serif; font-size:22px; line-height:1.34; font-weight:700; letter-spacing:-.018em; color:var(--ink); }
+    .double-change { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,.17); }
+    .change-card { position:relative; min-height:410px; padding:74px 72px; overflow:hidden; background:var(--violet-dark); color:#fff; }
+    .change-card:nth-child(2) { background:#302923; }
+    .change-card .num { display:block; margin-bottom:45px; font-family:Georgia,"Times New Roman",serif; font-size:62px; color:#f48a47; }
+    .change-card h3 { margin-bottom:18px; font-family:Georgia,"Times New Roman",serif; font-size:38px; letter-spacing:-.025em; }
+    .change-card p { max-width:570px; margin:0; color:rgba(255,255,255,.78); font-size:21px; }
+    .method { background:var(--paper-bright); }
+    .method-head { display:grid; grid-template-columns:1.1fr .9fr; gap:80px; align-items:end; margin-bottom:88px; }
+    .method-head h2 { margin:0; }
+    .method-head h2 .accent { font-weight:700; }
+    .method-impact { font-weight:900; font-style:normal; color:var(--orange); }
+    .method-head p { margin:0 0 5px; font-size:25px; }
+    .journey { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .step { position:relative; min-height:280px; padding:34px 42px 38px; border-left:1px solid var(--line); }
+    .step:first-child { border-left:0; }
+    .step .number { display:inline-flex; align-items:center; justify-content:center; width:45px; height:45px; margin-bottom:62px; border-radius:50%; color:#fff; background:var(--orange); font-weight:700; }
+    .step h3 { margin-bottom:13px; font-family:Georgia,"Times New Roman",serif; font-size:28px; line-height:1.02; letter-spacing:-.025em; }
+    .step p { margin:0; font-size:18px; line-height:1.4; }
+    .method-cta { padding-top:66px; text-align:center; }
+    .js .motion-reveal { opacity:0; transform:translateY(30px) scale(.975); transform-origin:center bottom; }
+    .js .motion-reveal.is-visible { opacity:1; transform:translateY(0) scale(1); transition:opacity .72s ease,transform .72s cubic-bezier(.2,.75,.25,1); }
+    footer { display:flex; justify-content:space-between; align-items:center; padding:32px 48px; color:rgba(255,255,255,.66); background:#11110f; font-size:13px; }
+    footer .brand { color:#fff; font-size:24px; }
+    .exit-modal[hidden] { display:none; }
+    .exit-modal { position:fixed; z-index:30; inset:0; display:grid; place-items:center; padding:24px; background:rgba(17,17,15,.66); backdrop-filter:blur(8px); }
+    .exit-card { position:relative; width:min(700px,100%); padding:62px; border-radius:26px; color:#fff; background:#11110f; box-shadow:0 30px 80px rgba(18,12,8,.34); text-align:center; }
+    .exit-card h2 { margin-bottom:22px; font-size:clamp(42px,6vw,68px); }
+    .exit-card p { margin-bottom:32px; color:rgba(255,255,255,.76); font-size:21px; }
+    .modal-close { position:absolute; top:18px; right:18px; width:40px; height:40px; border:1px solid rgba(255,255,255,.35); border-radius:50%; color:#fff; background:transparent; font-size:24px; cursor:pointer; }
+    @media (max-width:900px) { .shell{width:calc(100% - 40px);} .button{width:100%;min-width:0;} .brandline{padding:18px 0 28px;} .hero{min-height:auto;padding-bottom:52px;} .hero > .shell{display:block;min-height:auto;} .hero h1{font-size:44px;} .ai-cause{max-width:680px;font-size:21px;line-height:1.3;} h2{font-size:48px;} .split,.method-head{grid-template-columns:1fr;} .journey,.double-change{grid-template-columns:1fr;} .step{min-height:auto;border-top:1px solid var(--line);border-left:0;} .step .number{margin-bottom:24px;} .video-frame{height:clamp(280px,36vw,360px);background-size:1400px auto;background-position:center -298px;} }
+    @media (max-width:600px) { .video-frame{height:280px;background-size:1120px auto;background-position:center -238px;} }
+    @media (max-width:560px) { .old-rules,.change-card,.exit-card{padding:30px 24px;} .change-card{min-height:330px;} .change-card h3{font-size:31px;} .method-head,.split{gap:48px;} footer{align-items:flex-start;flex-direction:column;gap:12px;padding:30px 24px;} }
+    @media (prefers-reduced-motion:reduce) { html{scroll-behavior:auto;} *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;} .js .motion-reveal,.js .hero-accent-fade{opacity:1;transform:none;} .js .hero-accent-fade{animation:none;} }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="shell">
+        <div class="brandline"><button class="brand brand-trigger" id="brand-trigger" type="button" aria-label="Mostrar mensaje de salida">empleagilidad<span>.com</span></button></div>
+        <div class="hero-copy">
+          <div class="eyebrow">Programa para profesionales con experiencia</div>
+          <h1>Intentaste todo.<br>El trabajo que conocías<br><span class="accent hero-accent-fade">ya cambió.</span></h1>
+          <p class="ai-cause">La <strong>inteligencia artificial</strong> está transformando tu profesión<br />y las reglas por las que las empresas contratan.</p>
+        </div>
+        <div class="video-frame" aria-label="Video VSL: mercado, dirección y ejecución"></div>
+        <a class="button form-link" href="vsl_formulario_reducido_v1.html">Quiero postular a Empleagilidad</a>
+        <div class="microcopy">Postulación para profesionales con experiencia · Revisaremos tu perfil antes de confirmar el siguiente paso</div>
+      </div>
+    </section>
+
+    <section class="section problem-intro">
+      <div class="shell split">
+        <div>
+          <div class="eyebrow">El punto de partida</div>
+          <h2>Aplicaste las reglas que conocías. <span class="market-line">El mercado <span class="accent">cambió.</span></span></h2>
+          <p class="lead">Repetir con más intensidad la búsqueda que conocías no resuelve ese cambio. Necesitas una metodología construida para interpretarlo y actuar.</p>
+        </div>
+        <div class="old-rules">
+          <div class="label">Lo que probablemente ya intentaste</div>
+          <ul>
+            <li>Actualizar una vez más tu CV.</li>
+            <li>Revisar y ajustar tu perfil de LinkedIn.</li>
+            <li>Postular a más oportunidades.</li>
+            <li>Activar contactos sin una dirección clara.</li>
+            <li>Prepararte para entrevistas aisladas.</li>
+          </ul>
+          <p class="old-rules-cost">Y, aun así, tu búsqueda sigue sin producir conversaciones y oportunidades a la altura de tu experiencia.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="double-change" aria-label="El doble cambio provocado por la inteligencia artificial">
+      <article class="change-card"><span class="num">01</span><h3>Tu CV creado con IA se parece a todos los demás.</h3><p>Cuando cualquiera puede producir un CV correcto en minutos, lo correcto deja de diferenciarte.</p></article>
+      <article class="change-card"><span class="num">02</span><h3>La IA no solo cambia tu CV. Cambia el valor por el que te contratan.</h3><p>Se transforman las tareas, las capacidades y los problemas que las organizaciones necesitan resolver.</p></article>
+    </section>
+
+    <section class="section method">
+      <div class="shell">
+        <div class="method-head">
+          <div>
+            <div class="eyebrow">Una metodología para el mercado actual</div>
+            <h2>Empleagilidad cambia <span class="methodology-text">la metodología</span> <strong class="method-impact">por completo.</strong></h2>
+          </div>
+          <p>Lo que funcionaba antes ya no alcanza para interpretar lo que ocurre ahora. Necesitas nuevas preguntas para descubrir dónde está tu siguiente oportunidad.</p>
+        </div>
+        <div class="journey">
+          <article class="step"><span class="number">1</span><h3>¿Qué cambió en tu profesión?</h3><p>Interpreta cómo la IA está redefiniendo el valor en tu profesión.</p></article>
+          <article class="step"><span class="number">2</span><h3>¿Dónde puede volver a ser relevante tu experiencia?</h3><p>Reconoce dónde tu trayectoria puede responder a problemas que hoy importan.</p></article>
+          <article class="step"><span class="number">3</span><h3>¿Qué necesitas demostrar ahora?</h3><p>Convierte tu trayectoria en una propuesta creíble.</p></article>
+        </div>
+        <div class="method-cta"><a class="button form-link" href="vsl_formulario_reducido_v1.html">Quiero postular a Empleagilidad</a></div>
+      </div>
+    </section>
+
+    <footer><div class="brand">empleagilidad<span>.com</span></div><div>Programa para profesionales con experiencia</div></footer>
+  </main>
+
+  <div class="exit-modal" id="exit-modal" role="dialog" aria-modal="true" aria-labelledby="exit-title" aria-hidden="true" hidden>
+    <div class="exit-card">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Cerrar">×</button>
+      <h2 id="exit-title">El trabajo cambió. <span class="accent">Tu estrategia profesional también tiene que cambiar.</span></h2>
+      <p>Averigua qué está frenando tu estrategia de búsqueda.</p>
+      <a class="button" href="https://production.doctor-cv.pro/spa/test-empleabilidad">Quiero mi diagnóstico gratis</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const sequences = [
+        { trigger: '.problem-intro', selector: '.problem-intro .eyebrow, .problem-intro h2, .problem-intro .lead' },
+        { trigger: '.old-rules', selector: '.old-rules .label, .old-rules-cost' },
+        { trigger: '.method-head', selector: '.method-head .eyebrow, .method-head h2, .method-head > p' },
+        { trigger: '.method-cta', selector: '.method-cta' }
+      ].map((sequence) => ({ ...sequence, triggerElement: document.querySelector(sequence.trigger), elements: Array.from(document.querySelectorAll(sequence.selector)) })).filter((sequence) => sequence.triggerElement && sequence.elements.length);
+      const allElements = sequences.flatMap((sequence) => sequence.elements);
+      allElements.forEach((element) => element.classList.add('motion-reveal'));
+      const finalize = (elements) => { elements.forEach((element) => { element.classList.add('is-visible'); element.classList.remove('motion-reveal', 'is-visible'); }); };
+      if (reduceMotion) {
+        finalize(allElements);
+      } else if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        sequences.forEach(({ triggerElement, elements }) => {
+          gsap.fromTo(elements, { autoAlpha: 0, y: 28, scale: .985 }, { autoAlpha: 1, y: 0, scale: 1, duration: .72, stagger: .085, ease: 'power3.out', scrollTrigger: { trigger: triggerElement, start: 'top 84%', once: true }, onComplete: () => { gsap.set(elements, { clearProps: 'opacity,visibility,transform' }); finalize(elements); } });
+        });
+      } else {
+        const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (!entry.isIntersecting) return; const sequence = sequences.find(({ triggerElement }) => triggerElement === entry.target); if (!sequence) return; sequence.elements.forEach((element, index) => { window.setTimeout(() => { element.classList.add('is-visible'); window.setTimeout(() => element.classList.remove('motion-reveal', 'is-visible'), 780); }, index * 85); }); observer.unobserve(entry.target); }); }, { threshold: .12 });
+        sequences.forEach(({ triggerElement }) => observer.observe(triggerElement));
+      }
+      const modal = document.getElementById('exit-modal');
+      const closeButton = document.getElementById('modal-close');
+      const brandTrigger = document.getElementById('brand-trigger');
+      const formLinks = Array.from(document.querySelectorAll('.form-link'));
+      let suppressExit = false;
+      let lastFocus = null;
+      formLinks.forEach((link) => link.addEventListener('click', () => { suppressExit = true; }));
+      const hasSeenExit = () => { try { return sessionStorage.getItem('empleagilidad-exit-seen') === '1'; } catch (_) { return false; } };
+      const showExit = (force = false) => { if (suppressExit || (!force && hasSeenExit()) || !modal.hidden) return; lastFocus = document.activeElement; try { sessionStorage.setItem('empleagilidad-exit-seen', '1'); } catch (_) {} modal.hidden = false; modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('modal-open'); closeButton.focus(); };
+      const hideExit = () => { modal.hidden = true; modal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('modal-open'); if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus(); };
+      document.addEventListener('mouseout', (event) => { if (!event.relatedTarget && event.clientY <= 12) showExit(); });
+      brandTrigger.addEventListener('click', () => showExit(true));
+      closeButton.addEventListener('click', hideExit);
+      modal.addEventListener('click', (event) => { if (event.target === modal) hideExit(); });
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !modal.hidden) hideExit(); });
+    })();
+  </script>
+</body>
+</html>
