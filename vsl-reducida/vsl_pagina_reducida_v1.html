@@ -38,7 +38,10 @@
     .ai-cause { margin:0 auto 2px; max-width:1180px; font-family:Georgia,"Times New Roman",serif; font-size:clamp(20px,1.45vw,24px); line-height:1.28; letter-spacing:-.014em; font-weight:400; color:var(--ink-soft); }
     .ai-cause strong { color:#2d2c29; font-weight:700; }
     .video-frame { position:relative; width:100%; height:clamp(330px,34vw,410px); min-height:0; max-height:none; flex:0 0 auto; margin:24px auto 14px; overflow:hidden; border-radius:18px; background-image:url("vsl_hero_referencia_sin_play.png"); background-repeat:no-repeat; background-size:1558px auto; background-position:center -332px; box-shadow:var(--shadow); }
-    .video-play { position:absolute; z-index:1; left:50%; top:59%; display:grid; place-items:center; width:clamp(74px,7vw,104px); aspect-ratio:1; border:2px solid rgba(255,255,255,.94); border-radius:50%; background:linear-gradient(135deg,#f47922,#df5007); box-shadow:0 12px 28px rgba(23,15,9,.32); transform:translate(-50%,-50%); }
+    .video-frame.is-video { background:none; }
+    .video-frame iframe { display:block; width:100%; height:100%; border:0; }
+    .video-play { position:absolute; z-index:1; left:50%; top:59%; display:grid; place-items:center; width:clamp(74px,7vw,104px); padding:0; aspect-ratio:1; border:2px solid rgba(255,255,255,.94); border-radius:50%; background:linear-gradient(135deg,#f47922,#df5007); box-shadow:0 12px 28px rgba(23,15,9,.32); cursor:pointer; transform:translate(-50%,-50%); }
+    .video-play:focus-visible { outline:3px solid #fff; outline-offset:5px; }
     .video-play::before { content:""; width:28%; aspect-ratio:1; margin-left:8%; background:#fff; clip-path:polygon(0 0,100% 50%,0 100%); }
     .video-play::after { content:""; position:absolute; inset:-2px; border:2px solid rgba(255,255,255,.92); border-radius:50%; opacity:0; transform:scale(.94); animation:play-pulse 5s cubic-bezier(.2,.75,.25,1) infinite; }
     @keyframes play-pulse { 0%,74%,100% { opacity:0; transform:scale(.94); } 78% { opacity:.72; transform:scale(1); } 91% { opacity:0; transform:scale(1.36); } }
@@ -116,7 +119,7 @@
           <h1>Intentaste todo.<br>El trabajo que conocías<br><span class="accent hero-accent-fade">ya cambió.</span></h1>
           <p class="ai-cause">La <strong>inteligencia artificial</strong> está transformando tu profesión<br />y las reglas por las que las empresas contratan.</p>
         </div>
-        <div class="video-frame" aria-label="Video VSL: mercado, dirección y ejecución"><span class="video-play" aria-hidden="true"></span></div>
+        <div class="video-frame" id="video-frame" aria-label="Video VSL: mercado, dirección y ejecución"><button class="video-play" id="video-play" type="button" aria-label="Mostrar el video de presentación de Empleagilidad"></button></div>
         <a class="button form-link" href="vsl_formulario_reducido_v1.html">Quiero postular a Empleagilidad</a>
         <div class="microcopy">Postulación para profesionales con experiencia · Revisaremos tu perfil antes de confirmar el siguiente paso</div>
       </div>
@@ -203,6 +206,20 @@
         const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (!entry.isIntersecting) return; const sequence = sequences.find(({ triggerElement }) => triggerElement === entry.target); if (!sequence) return; sequence.elements.forEach((element, index) => { window.setTimeout(() => { element.classList.add('is-visible'); window.setTimeout(() => element.classList.remove('motion-reveal', 'is-visible'), 780); }, index * 85); }); observer.unobserve(entry.target); }); }, { threshold: .12 });
         sequences.forEach(({ triggerElement }) => observer.observe(triggerElement));
       }
+      const videoFrame = document.getElementById('video-frame');
+      const videoPlay = document.getElementById('video-play');
+      videoPlay.addEventListener('click', () => {
+        if (videoFrame.classList.contains('is-video')) return;
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube-nocookie.com/embed/0fvcNqXiHwk?controls=1&rel=0&autoplay=0&playsinline=1';
+        iframe.title = 'Video de presentación de Empleagilidad';
+        iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+        videoFrame.classList.add('is-video');
+        videoFrame.setAttribute('aria-label', 'Video de presentación de Empleagilidad');
+        videoFrame.replaceChildren(iframe);
+      }, { once:true });
       const modal = document.getElementById('exit-modal');
       const closeButton = document.getElementById('modal-close');
       const brandTrigger = document.getElementById('brand-trigger');
