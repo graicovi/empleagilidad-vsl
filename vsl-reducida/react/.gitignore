@@ -1,0 +1,18 @@
+# Dependencias
+node_modules/
+
+# Compilación de producción
+dist/
+
+# Variables de entorno con credenciales (no commitear)
+.env
+.env.local
+.env.*.local
+
+# .env.example SÍ se commitea (documenta las variables sin valores reales)
+
+# Logs y temporales
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
