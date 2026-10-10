@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <title>Oferta Empleagilidad — Sistema de aceleración de carrera</title>
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion-pending');
+      window.setTimeout(() => document.documentElement.classList.remove('motion-pending'), 4000);
+    }
+  </script>
   <style>
     :root { --paper:#f4ede1; --paper-bright:#fffaf2; --ink:#171714; --ink-soft:#403b34; --violet:#9d431e; --violet-dark:#1d1c19; --orange:#e85d0c; --line:rgba(23,23,20,.18); --shadow:0 24px 70px rgba(35,27,20,.14); }
     * { box-sizing:border-box; }
@@ -83,6 +89,26 @@
     .method-cta { padding-top:66px; text-align:center; }
     .js .motion-reveal { opacity:0; transform:translateY(30px) scale(.975); transform-origin:center bottom; }
     .js .motion-reveal.is-visible { opacity:1; transform:translateY(0) scale(1); transition:opacity .72s ease,transform .72s cubic-bezier(.2,.75,.25,1); }
+    .motion-pending .hero-nav,
+    .motion-pending .offer-hero .eyebrow,
+    .motion-pending .hero-title .title-line,
+    .motion-pending .hero-intro,
+    .motion-pending .hero-trust,
+    .motion-pending .offer-component,
+    .motion-pending .calculator-card,
+    .motion-pending .cost-grid > div:first-child > .eyebrow,
+    .motion-pending .cost-grid > div:first-child > p,
+    .motion-pending .cost-section > .section-cta,
+    .motion-pending .offer-stack > .shell > .eyebrow,
+    .motion-pending .offer-stack > .shell > h2,
+    .motion-pending .offer-stack > .shell > .lead,
+    .motion-pending .offer-key,
+    .motion-pending .offer-stack > .shell > .total-value,
+    .motion-pending .offer-stack .section-cta,
+    .motion-pending .investment h2,
+    .motion-pending .final-cta h2,
+    .motion-pending .final-cta-inner > p,
+    .motion-pending .final-cta-actions { opacity:0; visibility:hidden; }
     footer { display:flex; justify-content:space-between; align-items:center; padding:32px 48px; color:rgba(255,255,255,.66); background:#11110f; font-size:13px; }
     footer .brand { color:#fff; font-size:24px; }
     .exit-modal[hidden] { display:none; }
@@ -1482,6 +1508,7 @@
         gsap.fromTo('.investment h2',{scale:1.38,autoAlpha:.28},{scale:1,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'.investment',start:'top 90%',end:'center 48%',scrub:1}});
         gsap.fromTo('.final-cta h2',{'--cta-shift':'12%',autoAlpha:.18,scale:.76,y:80},{'--cta-shift':'78%',autoAlpha:1,scale:1,y:0,ease:'none',scrollTrigger:{trigger:'.final-cta',start:'top 94%',end:'center 52%',scrub:1}});
       }
+      document.documentElement.classList.remove('motion-pending');
     })();
   </script>
 </body>
