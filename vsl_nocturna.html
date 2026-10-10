@@ -355,6 +355,22 @@
     }
     .hero .video-frame:hover { filter:saturate(.9) contrast(1.04) brightness(.9); }
     .hero .video-frame.is-video { filter:none; }
+    .hero .audio-frame { display:flex; align-items:flex-end; justify-content:center; padding:clamp(24px,3vw,42px); }
+    .audio-player-card {
+      position:relative;
+      z-index:2;
+      width:min(760px,100%);
+      padding:22px 24px 24px;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:14px;
+      background:rgba(8,8,8,.78);
+      box-shadow:0 18px 52px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08);
+      backdrop-filter:blur(14px);
+      text-align:left;
+    }
+    .audio-kicker { margin:0 0 8px; color:rgba(255,255,255,.5); font-size:10px; font-weight:700; letter-spacing:.26em; text-transform:uppercase; }
+    .audio-title { margin:0 0 17px; color:#fff; font-size:17px; line-height:1.35; }
+    .hero-audio { display:block; width:100%; color-scheme:dark; }
     .hero .video-play {
       top:50%;
       width:82px;
@@ -942,7 +958,7 @@
           <p class="ai-cause">La <strong>inteligencia artificial</strong> está transformando tu profesión<br />y las reglas por las que las empresas contratan.</p>
           <div class="hero-actions">
             <a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular</a>
-            <a class="hero-secondary" href="#video">Ver cómo funciona</a>
+            <a class="hero-secondary" href="#audio">Escuchar presentación</a>
           </div>
         </div>
 
@@ -956,11 +972,17 @@
           </div>
         </div>
 
-        <div class="hero-video-shell" id="video">
-          <div class="video-frame" id="video-frame" aria-label="Video VSL: mercado, dirección y ejecución">
-            <button class="video-play" id="video-play" type="button" aria-label="Mostrar el video de presentación de Empleagilidad"></button>
+        <div class="hero-video-shell" id="audio">
+          <div class="video-frame audio-frame" aria-label="Audio VSL: mercado, dirección y ejecución">
+            <div class="audio-player-card">
+              <p class="audio-kicker">Audio de presentación</p>
+              <p class="audio-title">Descubre por qué las reglas tradicionales ya no bastan</p>
+              <audio class="hero-audio" controls preload="metadata">
+                <source src="prueba.mp3" type="audio/mpeg" />
+                Tu navegador no puede reproducir este audio.
+              </audio>
+            </div>
           </div>
-          <p class="hero-video-caption">Descubre por qué las reglas tradicionales ya no bastan</p>
         </div>
       </div>
     </section>
@@ -1138,22 +1160,6 @@
         const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (!entry.isIntersecting) return; const sequence = sequences.find(({ triggerElement }) => triggerElement === entry.target); if (!sequence) return; sequence.elements.forEach((element, index) => { window.setTimeout(() => { element.classList.add('is-visible'); window.setTimeout(() => element.classList.remove('motion-reveal', 'is-visible'), 780); }, index * 85); }); observer.unobserve(entry.target); }); }, { threshold: .12 });
         sequences.forEach(({ triggerElement }) => observer.observe(triggerElement));
       }
-      const videoFrame = document.getElementById('video-frame');
-      const videoPlay = document.getElementById('video-play');
-      const videoCaption = document.querySelector('.hero-video-caption');
-      videoPlay.addEventListener('click', () => {
-        if (videoFrame.classList.contains('is-video')) return;
-        const iframe = document.createElement('iframe');
-        iframe.src = 'https://www.youtube-nocookie.com/embed/0fvcNqXiHwk?controls=1&rel=0&autoplay=0&playsinline=1';
-        iframe.title = 'Video de presentación de Empleagilidad';
-        iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-        iframe.allowFullscreen = true;
-        videoFrame.classList.add('is-video');
-        videoFrame.setAttribute('aria-label', 'Video de presentación de Empleagilidad');
-        videoFrame.replaceChildren(iframe);
-        if (videoCaption) videoCaption.hidden = true;
-      }, { once:true });
       const modal = document.getElementById('exit-modal');
       const modalCard = modal.querySelector('.exit-card');
       const closeButton = document.getElementById('modal-close');
