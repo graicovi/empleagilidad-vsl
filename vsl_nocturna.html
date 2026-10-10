@@ -355,22 +355,8 @@
     }
     .hero .video-frame:hover { filter:saturate(.9) contrast(1.04) brightness(.9); }
     .hero .video-frame.is-video { filter:none; }
-    .hero .audio-frame { display:flex; align-items:flex-end; justify-content:center; padding:clamp(24px,3vw,42px); }
-    .audio-player-card {
-      position:relative;
-      z-index:2;
-      width:min(760px,100%);
-      padding:22px 24px 24px;
-      border:1px solid rgba(255,255,255,.16);
-      border-radius:14px;
-      background:rgba(8,8,8,.78);
-      box-shadow:0 18px 52px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08);
-      backdrop-filter:blur(14px);
-      text-align:left;
-    }
-    .audio-kicker { margin:0 0 8px; color:rgba(255,255,255,.5); font-size:10px; font-weight:700; letter-spacing:.26em; text-transform:uppercase; }
-    .audio-title { margin:0 0 17px; color:#fff; font-size:17px; line-height:1.35; }
-    .hero-audio { display:block; width:100%; color-scheme:dark; }
+    .hero-audio { position:absolute; z-index:3; left:50%; bottom:28px; display:block; width:min(760px,calc(100% - 48px)); transform:translateX(-50%); color-scheme:dark; }
+    .hero-audio[hidden] { display:none; }
     .hero .video-play {
       top:50%;
       width:82px;
@@ -381,6 +367,7 @@
       transition:transform .35s cubic-bezier(.2,.75,.25,1),background .35s ease;
     }
     .hero .video-play:hover { background:rgba(255,255,255,.3); transform:translate(-50%,-50%) scale(1.08); }
+    .hero .video-play[hidden] { display:none; }
     .hero .video-play::after { animation-duration:4.8s; }
     .hero-video-caption {
       position:absolute;
@@ -973,16 +960,14 @@
         </div>
 
         <div class="hero-video-shell" id="audio">
-          <div class="video-frame audio-frame" aria-label="Audio VSL: mercado, dirección y ejecución">
-            <div class="audio-player-card">
-              <p class="audio-kicker">Audio de presentación</p>
-              <p class="audio-title">Descubre por qué las reglas tradicionales ya no bastan</p>
-              <audio class="hero-audio" controls preload="metadata">
-                <source src="prueba.mp3" type="audio/mpeg" />
-                Tu navegador no puede reproducir este audio.
-              </audio>
-            </div>
+          <div class="video-frame audio-frame" id="audio-frame" aria-label="Audio VSL: mercado, dirección y ejecución">
+            <button class="video-play" id="audio-play" type="button" aria-label="Reproducir el audio de presentación de Empleagilidad"></button>
+            <audio class="hero-audio" id="hero-audio" controls preload="metadata" hidden>
+              <source src="prueba.mp3" type="audio/mpeg" />
+              Tu navegador no puede reproducir este audio.
+            </audio>
           </div>
+          <p class="hero-video-caption" id="audio-caption">Descubre por qué las reglas tradicionales ya no bastan</p>
         </div>
       </div>
     </section>
@@ -1160,6 +1145,16 @@
         const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (!entry.isIntersecting) return; const sequence = sequences.find(({ triggerElement }) => triggerElement === entry.target); if (!sequence) return; sequence.elements.forEach((element, index) => { window.setTimeout(() => { element.classList.add('is-visible'); window.setTimeout(() => element.classList.remove('motion-reveal', 'is-visible'), 780); }, index * 85); }); observer.unobserve(entry.target); }); }, { threshold: .12 });
         sequences.forEach(({ triggerElement }) => observer.observe(triggerElement));
       }
+      const audioPlay = document.getElementById('audio-play');
+      const heroAudio = document.getElementById('hero-audio');
+      const audioCaption = document.getElementById('audio-caption');
+      audioPlay.addEventListener('click', async () => {
+        audioPlay.hidden = true;
+        if (audioCaption) audioCaption.hidden = true;
+        heroAudio.hidden = false;
+        heroAudio.focus();
+        try { await heroAudio.play(); } catch (_) { /* Los controles quedan disponibles si el navegador bloquea el inicio automático. */ }
+      }, { once:true });
       const modal = document.getElementById('exit-modal');
       const modalCard = modal.querySelector('.exit-card');
       const closeButton = document.getElementById('modal-close');
