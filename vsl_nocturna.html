@@ -305,7 +305,7 @@
       transition:background .3s ease,border-color .3s ease,transform .3s cubic-bezier(.2,.75,.25,1);
     }
     .hero-secondary:hover,.hero-secondary:focus-visible { border-color:#fff; background:rgba(255,255,255,.08); transform:translateY(-2px); }
-    .hero-trust { width:min(76%,980px); margin:68px auto 44px; }
+    .hero-trust { width:min(76%,980px); margin:44px auto clamp(74px,8vw,118px); }
     .hero-trust > p {
       margin:0 0 24px;
       color:rgba(255,255,255,.45);
@@ -412,7 +412,7 @@
       .ai-cause br { display:none; }
       .hero-actions { flex-direction:column; width:min(100%,340px); margin:26px auto 0; }
       .hero .button,.hero-secondary { width:100%; min-height:50px; }
-      .hero-trust { width:calc(100% - 32px); margin:52px auto 28px; }
+      .hero-trust { width:calc(100% - 32px); margin:42px auto 72px; }
       .hero-trust > p { max-width:290px; margin-inline:auto; line-height:1.45; }
       .trust-logos { grid-template-columns:repeat(2,1fr); gap:22px 8px; }
       .trust-logos span { font-size:12px; }
@@ -801,7 +801,7 @@
       .ai-cause { font-size:clamp(14px,1.12vw,17px); line-height:1.38; }
       .hero-actions { margin-top:16px; }
       .hero .button,.hero-secondary { min-height:42px; }
-      .hero-trust { margin:20px auto 16px; }
+      .hero-trust { margin:30px auto 60px; }
       .hero-trust > p { margin-bottom:12px; }
       .hero-video-shell { align-self:stretch; height:100%; max-height:360px; }
       .hero .video-frame { height:100%; aspect-ratio:auto; }
@@ -889,7 +889,7 @@
       .ai-cause { font-size:14px; }
       .hero-actions { margin-top:12px; }
       .hero .button,.hero-secondary { min-height:38px; }
-      .hero-trust { margin:12px auto 10px; }
+      .hero-trust { margin:24px auto 52px; }
       .hero-trust > p { margin-bottom:8px; }
       .hero-video-shell { max-height:300px; }
     }
@@ -935,6 +935,17 @@
           <p class="ai-cause">La <strong>inteligencia artificial</strong> está transformando tu profesión<br />y las reglas por las que las empresas contratan.</p>
         </div>
 
+        <div class="hero-video-shell" id="audio">
+          <div class="video-frame audio-frame" id="audio-frame" aria-label="Audio VSL: mercado, dirección y ejecución">
+            <button class="video-play" id="audio-play" type="button" aria-label="Reproducir el audio de presentación de Empleagilidad"></button>
+            <audio class="hero-audio" id="hero-audio" controls preload="metadata" hidden>
+              <source src="vsl_nocturna_audio.mp3" type="audio/mpeg" />
+              Tu navegador no puede reproducir este audio.
+            </audio>
+          </div>
+          <p class="hero-video-caption" id="audio-caption">Descubre por qué las reglas tradicionales ya no bastan</p>
+        </div>
+        <div class="section-end-cta hero-end-cta"><a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular a Empleagilidad</a></div>
         <div class="hero-trust" aria-label="Ecosistema Empleagilidad">
           <p>Una metodología respaldada por un ecosistema dedicado a acelerar carreras</p>
           <div class="trust-logos">
@@ -944,18 +955,6 @@
             <span><i aria-hidden="true"></i>Libro Empleagilidad</span>
           </div>
         </div>
-
-        <div class="hero-video-shell" id="audio">
-          <div class="video-frame audio-frame" id="audio-frame" aria-label="Audio VSL: mercado, dirección y ejecución">
-            <button class="video-play" id="audio-play" type="button" aria-label="Reproducir el audio de presentación de Empleagilidad"></button>
-            <audio class="hero-audio" id="hero-audio" controls preload="metadata" hidden>
-              <source src="prueba.mp3" type="audio/mpeg" />
-              Tu navegador no puede reproducir este audio.
-            </audio>
-          </div>
-          <p class="hero-video-caption" id="audio-caption">Descubre por qué las reglas tradicionales ya no bastan</p>
-        </div>
-        <div class="section-end-cta hero-end-cta"><a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular a Empleagilidad</a></div>
       </div>
     </section>
 
