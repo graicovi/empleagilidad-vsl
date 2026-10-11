@@ -273,8 +273,7 @@
       letter-spacing:-.02em;
     }
     .ai-cause strong { color:rgba(255,255,255,.9); font-weight:600; }
-    .hero-actions { display:flex; justify-content:center; gap:12px; margin-top:28px; }
-    .hero-stage.is-intro-animating .hero-actions > * { transition:none; }
+    .hero-stage.is-intro-animating .hero-end-cta .button { transition:none; }
     .hero .button {
       min-width:0;
       min-height:47px;
@@ -685,7 +684,10 @@
     .proposal-night .step h3 { max-width:350px; margin-bottom:18px; font-size:clamp(30px,2.8vw,43px); line-height:1.01; }
     .proposal-night .step p { font-size:17px; }
     .proposal-night .method-cta { padding-top:76px; }
-    .proposal-night .method .button,.proposal-night .final-cta .button {
+    .proposal-night .section-end-cta { width:min(100% - 40px,1080px); margin:clamp(46px,6vw,78px) auto 0; text-align:center; }
+    .proposal-night .method-cta.section-end-cta { margin-top:0; }
+    .proposal-night .double-change .section-end-cta { grid-column:1/-1; }
+    .proposal-night .section-end-cta .button,.proposal-night .method .button,.proposal-night .final-cta .button {
       min-width:340px;
       min-height:58px;
       border:1px solid rgba(255,255,255,.18);
@@ -697,7 +699,7 @@
       font-size:15px;
       font-weight:700;
     }
-    .proposal-night .method .button:hover,.proposal-night .final-cta .button:hover { filter:brightness(1.04); box-shadow:0 28px 66px rgba(0,0,0,.44); }
+    .proposal-night .section-end-cta .button:hover,.proposal-night .method .button:hover,.proposal-night .final-cta .button:hover { filter:brightness(1.04); box-shadow:0 28px 66px rgba(0,0,0,.44); }
     .final-cta {
       position:relative;
       padding:30px;
@@ -770,7 +772,7 @@
       .proposal-night .method-head { gap:48px; margin-bottom:70px; }
       .proposal-night .step { min-height:390px; padding:32px 26px; }
       .proposal-night .step-signal { margin-bottom:100px; }
-      .proposal-night .method .button,.proposal-night .final-cta .button { width:100%; min-width:0; }
+      .proposal-night .section-end-cta .button,.proposal-night .method .button,.proposal-night .final-cta .button { width:100%; min-width:0; }
       .final-cta { padding:0; }
       .final-cta-inner { min-height:680px; padding:90px 22px; border:0; border-radius:0; }
       .final-cta h2 { font-size:55px; }
@@ -931,10 +933,6 @@
           <div class="eyebrow">Programa para profesionales con experiencia</div>
           <h1 class="hero-title" id="hero-title"><span class="title-line"><span class="title-word">Intentaste</span> <span class="title-word">todo.</span></span><span class="title-line"><span class="title-line-lead">El trabajo que conocías</span> <em class="title-line-accent exit-trigger" role="button" tabindex="0" aria-controls="exit-modal" aria-haspopup="dialog">ya cambió.</em></span></h1>
           <p class="ai-cause">La <strong>inteligencia artificial</strong> está transformando tu profesión<br />y las reglas por las que las empresas contratan.</p>
-          <div class="hero-actions">
-            <a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular</a>
-            <a class="hero-secondary" href="#audio">Escuchar presentación</a>
-          </div>
         </div>
 
         <div class="hero-trust" aria-label="Ecosistema Empleagilidad">
@@ -957,6 +955,7 @@
           </div>
           <p class="hero-video-caption" id="audio-caption">Descubre por qué las reglas tradicionales ya no bastan</p>
         </div>
+        <div class="section-end-cta hero-end-cta"><a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular a Empleagilidad</a></div>
       </div>
     </section>
 
@@ -978,6 +977,7 @@
           <p class="old-rules-cost">Y, aun así, tu búsqueda sigue sin producir conversaciones y oportunidades a la altura de tu experiencia.</p>
         </div>
       </div>
+      <div class="section-end-cta"><a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular a Empleagilidad</a></div>
     </section>
 
     <div class="signal-marquee" aria-label="Principios de la metodología">
@@ -990,6 +990,7 @@
     <section class="double-change" aria-label="El doble cambio provocado por la inteligencia artificial">
       <article class="change-card"><div class="change-copy"><span class="change-kicker">La señal visible</span><h3>Tu CV creado con IA se parece a todos los demás.</h3><p>Cuando cualquiera puede producir un CV correcto en minutos, lo correcto deja de diferenciarte.</p></div><span class="change-icon change-icon--signal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></span></article>
       <article class="change-card"><div class="change-copy"><span class="change-kicker">El cambio profundo</span><h3>La IA no solo cambia tu CV. Cambia el valor por el que te contratan.</h3><p>Se transforman las tareas, las capacidades y los problemas que las organizaciones necesitan resolver.</p></div><span class="change-icon change-icon--deep" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 7 8-4 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 17 8 4 8-4"/></svg></span></article>
+      <div class="section-end-cta"><a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular a Empleagilidad</a></div>
     </section>
 
     <section class="section method" id="metodo">
@@ -1006,7 +1007,7 @@
           <div class="step-wrap"><article class="step"><span class="step-signal">Dirección</span><h3>¿Dónde puede volver a ser relevante tu experiencia?</h3><p>Reconoce dónde tu trayectoria puede responder a problemas que hoy importan.</p></article></div>
           <div class="step-wrap"><article class="step"><span class="step-signal">Evidencia</span><h3>¿Qué necesitas demostrar ahora?</h3><p>Convierte tu trayectoria en una propuesta creíble.</p></article></div>
         </div>
-        <div class="method-cta"><a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular a Empleagilidad</a></div>
+        <div class="method-cta section-end-cta"><a class="button form-link" href="vsl_nocturna_formulario.html">Quiero postular a Empleagilidad</a></div>
       </div>
     </section>
 
@@ -1048,7 +1049,7 @@
         const heroIntro = gsap.timeline({
           defaults:{ ease:'power3.out' },
           onComplete:() => {
-            gsap.set('.hero-actions > *', { clearProps:'opacity,visibility,filter,transform' });
+            gsap.set('.hero-end-cta .button', { clearProps:'opacity,visibility,filter,transform' });
             heroStage.classList.remove('is-intro-animating');
           }
         })
@@ -1058,10 +1059,9 @@
           .fromTo('.hero-title .title-line-lead', { autoAlpha:0, y:18, scale:.96, filter:'blur(10px)' }, { autoAlpha:1, y:0, scale:1, filter:'blur(0px)', duration:1.9, ease:'power3.out' }, '-=.34')
           .fromTo('.hero-title .title-line-accent', { autoAlpha:0, y:10, scale:.92, filter:'blur(6px)' }, { autoAlpha:1, y:0, scale:1, filter:'blur(0px)', duration:2.6, ease:'power3.out' }, '-=1.03')
           .fromTo('.hero .ai-cause', { autoAlpha:0, y:20, filter:'blur(10px)' }, { autoAlpha:1, y:0, filter:'blur(0px)', duration:1, ease:'power2.out' }, '-=.68')
-          .from('.hero-actions .button', { autoAlpha:0, x:compactHeroMotion ? 0 : -28, y:compactHeroMotion ? 16 : 0, scale:compactHeroMotion ? .98 : .95, filter:compactHeroMotion ? 'blur(4px)' : 'none', duration:.82, ease:'power3.out' }, '-=.38')
-          .from('.hero-actions .hero-secondary', { autoAlpha:0, x:compactHeroMotion ? 0 : 28, y:compactHeroMotion ? 16 : 0, scale:compactHeroMotion ? .98 : 1, filter:'blur(5px)', duration:.82, ease:'power3.out' }, '-=.6')
           .fromTo('.hero-trust', { autoAlpha:0, scale:.97, filter:'blur(12px)' }, { autoAlpha:1, scale:1, filter:'blur(0px)', duration:1.05, ease:'power2.out' }, '-=.35')
-          .fromTo('.hero-video-shell', { autoAlpha:0, y:48, scale:.94, clipPath:'inset(12% 0 0 0 round 22px)' }, { autoAlpha:1, y:0, scale:1, clipPath:'inset(0% 0 0 0 round 22px)', duration:1.35, ease:'power3.out' }, '-=.5');
+          .fromTo('.hero-video-shell', { autoAlpha:0, y:48, scale:.94, clipPath:'inset(12% 0 0 0 round 22px)' }, { autoAlpha:1, y:0, scale:1, clipPath:'inset(0% 0 0 0 round 22px)', duration:1.35, ease:'power3.out' }, '-=.5')
+          .from('.hero-end-cta .button', { autoAlpha:0, y:compactHeroMotion ? 16 : 22, scale:compactHeroMotion ? .98 : .96, filter:'blur(4px)', duration:.82, ease:'power3.out' }, '-=.35');
 
         const revealHeroIfPassed = () => {
           if (heroStage.getBoundingClientRect().bottom >= window.innerHeight * .66) return;
