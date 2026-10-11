@@ -1510,7 +1510,7 @@
           '.final-cta-inner > p','.final-cta-actions'
         ].join(',');
         gsap.utils.toArray(fadeSelector).forEach((element) => gsap.fromTo(element,{autoAlpha:0},{autoAlpha:1,duration:1.15,ease:'power2.out',scrollTrigger:{trigger:element,start:'top 89%',once:true}}));
-        gsap.fromTo('.investment h2',{scale:compactLayout ? 1.1 : 1.38,autoAlpha:.28},{scale:1,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'.investment',start:'top 90%',end:'center 48%',scrub:1}});
+        gsap.fromTo('.investment h2',{scale:compactLayout ? 1.08 : 1.38,autoAlpha:.28},{scale:1,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'.investment',start:'top 90%',end:'center 48%',scrub:1}});
         gsap.fromTo('.final-cta h2',{'--cta-shift':'12%',autoAlpha:.18,scale:compactLayout ? .9 : .76,y:compactLayout ? 48 : 80},{'--cta-shift':'78%',autoAlpha:1,scale:1,y:0,ease:'none',scrollTrigger:{trigger:'.final-cta',start:'top 94%',end:'center 52%',scrub:1}});
       }
       document.documentElement.classList.remove('motion-pending');
