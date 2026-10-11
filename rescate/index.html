@@ -1063,7 +1063,7 @@
       .offer-v2 .system-flow span:not(:last-child)::after { right:auto; bottom:-12px; transform:rotate(90deg); }
       .offer-v2 .offer-table-wrap { overflow-x:auto; border-radius:14px; }
       .offer-v2 .offer-table { min-width:760px; }
-      .offer-v2 .investment h2 { font-size:29vw; }
+      .offer-v2 .investment h2 { width:100%; max-width:100%; font-size:clamp(72px,22vw,92px); letter-spacing:-.07em; }
       .offer-v2 .investment .button { width:calc(100% - 32px); min-width:0; }
       .offer-v2 .offer-faq { margin-top:78px; }
       .offer-v2 .offer-component { min-height:0; }
@@ -1071,12 +1071,16 @@
       .offer-v2 .offer-key span:last-child { text-align:left; }
       .offer-v2 .offer-component--wide { grid-column:auto; display:flex; min-height:0; }
       .offer-v2 .offer-component--featured { grid-column:auto; display:block; min-height:300px; padding-right:90px; }
+      .offer-v2 .component-ribbon { top:26px; right:-26px; width:190px; }
       .offer-v2 .component-value { margin-top:40px; }
-      .offer-v2 .total-value { align-items:flex-end; flex-direction:column; gap:12px; padding-inline:0; text-align:right; }
+      .offer-v2 .total-value { align-items:center; flex-direction:column; gap:12px; padding-inline:0; text-align:center; }
       .offer-v2 .authority-portrait { min-height:430px; }
       .offer-v2 .book-stage { min-height:460px; }
       .offer-v2 .program-includes { grid-template-columns:1fr; margin-top:70px; }
-      .offer-v2 .final-cta .lead { font-size:17px; }
+      .offer-v2 .final-cta-inner { width:100%; min-width:0; padding:80px 18px; }
+      .offer-v2 .final-cta h2 { width:100%; min-width:0; max-width:100%; font-size:clamp(38px,10.8vw,46px); line-height:.96; overflow-wrap:break-word; }
+      .offer-v2 .final-cta-inner > .lead { width:100%; min-width:0; max-width:100%; padding-inline:0; font-size:17px; overflow-wrap:break-word; }
+      .offer-v2 .final-cta-actions { width:100%; min-width:0; }
     }
   </style>
 </head>
@@ -1235,6 +1239,7 @@
   <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const compactLayout = window.matchMedia('(max-width: 700px)').matches;
       const heroStage = document.getElementById('hero-stage');
       const scrubText = document.querySelector('[data-scrub-text]');
       if (!reduceMotion && window.gsap) {
@@ -1277,8 +1282,8 @@
           '.final-cta-inner > p','.final-cta-actions'
         ].join(',');
         gsap.utils.toArray(fadeSelector).forEach((element) => gsap.fromTo(element,{autoAlpha:0},{autoAlpha:1,duration:1.15,ease:'power2.out',scrollTrigger:{trigger:element,start:'top 89%',once:true}}));
-        gsap.fromTo('.investment h2',{scale:1.38,autoAlpha:.28},{scale:1,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'.investment',start:'top 90%',end:'center 48%',scrub:1}});
-        gsap.fromTo('.final-cta h2',{'--cta-shift':'12%',autoAlpha:.18,scale:.76,y:80},{'--cta-shift':'78%',autoAlpha:1,scale:1,y:0,ease:'none',scrollTrigger:{trigger:'.final-cta',start:'top 94%',end:'center 52%',scrub:1}});
+        gsap.fromTo('.investment h2',{scale:compactLayout ? 1.1 : 1.38,autoAlpha:.28},{scale:1,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'.investment',start:'top 90%',end:'center 48%',scrub:1}});
+        gsap.fromTo('.final-cta h2',{'--cta-shift':'12%',autoAlpha:.18,scale:compactLayout ? .9 : .76,y:compactLayout ? 48 : 80},{'--cta-shift':'78%',autoAlpha:1,scale:1,y:0,ease:'none',scrollTrigger:{trigger:'.final-cta',start:'top 94%',end:'center 52%',scrub:1}});
       } else { scrubWords.forEach((word) => { word.style.opacity='1'; }); }
     })();
   </script>

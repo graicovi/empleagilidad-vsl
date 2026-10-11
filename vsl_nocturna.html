@@ -590,21 +590,21 @@
     }
     .proposal-night .change-card h3 { max-width:610px; margin-bottom:24px; font-size:clamp(38px,4.2vw,64px); line-height:.98; }
     .proposal-night .change-card p { max-width:560px; font-size:18px; }
-    .change-arrow {
+    .change-icon {
       position:absolute;
       right:48px;
       bottom:48px;
+      display:grid;
+      place-items:center;
       width:46px;
       height:46px;
       border:1px solid rgba(255,255,255,.22);
       border-radius:50%;
-      color:transparent;
+      color:#fff;
       transition:transform .45s cubic-bezier(.2,.75,.25,1),background .35s ease;
     }
-    .change-arrow::before,.change-arrow::after { content:""; position:absolute; background:#fff; }
-    .change-arrow::before { width:13px; height:1px; left:16px; top:22px; transform:rotate(-45deg); }
-    .change-arrow::after { width:6px; height:6px; left:22px; top:14px; border-top:1px solid #fff; border-right:1px solid #fff; background:transparent; }
-    .change-card:hover .change-arrow { background:rgba(255,255,255,.09); transform:rotate(45deg); }
+    .change-icon svg { width:23px; height:23px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .change-card:hover .change-icon { background:rgba(255,255,255,.09); transform:translateY(-3px) scale(1.04); }
     .proposal-night .method {
       position:relative;
       overflow:hidden;
@@ -765,7 +765,7 @@
       .proposal-night .change-card { min-height:500px; padding:38px 28px; }
       .proposal-night .change-kicker { margin-bottom:120px; }
       .proposal-night .change-card h3 { font-size:40px; }
-      .proposal-night .change-arrow { right:28px; bottom:28px; }
+      .proposal-night .change-icon { right:28px; bottom:28px; }
       .proposal-night .method-head { gap:48px; margin-bottom:70px; }
       .proposal-night .step { min-height:390px; padding:32px 26px; }
       .proposal-night .step-signal { margin-bottom:100px; }
@@ -987,8 +987,8 @@
     </div>
 
     <section class="double-change" aria-label="El doble cambio provocado por la inteligencia artificial">
-      <article class="change-card"><div class="change-copy"><span class="change-kicker">La señal visible</span><h3>Tu CV creado con IA se parece a todos los demás.</h3><p>Cuando cualquiera puede producir un CV correcto en minutos, lo correcto deja de diferenciarte.</p></div><span class="change-arrow" aria-hidden="true"></span></article>
-      <article class="change-card"><div class="change-copy"><span class="change-kicker">El cambio profundo</span><h3>La IA no solo cambia tu CV. Cambia el valor por el que te contratan.</h3><p>Se transforman las tareas, las capacidades y los problemas que las organizaciones necesitan resolver.</p></div><span class="change-arrow" aria-hidden="true"></span></article>
+      <article class="change-card"><div class="change-copy"><span class="change-kicker">La señal visible</span><h3>Tu CV creado con IA se parece a todos los demás.</h3><p>Cuando cualquiera puede producir un CV correcto en minutos, lo correcto deja de diferenciarte.</p></div><span class="change-icon change-icon--signal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></span></article>
+      <article class="change-card"><div class="change-copy"><span class="change-kicker">El cambio profundo</span><h3>La IA no solo cambia tu CV. Cambia el valor por el que te contratan.</h3><p>Se transforman las tareas, las capacidades y los problemas que las organizaciones necesitan resolver.</p></div><span class="change-icon change-icon--deep" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 7 8-4 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 17 8 4 8-4"/></svg></span></article>
     </section>
 
     <section class="section method" id="metodo">
@@ -1037,6 +1037,7 @@
   <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const compactHeroMotion = window.matchMedia('(max-width: 600px)').matches;
       const heroStage = document.getElementById('hero-stage');
       const heroTitle = document.getElementById('hero-title');
 
@@ -1049,8 +1050,8 @@
           .fromTo('.hero-title .title-line-lead', { autoAlpha:0, y:18, scale:.96, filter:'blur(10px)' }, { autoAlpha:1, y:0, scale:1, filter:'blur(0px)', duration:1.9, ease:'power3.out' }, '-=.34')
           .fromTo('.hero-title .title-line-accent', { autoAlpha:0, y:10, scale:.92, filter:'blur(6px)' }, { autoAlpha:1, y:0, scale:1, filter:'blur(0px)', duration:2.6, ease:'power3.out' }, '-=1.03')
           .fromTo('.hero .ai-cause', { autoAlpha:0, y:20, filter:'blur(10px)' }, { autoAlpha:1, y:0, filter:'blur(0px)', duration:1, ease:'power2.out' }, '-=.68')
-          .from('.hero-actions .button', { autoAlpha:0, x:-28, scale:.95, duration:.82, ease:'power3.out' }, '-=.38')
-          .from('.hero-actions .hero-secondary', { autoAlpha:0, x:28, filter:'blur(5px)', duration:.82, ease:'power3.out' }, '-=.6')
+          .from('.hero-actions .button', { autoAlpha:0, x:compactHeroMotion ? 0 : -28, y:compactHeroMotion ? 16 : 0, scale:compactHeroMotion ? .98 : .95, filter:compactHeroMotion ? 'blur(4px)' : 'none', duration:.82, ease:'power3.out' }, '-=.38')
+          .from('.hero-actions .hero-secondary', { autoAlpha:0, x:compactHeroMotion ? 0 : 28, y:compactHeroMotion ? 16 : 0, scale:compactHeroMotion ? .98 : 1, filter:'blur(5px)', duration:.82, ease:'power3.out' }, '-=.6')
           .fromTo('.hero-trust', { autoAlpha:0, scale:.97, filter:'blur(12px)' }, { autoAlpha:1, scale:1, filter:'blur(0px)', duration:1.05, ease:'power2.out' }, '-=.35')
           .fromTo('.hero-video-shell', { autoAlpha:0, y:48, scale:.94, clipPath:'inset(12% 0 0 0 round 22px)' }, { autoAlpha:1, y:0, scale:1, clipPath:'inset(0% 0 0 0 round 22px)', duration:1.35, ease:'power3.out' }, '-=.5');
 
