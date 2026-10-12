@@ -1526,5 +1526,67 @@
       document.documentElement.classList.remove('motion-pending');
     })();
   </script>
+  <script>
+    (() => {
+      // ==========================================================
+      // CONFIGURACIÓN DE INTEGRACIÓN Y CHECKOUT DINÁMICO
+      // ==========================================================
+      const CONFIG = {
+        // Dominio base de la API (debe coincidir con el configurado en la primera página)
+        // Ejemplo: 'http://omega.localhost:8000' o 'https://api.empleagilidad.com'
+        apiBaseDomain: 'http://omega.localhost:8000',
+
+        // Patrón para el endpoint de checkout con el UID de la orden
+        // La URL final será: <DOMINIO>/api/v1/compras/orders/<UID>/checkout-link/
+        checkoutPathPattern: '/api/v1/compras/orders/{UID}/checkout-link/',
+
+        // Parámetros de URL admitidos para extraer el UID de la orden
+        queryParamNames: ['order_uid', 'uid'],
+
+        // Texto que se mostrará en los botones si NO se recibe el UID de la orden
+        noUidButtonText: 'Contáctate con nosotros',
+
+        // Enlace de chat de WhatsApp placeholder si NO se recibe el UID de la orden
+        whatsappPlaceholderUrl: 'https://wa.me/51999999999?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20programa%20Empleagilidad'
+      };
+
+      // 1. Extraer el UID de los query params de la URL actual
+      const urlParams = new URLSearchParams(window.location.search);
+      let orderUid = null;
+      for (const paramKey of CONFIG.queryParamNames) {
+        const val = urlParams.get(paramKey);
+        if (val && val.trim()) {
+          orderUid = val.trim();
+          break;
+        }
+      }
+
+      // 2. Seleccionar todos los botones de reserva / CTA
+      const reserveButtons = document.querySelectorAll('.reserve-cta');
+      if (!reserveButtons.length) return;
+
+      if (orderUid) {
+        // Caso A: Existe UID -> Construir dinámicamente la URL de checkout
+        const base = CONFIG.apiBaseDomain.replace(/\/+$/, '');
+        const path = CONFIG.checkoutPathPattern.replace('{UID}', encodeURIComponent(orderUid));
+        const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+        const checkoutUrl = `${base}${normalizedPath}`;
+
+        reserveButtons.forEach((btn) => {
+          btn.href = checkoutUrl;
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+        });
+      } else {
+        // Caso B: NO existe UID -> Cambiar texto a "Contáctate con nosotros" y enlazar a WhatsApp
+        reserveButtons.forEach((btn) => {
+          btn.href = CONFIG.whatsappPlaceholderUrl;
+          btn.textContent = CONFIG.noUidButtonText;
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

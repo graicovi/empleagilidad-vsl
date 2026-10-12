@@ -418,11 +418,26 @@
         // Ruta hacia la segunda página (oferta)
         offerPageUrl: 'oferta/',
 
+        // Ruta hacia la página de confirmación/gracias (enviada al backend como success_url)
+        successPageUrl: 'gracias/index.html',
+
         // Nombre del parámetro query para transportar el UID de la orden
         queryParamName: 'order_uid',
 
         // Tag de segmentación para ActiveCampaign
         tagName: 'lead_checkout_iniciado'
+      };
+
+      /**
+       * Construye una URL absoluta robusta a partir de una ruta relativa,
+       * tomando en cuenta el origen, pathname actual y presencia de trailing slashes.
+       */
+      const getAbsoluteUrl = (relativeOrAbsoluteUrl) => {
+        const currentUrl = new URL(window.location.href);
+        if (!currentUrl.pathname.endsWith('/') && !currentUrl.pathname.split('/').pop().includes('.')) {
+          currentUrl.pathname += '/';
+        }
+        return new URL(relativeOrAbsoluteUrl, currentUrl).href;
       };
 
       const form = document.getElementById('application-form');
@@ -503,6 +518,9 @@
           const path = CONFIG.landingCheckoutPath.startsWith('/') ? CONFIG.landingCheckoutPath : `/${CONFIG.landingCheckoutPath}`;
           const endpointUrl = `${base}${path}`;
 
+          // Construir URL absoluta hacia la página de gracias para redirección tras pago exitoso
+          const successUrl = getAbsoluteUrl(CONFIG.successPageUrl);
+
           const payload = {
             nombre,
             correo,
@@ -510,7 +528,8 @@
             whatsapp,
             phone: whatsapp,
             situacion: situacion || '',
-            tag_name: CONFIG.tagName
+            tag_name: CONFIG.tagName,
+            success_url: successUrl
           };
 
           const response = await fetch(endpointUrl, {
@@ -540,7 +559,7 @@
           }
 
           // Redirigir a la página de oferta adjuntando el UID como query param
-          const targetUrl = new URL(CONFIG.offerPageUrl, window.location.href);
+          const targetUrl = new URL(getAbsoluteUrl(CONFIG.offerPageUrl));
           targetUrl.searchParams.set(CONFIG.queryParamName, orderUid);
 
           // Preservar UTMs y otros parámetros existentes
