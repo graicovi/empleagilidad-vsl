@@ -1250,6 +1250,15 @@ h1 em::after {
   text-align: center;
 }
 
+.program-note--hero {
+  max-width: 27rem;
+  margin-top: 0.8rem;
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
 .site-footer {
   display: flex;
   width: min(100%, 1440px);
