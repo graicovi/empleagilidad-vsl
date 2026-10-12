@@ -407,25 +407,21 @@
       // CONFIGURACIÓN DE INTEGRACIÓN Y CHECKOUT
       // ==========================================================
       const CONFIG = {
-        // Dominio base de la API (debe coincidir con programa/oferta/index.html)
-        // Ejemplo: 'http://omega.localhost:8000' o 'https://api.empleagilidad.com'
-        apiBaseDomain: 'http://omega.localhost:8000',
+        apiBaseDomain: 'https://beta.testing.doctor-cv.pro',
 
-        // Endpoint para procesar el checkout y registrar el lead
-        // La URL final será: <DOMINIO>/api/v1/jobbox/landing-checkout/
         landingCheckoutPath: '/api/v1/jobbox/landing-checkout/',
 
         // Ruta hacia la página de oferta
         offerPageUrl: '../oferta/',
 
         // Ruta hacia la página de confirmación/gracias (enviada al backend como success_url)
-        successPageUrl: '../gracias/index.html',
+        successPageUrl: '../gracias/',
 
         // Nombre del parámetro query para transportar el UID de la orden
         queryParamName: 'order_uid',
 
         // Tag de segmentación para ActiveCampaign
-        tagName: 'lead_checkout_iniciado'
+        tagName: 'interesado'
       };
 
       /**
