@@ -1,0 +1,485 @@
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rig = document.querySelector(".lanyard-rig");
+const response = document.querySelector(".lanyard-response");
+const titleLines = [...document.querySelectorAll(".title-line")];
+const copyBlocks = [...document.querySelectorAll(".reveal-copy")];
+const magneticButtons = [...document.querySelectorAll(".magnetic")];
+const lanyardImage = document.querySelector(".lanyard-response img");
+const layoutQuery = window.matchMedia("(max-width: 760px)");
+const mobileLayout = layoutQuery.matches;
+let entranceAnimation = null;
+
+layoutQuery.addEventListener("change", () => window.location.reload());
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) window.location.reload();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!entranceAnimation || entranceAnimation.playState === "finished") return;
+  if (document.hidden) entranceAnimation.pause();
+  else entranceAnimation.play();
+});
+
+function waitUntilVisible() {
+  if (!document.hidden) return Promise.resolve();
+
+  return new Promise((resolve) => {
+    const onVisibilityChange = () => {
+      if (document.hidden) return;
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      resolve();
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+  });
+}
+
+async function waitForLanyard() {
+  if (!lanyardImage) return;
+
+  if (!lanyardImage.complete) {
+    await new Promise((resolve) => {
+      lanyardImage.addEventListener("load", resolve, { once: true });
+      lanyardImage.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  if (typeof lanyardImage.decode === "function") {
+    try {
+      await lanyardImage.decode();
+    } catch {
+      // The load event is enough when a browser cannot decode explicitly.
+    }
+  }
+}
+
+function waitForFirstPaint() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+}
+
+function revealText() {
+  titleLines.forEach((line, index) => {
+    line.animate(
+      [
+        { opacity: 0, transform: "translateY(0.55em) rotate(1.5deg)", filter: "blur(8px)" },
+        { opacity: 1, transform: "translateY(0) rotate(0deg)", filter: "blur(0)" },
+      ],
+      {
+        duration: 920,
+        delay: mobileLayout ? 3920 + index * 230 : 720 + index * 240,
+        fill: "forwards",
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+    );
+  });
+
+  const copyDelays = mobileLayout
+    ? [3740, 4620, 4840, 5040]
+    : [480, 1180, 1420, 1640];
+
+  copyBlocks.forEach((block, index) => {
+    block.animate(
+      [
+        { opacity: 0, transform: "translateY(18px)" },
+        { opacity: 1, transform: "translateY(0)" },
+      ],
+      {
+        duration: 760,
+        delay: copyDelays[index] ?? 1640 + index * 180,
+        fill: "forwards",
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+    );
+  });
+}
+
+function animateLanyard() {
+  response.classList.add("glint-active");
+
+  if (mobileLayout) {
+    const mobileEntrance = rig.animate(
+      [
+        {
+          opacity: 0,
+          filter: "blur(8px) saturate(0.78)",
+          transform: "translateY(-8vh) rotate(-3deg) scale(1.06)",
+          offset: 0,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(1vh) rotate(3.2deg) scale(1)",
+          offset: 0.56,
+          easing: "ease-in-out",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(0) rotate(-1.7deg) scale(1)",
+          offset: 0.76,
+          easing: "ease-in-out",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(0) rotate(0.65deg) scale(1)",
+          offset: 0.9,
+          easing: "ease-in-out",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(0) rotate(0deg) scale(1)",
+          offset: 1,
+        },
+      ],
+      {
+        duration: 1450,
+        fill: "forwards",
+        easing: "linear",
+      },
+    );
+    entranceAnimation = mobileEntrance;
+
+    mobileEntrance.finished.then(() => {
+      const holdSwing = rig.animate(
+        [
+          { transform: "translateY(0) rotate(0deg) scale(1)" },
+          { transform: "translateY(0) rotate(1.15deg) scale(1)", offset: 0.25 },
+          { transform: "translateY(0) rotate(0deg) scale(1)", offset: 0.5 },
+          { transform: "translateY(0) rotate(-0.9deg) scale(1)", offset: 0.75 },
+          { transform: "translateY(0) rotate(0deg) scale(1)" },
+        ],
+        {
+          duration: 2200,
+          fill: "forwards",
+          easing: "ease-in-out",
+        },
+      );
+
+      holdSwing.finished.then(() => {
+        rig.animate(
+          [
+            {
+              opacity: 1,
+              filter: "blur(0) saturate(1)",
+              transform: "translateY(0) rotate(0deg) scale(1)",
+            },
+            {
+              opacity: 0.1,
+              filter: "blur(18px) saturate(0.78)",
+              transform: "translateY(-1vh) rotate(0deg) scale(1.02)",
+            },
+          ],
+          {
+            duration: 720,
+            fill: "forwards",
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          },
+        );
+      });
+    });
+
+    return;
+  }
+
+  const entrance = rig.animate(
+    [
+      {
+        opacity: 0.38,
+        filter: "blur(10px) saturate(0.72)",
+        transform: "translate3d(15vw, -9vh, 0) rotate(-5deg) scale(1.58)",
+        offset: 0,
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(6.4deg) scale(1)",
+        offset: 0.48,
+        easing: "cubic-bezier(0.45, 0, 0.55, 1)",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(-3.1deg) scale(1)",
+        offset: 0.67,
+        easing: "ease-in-out",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(1.45deg) scale(1)",
+        offset: 0.82,
+        easing: "ease-in-out",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(-0.58deg) scale(1)",
+        offset: 0.93,
+        easing: "ease-in-out",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)",
+        offset: 1,
+      },
+    ],
+    {
+      duration: 2550,
+      fill: "forwards",
+      easing: "linear",
+    },
+  );
+  entranceAnimation = entrance;
+
+  entrance.finished.then(() => {
+    rig.animate(
+      [
+        { transform: "translateY(0) rotate(0deg)" },
+        { transform: "translateY(2px) rotate(0.85deg)" },
+        { transform: "translateY(0) rotate(0deg)" },
+        { transform: "translateY(2px) rotate(-0.85deg)" },
+        { transform: "translateY(0) rotate(0deg)" },
+      ],
+      {
+        duration: 6800,
+        iterations: Infinity,
+        easing: "ease-in-out",
+      },
+    );
+  });
+}
+
+function installPointerPhysics() {
+  let rafId = 0;
+
+  window.addEventListener("pointermove", (event) => {
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      const x = event.clientX / window.innerWidth - 0.5;
+      const y = event.clientY / window.innerHeight - 0.5;
+      response.style.setProperty("--tilt-y", `${x * 7}deg`);
+      response.style.setProperty("--tilt-x", `${y * -4}deg`);
+    });
+  });
+
+  document.documentElement.addEventListener("pointerleave", () => {
+    response.style.setProperty("--tilt-y", "0deg");
+    response.style.setProperty("--tilt-x", "0deg");
+  });
+}
+
+function installMagneticButtons() {
+  magneticButtons.forEach((button) => {
+    button.addEventListener("pointermove", (event) => {
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const distanceX = x - rect.width / 2;
+      const distanceY = y - rect.height / 2;
+
+      button.style.setProperty("--pointer-x", `${(x / rect.width) * 100}%`);
+      button.style.setProperty("--pointer-y", `${(y / rect.height) * 100}%`);
+      button.style.setProperty("--magnet-x", `${distanceX * 0.055}px`);
+      button.style.setProperty("--magnet-y", `${distanceY * 0.075}px`);
+    });
+
+    button.addEventListener("pointerleave", () => {
+      button.style.setProperty("--magnet-x", "0px");
+      button.style.setProperty("--magnet-y", "0px");
+      button.style.setProperty("--pointer-x", "50%");
+      button.style.setProperty("--pointer-y", "50%");
+    });
+  });
+}
+
+function installPageMotion() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const { gsap, ScrollTrigger } = window;
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray(".section-reveal").forEach((section) => {
+    const introTargets = section.querySelectorAll(
+      ".section-marker, .section-kicker, .section-heading h2, .author-copy h2, .section-lead, .author-copy > p",
+    );
+    const detailTargets = section.querySelectorAll(
+      ".signal-card, .editorial-statement, .method-loop span, .system-result, .outcome-grid article, .author-portrait, .author-signature, .faq-list details, .launch-panel",
+    );
+
+    gsap.set(introTargets, { opacity: 0, y: 34 });
+    gsap.set(detailTargets, { opacity: 0, y: 28 });
+
+    const sectionTimeline = gsap.timeline({
+      defaults: { ease: "power3.out" },
+      scrollTrigger: {
+        trigger: section,
+        start: "top 78%",
+        once: true,
+      },
+    });
+
+    sectionTimeline
+      .to(introTargets, {
+        opacity: 1,
+        y: 0,
+        duration: 0.82,
+        stagger: 0.09,
+      })
+      .to(
+        detailTargets,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          stagger: 0.105,
+        },
+        "-=0.44",
+      );
+  });
+
+  const outcomeCards = gsap.utils.toArray(".outcome-grid article");
+
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    outcomeCards.forEach((card, index) => {
+      const number = card.querySelector(":scope > span");
+      const heading = card.querySelector("h3");
+      const copy = card.querySelector("p");
+      const tilt = index % 2 === 0 ? -1.25 : 1.25;
+
+      card.addEventListener("pointerenter", () => {
+        gsap.to(card, {
+          y: -12,
+          rotationY: tilt,
+          transformPerspective: 1000,
+          duration: 0.6,
+          ease: "power3.out",
+          overwrite: "auto",
+        });
+        gsap.to(number, { x: 5, duration: 0.48, ease: "power3.out" });
+        gsap.to(heading, { x: 8, color: "#c57a21", duration: 0.5, ease: "power3.out" });
+        gsap.to(copy, { y: -4, duration: 0.58, ease: "power3.out" });
+      });
+
+      card.addEventListener("pointerleave", () => {
+        gsap.to(card, {
+          y: 0,
+          rotationY: 0,
+          duration: 0.75,
+          ease: "elastic.out(1, 0.55)",
+          overwrite: "auto",
+        });
+        gsap.to([number, copy], {
+          x: 0,
+          y: 0,
+          duration: 0.55,
+          ease: "power3.out",
+        });
+        gsap.to(heading, {
+          x: 0,
+          color: "#151515",
+          duration: 0.55,
+          ease: "power3.out",
+        });
+      });
+    });
+  }
+
+  document.querySelectorAll(".faq-list details").forEach((item) => {
+    const summary = item.querySelector("summary");
+    const answer = item.querySelector("p");
+    if (!summary || !answer) return;
+
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (item.dataset.animating === "true") return;
+
+      item.dataset.animating = "true";
+
+      if (!item.open) {
+        const collapsedHeight = summary.getBoundingClientRect().height;
+        item.open = true;
+        const expandedHeight = item.scrollHeight;
+
+        gsap.set(item, { height: collapsedHeight, overflow: "hidden" });
+        gsap.set(answer, { autoAlpha: 0, y: -12 });
+        gsap.to(item, {
+          height: expandedHeight,
+          duration: 0.58,
+          ease: "power3.out",
+          onComplete: () => {
+            gsap.set(item, { clearProps: "height,overflow" });
+            delete item.dataset.animating;
+          },
+        });
+        gsap.to(answer, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.44,
+          delay: 0.12,
+          ease: "power3.out",
+        });
+        return;
+      }
+
+      const expandedHeight = item.getBoundingClientRect().height;
+      const collapsedHeight = summary.getBoundingClientRect().height;
+
+      gsap.set(item, { height: expandedHeight, overflow: "hidden" });
+      gsap.to(answer, {
+        autoAlpha: 0,
+        y: -9,
+        duration: 0.24,
+        ease: "power2.in",
+      });
+      gsap.to(item, {
+        height: collapsedHeight,
+        duration: 0.5,
+        delay: 0.03,
+        ease: "power2.inOut",
+        onComplete: () => {
+          item.open = false;
+          gsap.set(item, { clearProps: "height,overflow" });
+          gsap.set(answer, { clearProps: "opacity,visibility,transform" });
+          delete item.dataset.animating;
+        },
+      });
+    });
+  });
+
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+}
+
+async function startHero() {
+  await Promise.all([
+    waitForLanyard(),
+    document.fonts?.ready ?? Promise.resolve(),
+  ]);
+  await waitUntilVisible();
+  await waitForFirstPaint();
+
+  revealText();
+  animateLanyard();
+  if (!mobileLayout) {
+    installPointerPhysics();
+    installMagneticButtons();
+  }
+}
+
+if (reduceMotion) {
+  rig.style.opacity = "1";
+  rig.style.transform = "none";
+  rig.style.filter = "none";
+  titleLines.forEach((line) => (line.style.opacity = "1"));
+  copyBlocks.forEach((block) => (block.style.opacity = "1"));
+} else {
+  startHero();
+  installPageMotion();
+}
