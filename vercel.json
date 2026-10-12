@@ -1,0 +1,29 @@
+{
+  "redirects": [
+    {
+      "source": "/vsl_nocturna.html",
+      "destination": "/programa/",
+      "permanent": true
+    },
+    {
+      "source": "/vsl_nocturna_formulario.html",
+      "destination": "/programa/formulario/",
+      "permanent": true
+    },
+    {
+      "source": "/oferta/",
+      "destination": "/programa/oferta/",
+      "permanent": true
+    },
+    {
+      "source": "/gracias/",
+      "destination": "/programa/gracias/",
+      "permanent": true
+    },
+    {
+      "source": "/rescate/",
+      "destination": "/programa/oportunidad/",
+      "permanent": true
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <base href="../../" />
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQXM94HT');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="https://www.empleagilidad.com/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Gracias por inscribirte — Empleagilidad</title>
+  <style>
+    :root {
+      --orange:#e85d0c;
+      --line:rgba(255,255,255,.11);
+      --spot-x:72%;
+      --spot-y:8%;
+    }
+    * { box-sizing:border-box; }
+    html { background:#060606; }
+    body {
+      margin:0;
+      color:#fff;
+      background:#060606;
+      font-family:Geist,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    a { color:inherit; }
+    .page { width:100%; min-height:100svh; overflow:hidden; background:#080808; }
+    .thank-you {
+      position:relative;
+      display:grid;
+      place-items:center;
+      min-height:calc(100svh - 104px);
+      padding:clamp(72px,10vw,144px) 48px;
+      isolation:isolate;
+      background:
+        radial-gradient(circle at var(--spot-x) var(--spot-y),rgba(255,255,255,.13),transparent 27%),
+        radial-gradient(circle at 14% 88%,rgba(190,139,85,.10),transparent 24%),
+        linear-gradient(128deg,#050505,#151515);
+    }
+    .thank-you::before {
+      content:"";
+      position:absolute;
+      z-index:-1;
+      inset:0;
+      opacity:.34;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+      background-size:100% 150px,150px 100%;
+      mask-image:linear-gradient(to bottom,black,transparent 88%);
+    }
+    .thank-you::after {
+      content:"";
+      position:absolute;
+      z-index:-1;
+      top:-330px;
+      right:-90px;
+      width:680px;
+      height:680px;
+      border-radius:50%;
+      background:rgba(255,255,255,.12);
+      filter:blur(90px);
+      pointer-events:none;
+    }
+    .message {
+      width:min(100%,1040px);
+      padding:clamp(42px,6vw,78px);
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
+      box-shadow:0 30px 80px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.08);
+      backdrop-filter:blur(14px);
+    }
+    h1 {
+      max-width:900px;
+      margin:0 0 34px;
+      color:transparent;
+      background:radial-gradient(circle at 54% 40%,#fff 0%,#f3f3f3 16%,#8c8c8c 44%,#e5e5e5 72%,#777 100%);
+      background-size:135% 170%;
+      -webkit-background-clip:text;
+      background-clip:text;
+      filter:drop-shadow(0 12px 18px rgba(0,0,0,.46));
+      font-family:Geist,"Segoe UI",sans-serif;
+      font-size:clamp(48px,7vw,94px);
+      font-weight:750;
+      line-height:.94;
+      letter-spacing:-.068em;
+      text-wrap:balance;
+    }
+    h1 span { color:var(--orange); -webkit-text-fill-color:var(--orange); }
+    .copy { max-width:850px; }
+    p {
+      margin:0 0 18px;
+      color:rgba(255,255,255,.72);
+      font-size:clamp(18px,1.7vw,23px);
+      line-height:1.56;
+      letter-spacing:-.016em;
+    }
+    p:last-child { margin-bottom:0; color:#fff; font-weight:650; }
+    .contact { color:#fff; font-weight:600; text-decoration-color:rgba(232,93,12,.72); text-decoration-thickness:1px; text-underline-offset:4px; }
+    .contact:hover,.contact:focus-visible { color:#f18a4f; }
+    footer {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      min-height:104px;
+      padding:42px 60px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:rgba(255,255,255,.66);
+      background:#060606;
+      font-family:Geist,"Segoe UI",sans-serif;
+      font-size:13px;
+    }
+    footer .brand { color:#fff; font-family:Geist,"Segoe UI",sans-serif; font-size:18px; font-weight:700; letter-spacing:-.04em; text-decoration:none; }
+    footer .brand span { color:var(--orange); }
+    @media (max-width:700px) {
+      .thank-you { min-height:calc(100svh - 123px); padding:32px 16px; }
+      .message { padding:38px 26px; border-radius:18px; }
+      h1 { margin-bottom:28px; font-size:clamp(44px,13vw,62px); }
+      p { font-size:17px; }
+      footer { min-height:123px; align-items:flex-start; flex-direction:column; gap:12px; padding:32px 24px; }
+    }
+    @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQXM94HT"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <main class="page">
+    <section class="thank-you" id="thank-you" aria-labelledby="thank-you-title">
+      <div class="message">
+        <h1 id="thank-you-title">¡Te damos la <span>Bienvenida!</span></h1>
+        <div class="copy">
+          <p>Tu inscripción al programa Empleagilidad ha quedado registrada correctamente.</p>
+          <p>En los próximos minutos recibirás un correo de confirmación con los detalles de tu compra. Además, nos pondremos en contacto contigo para indicarte los siguientes pasos y acompañarte en el inicio de tu proceso.</p>
+          <p>Por favor, revisa tu correo electrónico, incluyendo las carpetas de promociones o spam.</p>
+          <p>Si tienes alguna consulta, puedes escribirnos a <a class="contact" href="mailto:contacto@doctor-cv.com">contacto@doctor-cv.com</a> o por WhatsApp al <a class="contact" href="https://wa.me/51963782942">+51 963 782 942</a>.</p>
+          <p>Nos alegra mucho que hayas decidido dar este paso.</p>
+          <p>La mejor oportunidad que puedes construir es la que empieza por ti. Acabas de dar ese paso. Felicidades.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer><a class="brand" href="https://empleagilidad.com/">empleagilidad<span>.com</span></a><div>Programa para profesionales con experiencia</div></footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const stage = document.getElementById('thank-you');
+      if (!reduceMotion && window.gsap) {
+        gsap.timeline({defaults:{ease:'power2.out'}})
+          .fromTo('.message',{y:34,scale:.975,autoAlpha:0,filter:'blur(12px)'},{y:0,scale:1,autoAlpha:1,filter:'blur(0px)',duration:1.1})
+          .fromTo('.copy p',{y:18,autoAlpha:0},{y:0,autoAlpha:1,duration:.72,stagger:.09},'-=.55')
+          .fromTo('footer',{autoAlpha:0},{autoAlpha:1,duration:.8},'-=.35');
+        stage?.addEventListener('pointermove',(event) => {
+          if (event.pointerType !== 'mouse') return;
+          const bounds=stage.getBoundingClientRect();
+          const x=((event.clientX-bounds.left)/bounds.width)*100;
+          const y=((event.clientY-bounds.top)/bounds.height)*100;
+          gsap.to(stage,{'--spot-x':`${x}%`,'--spot-y':`${y}%`,duration:.18,overwrite:'auto'});
+        });
+        stage?.addEventListener('pointerleave',() => gsap.to(stage,{'--spot-x':'72%','--spot-y':'8%',duration:1.2}));
+      }
+    })();
+  </script>
+</body>
+</html>
