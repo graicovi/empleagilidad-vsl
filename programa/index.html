@@ -10,7 +10,9 @@
   <!-- End Google Tag Manager -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -92,6 +94,7 @@
     .js .motion-reveal.is-visible { opacity:1; transform:translateY(0) scale(1); transition:opacity .72s ease,transform .72s cubic-bezier(.2,.75,.25,1); }
     footer { display:flex; justify-content:space-between; align-items:center; padding:32px 48px; color:rgba(255,255,255,.66); background:#11110f; font-size:13px; }
     footer .brand { color:#fff; font-size:24px; text-decoration:none; }
+    footer .footer-brand-logo { display:block; width:min(172px, 42vw); height:auto; }
     .exit-modal[hidden] { display:none; }
     .exit-modal { position:fixed; z-index:30; inset:0; display:grid; place-items:center; padding:24px; background:rgba(17,17,15,.66); backdrop-filter:blur(8px); }
     .exit-card { position:relative; width:min(700px,100%); padding:62px; border-radius:26px; color:#fff; background:#11110f; box-shadow:0 30px 80px rgba(18,12,8,.34); text-align:center; }
@@ -930,7 +933,7 @@
       <div class="hero-stage" id="hero-stage">
         <nav class="hero-nav" aria-label="Navegación principal">
           <button class="brand brand-trigger" id="brand-trigger" type="button" aria-label="Empleagilidad: mostrar mensaje de salida">
-            <img class="header-brand-logo" src="../logo%20empleagilidad.svg" alt="Empleagilidad" />
+            <img class="header-brand-logo" src="../logo-empleagilidad-blanco.svg" alt="Empleagilidad.com" />
           </button>
           <div class="hero-nav-links">
             <a href="#problema">El reto</a>
@@ -1030,7 +1033,7 @@
       </div>
     </section>
 
-    <footer><a class="brand" href="https://empleagilidad.com/">empleagilidad<span>.com</span></a><div>Programa para profesionales con experiencia</div></footer>
+    <footer><a class="brand" href="https://empleagilidad.com/"><img class="footer-brand-logo" src="../logo-empleagilidad-blanco.svg" alt="Empleagilidad.com" /></a><div>Programa para profesionales con experiencia</div></footer>
   </main>
 
   <div class="exit-modal" id="exit-modal" role="dialog" aria-modal="true" aria-labelledby="exit-title" aria-hidden="true" hidden>
