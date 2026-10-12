@@ -1079,6 +1079,45 @@
       width: 100%;
       min-width: 0;
       margin-top: 7px;
+      cursor: pointer;
+    }
+
+    .form-card button.button:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+      filter: grayscale(.2);
+    }
+
+    .form-status-msg {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .form-status-msg.error {
+      display: block;
+      background: #fdf2f2;
+      color: #991b1b;
+      border: 1px solid #f87171;
+    }
+
+    .form-status-msg.success {
+      display: block;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .field.is-invalid {
+      border-color: #dc2626 !important;
+      background: #fff5f5 !important;
+      outline: 2px solid rgba(220, 38, 38, .18) !important;
     }
 
     .form-card .legal {
@@ -1428,18 +1467,18 @@
           <p class="lead">Cada mes con una estrategia desactualizada prolonga la distancia entre tu experiencia y las oportunidades correctas. Postula para construir una estrategia alineada con el mercado actual y convertirla en acción.</p>
         </div>
 
-        <div class="form-card">
+        <form class="form-card" id="form-postulacion" novalidate>
           <h3>Postula a la próxima cohorte</h3>
           <p>Déjanos tus datos e indica cuál describe mejor tu situación profesional. Revisaremos tu perfil y te contactaremos para validar si Empleagilidad es adecuado para este momento de tu carrera.</p>
           <label class="sr-only" for="nombre-completo">Nombre y apellido</label>
-          <input class="field" id="nombre-completo" name="nombre-completo" type="text" placeholder="Nombre y apellido" autocomplete="name" required />
+          <input class="field" id="nombre-completo" name="nombre" type="text" placeholder="Nombre y apellido" autocomplete="name" required />
           <label class="sr-only" for="correo-electronico">Correo electrónico</label>
-          <input class="field" id="correo-electronico" name="correo-electronico" type="email" placeholder="Correo electrónico" autocomplete="email" inputmode="email" required />
+          <input class="field" id="correo-electronico" name="correo" type="email" placeholder="Correo electrónico" autocomplete="email" inputmode="email" required />
           <label class="sr-only" for="whatsapp">WhatsApp</label>
           <input class="field" id="whatsapp" name="whatsapp" type="tel" placeholder="WhatsApp" autocomplete="tel" inputmode="tel" required />
           <label class="field-label" for="situacion-profesional">¿Cuál describe mejor tu situación actual?</label>
           <div class="select-wrap">
-            <select class="field field-select" id="situacion-profesional" name="situacion-profesional">
+            <select class="field field-select" id="situacion-profesional" name="situacion">
               <option value="" selected disabled>Selecciona una opción</option>
               <option value="anticiparme">Estoy trabajando y quiero anticiparme</option>
               <option value="busqueda-activa">Estoy buscando activamente</option>
@@ -1448,9 +1487,10 @@
               <option value="otra">Otra situación</option>
             </select>
           </div>
-          <a class="button" href="#">Quiero postular a Empleagilidad</a>
+          <button type="submit" class="button" id="btn-submit-postulacion">Quiero postular a Empleagilidad</button>
+          <div id="form-status-msg" class="form-status-msg" role="alert"></div>
           <p class="legal">Empleagilidad no garantiza empleo. Tus datos serán utilizados para orientarte sobre el programa.</p>
-        </div>
+        </form>
       </div>
     </section>
 
@@ -1551,6 +1591,160 @@
       }, { threshold: .12 });
 
       sequences.forEach(({ triggerElement }) => observer.observe(triggerElement));
+    })();
+  </script>
+  <script>
+    (() => {
+      // ==========================================================
+      // CONFIGURACIÓN DE INTEGRACIÓN Y CHECKOUT
+      // ==========================================================
+      const CONFIG = {
+        // Dominio base de la API (reemplazar con el dominio de tu backend)
+        // Ejemplo: 'https://doctorcv.pe' o 'https://api.empleagilidad.com'
+        apiBaseDomain: 'http://omega.localhost:8000',
+
+        // Endpoint para procesar el checkout y registrar el lead
+        // La URL final será: <DOMINIO>/api/v1/jobbox/landing-checkout/
+        landingCheckoutPath: '/api/v1/jobbox/landing-checkout/',
+
+        // Ruta hacia la segunda página (oferta)
+        offerPageUrl: 'oferta/',
+
+        // Nombre del parámetro query para transportar el UID de la orden
+        queryParamName: 'order_uid',
+
+        // Tag de segmentación para ActiveCampaign
+        tagName: 'interesado'
+      };
+
+      const form = document.getElementById('form-postulacion');
+      if (!form) return;
+
+      const submitBtn = document.getElementById('btn-submit-postulacion');
+      const statusMsg = document.getElementById('form-status-msg');
+      const nombreInput = document.getElementById('nombre-completo');
+      const correoInput = document.getElementById('correo-electronico');
+      const whatsappInput = document.getElementById('whatsapp');
+      const situacionSelect = document.getElementById('situacion-profesional');
+
+      const showMessage = (msg, isError = true) => {
+        if (!statusMsg) return;
+        statusMsg.textContent = msg;
+        statusMsg.className = `form-status-msg ${isError ? 'error' : 'success'}`;
+        statusMsg.style.display = 'block';
+      };
+
+      const clearMessage = () => {
+        if (!statusMsg) return;
+        statusMsg.textContent = '';
+        statusMsg.className = 'form-status-msg';
+        statusMsg.style.display = 'none';
+      };
+
+      [nombreInput, correoInput, whatsappInput, situacionSelect].forEach((input) => {
+        if (!input) return;
+        input.addEventListener('input', () => {
+          input.classList.remove('is-invalid');
+          clearMessage();
+        });
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearMessage();
+
+        const nombre = nombreInput ? nombreInput.value.trim() : '';
+        const correo = correoInput ? correoInput.value.trim() : '';
+        const whatsapp = whatsappInput ? whatsappInput.value.trim() : '';
+        const situacion = situacionSelect ? situacionSelect.value : '';
+
+        let hasError = false;
+        if (!nombre) {
+          nombreInput?.classList.add('is-invalid');
+          hasError = true;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!correo || !emailRegex.test(correo)) {
+          correoInput?.classList.add('is-invalid');
+          hasError = true;
+        }
+        if (!whatsapp) {
+          whatsappInput?.classList.add('is-invalid');
+          hasError = true;
+        }
+
+        if (hasError) {
+          showMessage('Por favor completa todos los campos requeridos con datos válidos.');
+          return;
+        }
+
+        const originalBtnText = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Enviando postulación...';
+        }
+
+        try {
+          const base = CONFIG.apiBaseDomain.replace(/\/+$/, '');
+          const path = CONFIG.landingCheckoutPath.startsWith('/') ? CONFIG.landingCheckoutPath : `/${CONFIG.landingCheckoutPath}`;
+          const endpointUrl = `${base}${path}`;
+
+          const payload = {
+            nombre,
+            correo,
+            whatsapp,
+            situacion: situacion || '',
+            tag_name: CONFIG.tagName
+          };
+
+          const response = await fetch(endpointUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            const errorMsg = errorData?.detail || errorData?.message || `Error del servidor (${response.status}).`;
+            throw new Error(errorMsg);
+          }
+
+          const data = await response.json();
+          const orderUid = data.order_uid || data.uid;
+
+          if (!orderUid) {
+            throw new Error('La respuesta del servidor no incluyó el identificador de orden (order_uid).');
+          }
+
+          if (submitBtn) {
+            submitBtn.textContent = '¡Listo! Redirigiendo...';
+          }
+
+          // Redirigir a la segunda página adjuntando el UID como query param
+          const targetUrl = new URL(CONFIG.offerPageUrl, window.location.href);
+          targetUrl.searchParams.set(CONFIG.queryParamName, orderUid);
+
+          // Preservar UTMs y otros parámetros existentes
+          const currentParams = new URLSearchParams(window.location.search);
+          currentParams.forEach((val, key) => {
+            if (key !== CONFIG.queryParamName) {
+              targetUrl.searchParams.set(key, val);
+            }
+          });
+
+          window.location.href = targetUrl.toString();
+        } catch (err) {
+          console.error('[Landing Form] Error al enviar postulación:', err);
+          showMessage(err.message || 'Ocurrió un error al procesar tu postulación. Por favor intenta nuevamente.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+          }
+        }
+      });
     })();
   </script>
 </body>
