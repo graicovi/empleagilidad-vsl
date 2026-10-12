@@ -1,6 +1,13 @@
 <!doctype html>
 <html lang="es">
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQXM94HT');</script>
+  <!-- End Google Tag Manager -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="https://www.empleagilidad.com/favicon.svg" type="image/svg+xml" />
@@ -84,7 +91,7 @@
     .js .motion-reveal { opacity:0; transform:translateY(30px) scale(.975); transform-origin:center bottom; }
     .js .motion-reveal.is-visible { opacity:1; transform:translateY(0) scale(1); transition:opacity .72s ease,transform .72s cubic-bezier(.2,.75,.25,1); }
     footer { display:flex; justify-content:space-between; align-items:center; padding:32px 48px; color:rgba(255,255,255,.66); background:#11110f; font-size:13px; }
-    footer .brand { color:#fff; font-size:24px; }
+    footer .brand { color:#fff; font-size:24px; text-decoration:none; }
     .exit-modal[hidden] { display:none; }
     .exit-modal { position:fixed; z-index:30; inset:0; display:grid; place-items:center; padding:24px; background:rgba(17,17,15,.66); backdrop-filter:blur(8px); }
     .exit-card { position:relative; width:min(700px,100%); padding:62px; border-radius:26px; color:#fff; background:#11110f; box-shadow:0 30px 80px rgba(18,12,8,.34); text-align:center; }
@@ -182,6 +189,7 @@
     }
     .brand-mark { width:15px; height:22px; overflow:visible; }
     .brand-mark path { fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .header-brand-logo { display:block; width:194px; max-width:100%; height:auto; }
     .hero-nav-links { display:flex; align-items:center; gap:44px; }
     .hero-nav-links a {
       position:relative;
@@ -386,6 +394,7 @@
       .hero-stage { min-height:0; }
       .hero-nav { width:calc(100% - 48px); min-height:88px; grid-template-columns:1fr auto; }
       .hero-nav-links { display:none; }
+      .header-brand-logo { width:174px; }
       .hero-copy { width:calc(100% - 40px); margin-top:30px; }
       .hero-title { font-size:clamp(42px,7.5vw,64px); }
       .hero-trust,.hero-video-shell { width:calc(100% - 48px); }
@@ -397,6 +406,7 @@
       .hero-stage::before { background-size:100% 110px,88px 100%; }
       .hero-nav { width:calc(100% - 32px); min-height:76px; }
       .hero .brand { font-size:15px; }
+      .header-brand-logo { width:158px; }
       .hero-nav-cta { min-height:38px; padding:0 14px; font-size:12px; }
       .hero-copy { width:calc(100% - 32px); margin-top:30px; }
       .hero .eyebrow { margin-bottom:18px; font-size:9px; line-height:1.5; letter-spacing:.22em; }
@@ -1060,7 +1070,7 @@
       .offer-v2 .system-flow span:not(:last-child)::after { right:auto; bottom:-12px; transform:rotate(90deg); }
       .offer-v2 .offer-table-wrap { overflow-x:auto; border-radius:14px; }
       .offer-v2 .offer-table { min-width:760px; }
-      .offer-v2 .investment h2 { font-size:29vw; }
+      .offer-v2 .investment h2 { width:100%; max-width:100%; font-size:clamp(72px,22vw,92px); letter-spacing:-.07em; }
       .offer-v2 .investment .button { width:calc(100% - 32px); min-width:0; }
       .offer-v2 .offer-faq { margin-top:78px; }
       .offer-v2 .offer-component { min-height:0; }
@@ -1068,23 +1078,30 @@
       .offer-v2 .offer-key span:last-child { text-align:left; }
       .offer-v2 .offer-component--wide { grid-column:auto; display:flex; min-height:0; }
       .offer-v2 .offer-component--featured { grid-column:auto; display:block; min-height:300px; padding-right:90px; }
+      .offer-v2 .component-ribbon { top:26px; right:-26px; width:190px; }
       .offer-v2 .component-value { margin-top:40px; }
-      .offer-v2 .total-value { align-items:flex-end; flex-direction:column; gap:12px; padding-inline:0; text-align:right; }
+      .offer-v2 .total-value { align-items:center; flex-direction:column; gap:12px; padding-inline:0; text-align:center; }
       .offer-v2 .authority-portrait { min-height:430px; }
       .offer-v2 .book-stage { min-height:460px; }
       .offer-v2 .program-includes { grid-template-columns:1fr; margin-top:70px; }
-      .offer-v2 .final-cta .lead { font-size:17px; }
+      .offer-v2 .final-cta-inner { width:100%; min-width:0; padding:80px 18px; }
+      .offer-v2 .final-cta h2 { width:100%; min-width:0; max-width:100%; font-size:clamp(38px,10.8vw,46px); line-height:.96; overflow-wrap:break-word; }
+      .offer-v2 .final-cta-inner > .lead { width:100%; min-width:0; max-width:100%; padding-inline:0; font-size:17px; overflow-wrap:break-word; }
+      .offer-v2 .final-cta-actions { width:100%; min-width:0; }
     }
   </style>
 </head>
 <body class="proposal-night offer-v2">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQXM94HT"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <main class="page">
     <section class="hero offer-hero" id="inicio">
       <div class="hero-stage" id="hero-stage">
         <nav class="hero-nav" aria-label="Navegación principal">
           <a class="brand" href="#inicio" aria-label="Empleagilidad, inicio">
-            <svg class="brand-mark" viewBox="0 0 16 24" aria-hidden="true"><path d="M9.6 1.5 3.3 12h4.2l-1.2 10.5L13 10.7H8.7l.9-9.2Z"/></svg>
-            <span>empleagilidad.com</span>
+            <img class="header-brand-logo" src="logo%20empleagilidad.svg" alt="Empleagilidad" />
           </a>
           <div class="hero-nav-links"><a href="#problema">El reto</a><a href="#metodo">El sistema</a><a href="#oferta">La oferta</a></div>
           <a class="hero-nav-cta reserve-cta" href="https://mpago.la/2FKwAjM" target="_blank" rel="noopener noreferrer">RESERVAR MI LUGAR</a>
@@ -1225,7 +1242,7 @@
       <div class="final-cta-inner"><h2 id="final-cta-title">Tu trayectoria ya tiene valor. <span>Lo único que le falta es <span class="brand-red">posicionamiento estratégico.</span></span></h2><p class="lead">No sigas pasando meses enviando el mismo CV a portales masivos. Toma el control de tu carrera, aplica una metodología probada y pon tu búsqueda en movimiento hoy mismo.</p><div class="final-cta-actions"><a class="button reserve-cta" href="https://mpago.la/2FKwAjM" target="_blank" rel="noopener noreferrer">RESERVAR MI LUGAR</a></div></div>
     </section>
 
-    <footer><div class="brand">empleagilidad<span>.com</span></div><div>Programa para profesionales con experiencia · Perú y Chile</div></footer>
+    <footer><a class="brand" href="https://empleagilidad.com/">empleagilidad<span>.com</span></a><div>Programa para profesionales con experiencia</div></footer>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -1233,6 +1250,7 @@
   <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const compactLayout = window.matchMedia('(max-width: 700px)').matches;
       const heroStage = document.getElementById('hero-stage');
       const scrubText = document.querySelector('[data-scrub-text]');
       if (!reduceMotion && window.gsap) {
@@ -1275,8 +1293,8 @@
           '.final-cta-inner > p','.final-cta-actions'
         ].join(',');
         gsap.utils.toArray(fadeSelector).forEach((element) => gsap.fromTo(element,{autoAlpha:0},{autoAlpha:1,duration:1.15,ease:'power2.out',scrollTrigger:{trigger:element,start:'top 89%',once:true}}));
-        gsap.fromTo('.investment h2',{scale:1.38,autoAlpha:.28},{scale:1,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'.investment',start:'top 90%',end:'center 48%',scrub:1}});
-        gsap.fromTo('.final-cta h2',{'--cta-shift':'12%',autoAlpha:.18,scale:.76,y:80},{'--cta-shift':'78%',autoAlpha:1,scale:1,y:0,ease:'none',scrollTrigger:{trigger:'.final-cta',start:'top 94%',end:'center 52%',scrub:1}});
+        gsap.fromTo('.investment h2',{scale:compactLayout ? 1.08 : 1.38,autoAlpha:.28},{scale:1,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'.investment',start:'top 90%',end:'center 48%',scrub:1}});
+        gsap.fromTo('.final-cta h2',{'--cta-shift':'12%',autoAlpha:.18,scale:compactLayout ? .9 : .76,y:compactLayout ? 48 : 80},{'--cta-shift':'78%',autoAlpha:1,scale:1,y:0,ease:'none',scrollTrigger:{trigger:'.final-cta',start:'top 94%',end:'center 52%',scrub:1}});
       } else { scrubWords.forEach((word) => { word.style.opacity='1'; }); }
     })();
   </script>

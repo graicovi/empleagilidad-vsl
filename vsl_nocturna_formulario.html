@@ -330,7 +330,7 @@
         <p class="lead">Con esto te reservamos un lugar mientras revisas el detalle del programa.</p>
       </div>
 
-      <form class="form-card" action="#" method="post">
+      <form class="form-card" id="application-form" action="#" method="post">
         <div class="field">
           <label for="nombre">Nombre completo</label>
           <input id="nombre" name="nombre" type="text" autocomplete="name" required />
@@ -368,5 +368,11 @@
       <div>Programa para profesionales con experiencia</div>
     </footer>
   </main>
+  <script>
+    document.getElementById('application-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      window.location.assign('https://empleagilidad-vsl.vercel.app/oferta/');
+    });
+  </script>
 </body>
 </html>
