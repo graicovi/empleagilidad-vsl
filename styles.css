@@ -93,6 +93,12 @@ a {
   letter-spacing: -0.065em;
 }
 
+.brand-logo {
+  display: block;
+  width: min(205px, 42vw);
+  height: auto;
+}
+
 .brand-word {
   white-space: nowrap;
 }
