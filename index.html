@@ -199,5 +199,26 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
     <script src="./script.js?v=20260909-author-gap"></script>
+    <script>
+      (() => {
+        const ATTRIBUTION_STORAGE_KEY = 'empleagilidad_attribution';
+        const params = new URLSearchParams(window.location.search);
+        const trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
+        const data = {};
+        trackingKeys.forEach((key) => {
+          const val = params.get(key);
+          if (val && val.trim()) data[key] = val.trim();
+        });
+        if (Object.keys(data).length > 0) {
+          try {
+            const raw = sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY) || localStorage.getItem(ATTRIBUTION_STORAGE_KEY);
+            const existing = raw ? JSON.parse(raw) : {};
+            const merged = { ...existing, ...data };
+            sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(merged));
+            localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(merged));
+          } catch (_) {}
+        }
+      })();
+    </script>
   </body>
 </html>

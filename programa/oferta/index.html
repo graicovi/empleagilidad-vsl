@@ -1565,16 +1565,71 @@
       if (!reserveButtons.length) return;
 
       if (orderUid) {
-        // Caso A: Existe UID -> Construir dinámicamente la URL de checkout
+        // Caso A: Existe UID -> Al hacer clic, enviar POST al backend para generar payment_url
         const base = CONFIG.apiBaseDomain.replace(/\/+$/, '');
         const path = CONFIG.checkoutPathPattern.replace('{UID}', encodeURIComponent(orderUid));
         const normalizedPath = path.startsWith('/') ? path : `/${path}`;
         const checkoutUrl = `${base}${normalizedPath}`;
 
+        let isSubmitting = false;
+
         reserveButtons.forEach((btn) => {
-          btn.href = checkoutUrl;
-          btn.target = '_blank';
-          btn.rel = 'noopener noreferrer';
+          btn.href = '#';
+          btn.removeAttribute('target');
+          btn.removeAttribute('rel');
+
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (isSubmitting) return;
+
+            isSubmitting = true;
+            const originalTexts = new Map();
+            reserveButtons.forEach((b) => {
+              originalTexts.set(b, b.textContent);
+              b.style.pointerEvents = 'none';
+              b.style.opacity = '0.7';
+              b.textContent = 'Generando pago...';
+            });
+
+            try {
+              const response = await fetch(checkoutUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify({ order_uid: orderUid })
+              });
+
+              if (!response.ok) {
+                const errorData = await response.json().catch(() => null);
+                const errorMsg = errorData?.detail || errorData?.message || `Error del servidor (${response.status}).`;
+                throw new Error(errorMsg);
+              }
+
+              const data = await response.json();
+              const paymentUrl = data.payment_url;
+
+              if (!paymentUrl) {
+                throw new Error('No se recibió la URL de pago desde el servidor.');
+              }
+
+              reserveButtons.forEach((b) => {
+                b.textContent = 'Redirigiendo a Mercado Pago...';
+              });
+
+              window.location.href = paymentUrl;
+            } catch (err) {
+              console.error('[Checkout] Error al generar link de pago:', err);
+              alert(err.message || 'Ocurrió un error al conectar con la pasarela de pago. Por favor intenta nuevamente.');
+              isSubmitting = false;
+              reserveButtons.forEach((b) => {
+                b.style.pointerEvents = '';
+                b.style.opacity = '';
+                b.textContent = originalTexts.get(b) || 'RESERVAR MI LUGAR';
+              });
+            }
+          });
         });
       } else {
         // Caso B: NO existe UID -> Cambiar texto a "Contáctate con nosotros" y enlazar a WhatsApp

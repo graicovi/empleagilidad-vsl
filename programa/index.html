@@ -1172,6 +1172,49 @@
       let exitClosing = false;
       let lastFocus = null;
       formLinks.forEach((link) => link.addEventListener('click', () => { suppressExit = true; }));
+
+      // Persistir y propagar parámetros de campaña (UTMs, fbclid, gclid) hacia el formulario
+      (() => {
+        const ATTRIBUTION_STORAGE_KEY = 'empleagilidad_attribution';
+        const currentUrlParams = new URLSearchParams(window.location.search);
+        const trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
+        const urlTracking = {};
+        trackingKeys.forEach((key) => {
+          const val = currentUrlParams.get(key);
+          if (val && val.trim()) urlTracking[key] = val.trim();
+        });
+
+        let saved = {};
+        try {
+          const raw = sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY) || localStorage.getItem(ATTRIBUTION_STORAGE_KEY);
+          if (raw) saved = JSON.parse(raw);
+        } catch (_) {}
+
+        if (Object.keys(urlTracking).length > 0) {
+          const merged = { ...saved, ...urlTracking };
+          try {
+            const json = JSON.stringify(merged);
+            sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, json);
+            localStorage.setItem(ATTRIBUTION_STORAGE_KEY, json);
+          } catch (_) {}
+          saved = merged;
+        }
+
+        formLinks.forEach((link) => {
+          try {
+            const targetUrl = new URL(link.getAttribute('href'), window.location.href);
+            Object.keys(saved).forEach((k) => {
+              if (saved[k] && !targetUrl.searchParams.has(k)) {
+                targetUrl.searchParams.set(k, saved[k]);
+              }
+            });
+            currentUrlParams.forEach((val, k) => {
+              targetUrl.searchParams.set(k, val);
+            });
+            link.href = targetUrl.href;
+          } catch (_) {}
+        });
+      })();
       const hasSeenExit = () => { try { return sessionStorage.getItem('empleagilidad-exit-seen') === '1'; } catch (_) { return false; } };
       const showExit = (force = false) => {
         if ((!force && (suppressExit || hasSeenExit())) || !modal.hidden) return;

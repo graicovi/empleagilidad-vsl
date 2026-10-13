@@ -1,6 +1,13 @@
 <!doctype html>
 <html lang="es">
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQXM94HT');</script>
+  <!-- End Google Tag Manager -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="../../favicon.ico" sizes="any" />
@@ -354,6 +361,10 @@
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQXM94HT"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <main class="page">
     <div class="brandline">
       <img class="brand-logo" src="../../logo-empleagilidad-gris.svg" alt="Empleagilidad.com" />
@@ -426,6 +437,120 @@
 
         // Tag de segmentación para ActiveCampaign
         tagName: 'interesado'
+      };
+
+      // ==========================================================
+      // CAPTURA Y ATRIBUCIÓN DE CONVERSIONES (GA4, META CAPI, UTMS)
+      // ==========================================================
+      const ATTRIBUTION_STORAGE_KEY = 'empleagilidad_attribution';
+
+      const getCookie = (name) => {
+        try {
+          const match = document.cookie.match(new RegExp('(?:^|;\\s*)' + name.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1') + '=([^;]*)'));
+          return match ? decodeURIComponent(match[1]) : '';
+        } catch (_) {
+          return '';
+        }
+      };
+
+      const getSavedAttribution = () => {
+        try {
+          const stored = sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY) || localStorage.getItem(ATTRIBUTION_STORAGE_KEY);
+          return stored ? JSON.parse(stored) : {};
+        } catch (_) {
+          return {};
+        }
+      };
+
+      const saveAttribution = (data) => {
+        try {
+          const merged = { ...getSavedAttribution(), ...data };
+          const json = JSON.stringify(merged);
+          sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, json);
+          localStorage.setItem(ATTRIBUTION_STORAGE_KEY, json);
+        } catch (_) {}
+      };
+
+      // Extraer y persistir parámetros presentes en la URL actual
+      const currentUrlParams = new URLSearchParams(window.location.search);
+      const urlTrackingData = {};
+      const trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
+      trackingKeys.forEach((key) => {
+        const val = currentUrlParams.get(key);
+        if (val && val.trim()) {
+          urlTrackingData[key] = val.trim();
+        }
+      });
+      if (Object.keys(urlTrackingData).length > 0) {
+        saveAttribution(urlTrackingData);
+      }
+
+      /**
+       * Extrae el client_id de GA4 de la cookie _ga (formato GA1.1.123456789.1710000000)
+       */
+      const getGaClientId = () => {
+        const gaCookie = getCookie('_ga');
+        if (!gaCookie) return '';
+        const parts = gaCookie.split('.');
+        return parts.length >= 4 ? parts.slice(2).join('.') : gaCookie;
+      };
+
+      /**
+       * Extrae el session_id de GA4 desde cookies de contenedor _ga_* (formato GS1.1.1710000000...)
+       */
+      const getGaSessionId = () => {
+        try {
+          const cookies = document.cookie.split(';');
+          for (let cookie of cookies) {
+            const [rawName, rawVal] = cookie.trim().split('=');
+            if (rawName && rawName.startsWith('_ga_') && rawVal) {
+              const val = decodeURIComponent(rawVal);
+              const parts = val.split('.');
+              if (parts.length >= 3 && parts[2]) {
+                return parts[2];
+              }
+            }
+          }
+        } catch (_) {}
+        return '';
+      };
+
+      /**
+       * Recolecta todos los datos consolidados de atribución para Meta CAPI y GA4
+       */
+      const collectAttribution = () => {
+        const saved = getSavedAttribution();
+
+        const utm_source = currentUrlParams.get('utm_source') || saved.utm_source || '';
+        const utm_medium = currentUrlParams.get('utm_medium') || saved.utm_medium || '';
+        const utm_campaign = currentUrlParams.get('utm_campaign') || saved.utm_campaign || '';
+        const utm_content = currentUrlParams.get('utm_content') || saved.utm_content || '';
+        const utm_term = currentUrlParams.get('utm_term') || saved.utm_term || '';
+        const fbclid = currentUrlParams.get('fbclid') || saved.fbclid || '';
+        const gclid = currentUrlParams.get('gclid') || saved.gclid || '';
+
+        const fbp = getCookie('_fbp') || '';
+        let fbc = getCookie('_fbc') || '';
+        if (!fbc && fbclid) {
+          fbc = `fb.1.${Date.now()}.${fbclid}`;
+        }
+
+        const gaClientId = getGaClientId();
+        const gaSessionId = getGaSessionId();
+
+        return {
+          utm_source,
+          utm_medium,
+          utm_campaign,
+          utm_content,
+          utm_term,
+          fbclid,
+          gclid,
+          fbp,
+          fbc,
+          ga_client_id: gaClientId,
+          ga_session_id: gaSessionId
+        };
       };
 
       /**
@@ -523,6 +648,8 @@
           // Construir URL absoluta hacia la página de gracias para redirección tras pago exitoso
           const successUrl = getAbsoluteUrl(CONFIG.successPageUrl);
 
+          const attribution = collectAttribution();
+
           const payload = {
             nombre,
             correo,
@@ -531,7 +658,31 @@
             phone: whatsapp,
             situacion: situacion || '',
             tag_name: CONFIG.tagName,
-            success_url: successUrl
+            success_url: successUrl,
+
+            // Campaña y Atribución UTM
+            utm_source: attribution.utm_source,
+            utm_medium: attribution.utm_medium,
+            utm_campaign: attribution.utm_campaign,
+            utm_content: attribution.utm_content,
+            utm_term: attribution.utm_term,
+
+            // Meta Ads (Conversions API)
+            fbclid: attribution.fbclid,
+            fbp: attribution.fbp,
+            _fbp: attribution.fbp,
+            fbc: attribution.fbc,
+            _fbc: attribution.fbc,
+
+            // Google Analytics 4 (Measurement Protocol)
+            client_id: attribution.ga_client_id,
+            ga_client_id: attribution.ga_client_id,
+            session_id: attribution.ga_session_id,
+            ga_session_id: attribution.ga_session_id,
+
+            // Contexto de origen
+            landing_url: window.location.href,
+            referrer: document.referrer || ''
           };
 
           const response = await fetch(endpointUrl, {
@@ -564,8 +715,14 @@
           const targetUrl = new URL(getAbsoluteUrl(CONFIG.offerPageUrl));
           targetUrl.searchParams.set(CONFIG.queryParamName, orderUid);
 
-          // Preservar UTMs y otros parámetros existentes
+          // Preservar UTMs y parámetros de tracking (URL o memoria)
           const currentParams = new URLSearchParams(window.location.search);
+          const savedAttribution = getSavedAttribution();
+          Object.keys(savedAttribution).forEach((k) => {
+            if (!currentParams.has(k) && savedAttribution[k]) {
+              currentParams.set(k, savedAttribution[k]);
+            }
+          });
           currentParams.forEach((val, key) => {
             if (key !== CONFIG.queryParamName) {
               targetUrl.searchParams.set(key, val);
