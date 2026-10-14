@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Términos, privacidad y consentimientos del programa Empleagilidad." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Empleagilidad | Políticas</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ink:#151515; --muted:#676767; --line:#e6e6e6; --soft:#f7f7f5; --orange:#e85d0c; --orange-soft:#fff1e7; --focus:#1d6fff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:#fff; font-family:Geist,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; }
+    button,input { font:inherit; }
+    .skip { position:absolute; top:-4rem; left:1rem; z-index:5; padding:.7rem 1rem; background:#fff; } .skip:focus { top:1rem; }
+    .shell { width:min(1200px, calc(100% - 48px)); margin:0 auto; }
+    .masthead { border-bottom:1px solid var(--line); background:#fff; }
+    .masthead .shell { display:flex; align-items:center; min-height:82px; }
+    .brand { display:inline-flex; align-items:center; text-decoration:none; }
+    .brand img { display:block; width:min(212px, 52vw); height:auto; }
+    .hero { padding:58px 0 35px; border-bottom:1px solid var(--line); }
+    .eyebrow { margin:0 0 13px; color:var(--orange); font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+    h1 { max-width:760px; margin:0; font-family:"Playfair Display",Georgia,serif; font-size:clamp(38px,5vw,66px); letter-spacing:-.065em; line-height:.98; }
+    .intro { max-width:670px; margin:20px 0 0; color:var(--muted); font-size:17px; line-height:1.65; }
+    .tabbar-wrap { position:sticky; top:0; z-index:3; border-bottom:1px solid var(--line); background:rgba(255,255,255,.94); backdrop-filter:blur(14px); }
+    .tabbar { display:flex; gap:4px; overflow:auto; padding:12px 0; scrollbar-width:none; }
+    .tab { flex:0 0 auto; padding:10px 15px; border:1px solid transparent; border-radius:9px; color:#5d5d5d; background:transparent; font-size:13px; font-weight:700; cursor:pointer; }
+    .tab:hover { color:var(--ink); background:var(--soft); }
+    .tab[aria-selected="true"] { border-color:#f2d6c4; color:#a44208; background:var(--orange-soft); }
+    .layout { display:grid; grid-template-columns:236px minmax(0,1fr); gap:58px; padding:45px 0 72px; }
+    .toc { position:sticky; top:72px; align-self:start; }
+    .toc small { display:block; margin:0 0 13px; color:#999; font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+    .toc a { display:block; padding:8px 0 8px 14px; border-left:1px solid var(--line); color:#777; font-size:12px; line-height:1.3; text-decoration:none; }
+    .toc a:hover,.toc a:focus { border-color:var(--orange); color:var(--ink); }
+    .panel { display:none; max-width:790px; }
+    .panel.is-active { display:block; animation:fade .22s ease-out; }
+    @keyframes fade { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:none; } }
+    .panel h2 { margin:0 0 12px; font-family:"Playfair Display",Georgia,serif; font-size:36px; letter-spacing:-.045em; }
+    .panel-lead { margin:0 0 38px; color:var(--muted); font-size:16px; line-height:1.65; }
+    .policy-section { padding:30px 0; border-top:1px solid var(--line); scroll-margin-top:116px; }
+    .policy-section h3 { margin:0 0 13px; font-size:18px; letter-spacing:-.02em; }
+    .policy-section p,.policy-section li { color:#424242; font-size:15px; line-height:1.7; }
+    .policy-section p { margin:0 0 13px; }
+    .policy-section ul { margin:12px 0; padding-left:21px; }
+    .policy-section li + li { margin-top:6px; }
+    .notice { margin:24px 0; padding:17px 19px; border-left:3px solid var(--orange); color:#51493f; background:var(--orange-soft); font-size:14px; line-height:1.55; }
+    .contact-card { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-top:28px; padding:23px; border:1px solid var(--line); border-radius:13px; background:var(--soft); }
+    .contact-card strong { display:block; margin-bottom:5px; font-size:14px; }.contact-card p { margin:0; font-size:13px; }.contact-card a { color:#a44208; font-size:14px; font-weight:700; }
+    .consent { margin:16px 0; padding:21px 22px; border:1px solid var(--line); border-radius:13px; background:#fff; }
+    .consent__tag { display:inline-block; margin-bottom:8px; padding:4px 8px; border-radius:4px; color:#a44208; background:var(--orange-soft); font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+    .consent h3 { margin:0 0 8px; font-size:17px; }.consent p { margin:0; color:#525252; font-size:14px; line-height:1.6; }
+    .acceptance { margin-top:30px; padding:22px; border-radius:13px; background:var(--ink); color:#fff; }.acceptance h3 { margin:0 0 8px; font-size:17px; }.acceptance p { margin:0; color:#d8d8d8; font-size:14px; line-height:1.6; }
+    footer { padding:30px 0; border-top:1px solid var(--line); color:#777; font-size:12px; } footer .shell { display:flex; justify-content:space-between; gap:20px; } footer a { text-decoration:none; }
+    :focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+    @media (max-width:760px) { .shell{width:min(100% - 34px, 1200px)} .masthead .shell{min-height:68px}.masthead__right span{display:none}.hero{padding:42px 0 28px}.layout{grid-template-columns:1fr;gap:30px;padding-top:30px}.toc{position:static;display:flex;gap:13px;overflow:auto}.toc small{display:none}.toc a{flex:0 0 auto;padding:5px 0;border:0;text-decoration:underline}.panel h2{font-size:30px}.contact-card,footer .shell{align-items:flex-start;flex-direction:column}.intro{font-size:16px} }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#contenido">Ir al contenido</a>
+  <header class="masthead">
+    <div class="shell">
+      <a class="brand" href="../../" aria-label="Empleagilidad, inicio"><img src="../../logo-empleagilidad-gris.svg" alt="Empleagilidad" /></a>
+    </div>
+  </header>
+  <main>
+    <section class="hero"><div class="shell"><p class="eyebrow">Empleagilidad · Doctor CV SAC</p><h1>Políticas claras,<br>para decidir con confianza.</h1><p class="intro">Aquí encuentras las condiciones del programa, cómo cuidamos tus datos y las autorizaciones que puedes aceptar de forma independiente.</p></div></section>
+    <div class="tabbar-wrap"><div class="shell"><div class="tabbar" role="tablist" aria-label="Secciones de políticas"><button class="tab" role="tab" id="tab-terminos" aria-controls="terminos" aria-selected="true">Términos y condiciones</button><button class="tab" role="tab" id="tab-privacidad" aria-controls="privacidad" aria-selected="false" tabindex="-1">Política de privacidad</button><button class="tab" role="tab" id="tab-consentimientos" aria-controls="consentimientos" aria-selected="false" tabindex="-1">Consentimientos</button></div></div></div>
+    <div class="shell layout" id="contenido">
+      <nav class="toc" aria-label="Índice de la sección"><small>En esta sección</small><div id="toc-links"></div></nav>
+      <section class="panel is-active" id="terminos" role="tabpanel" aria-labelledby="tab-terminos">
+        <h2>Términos y condiciones</h2><p class="panel-lead">Condiciones aplicables al programa Empleagilidad para profesionales con experiencia.</p>
+        <section class="policy-section" data-title="Responsable"><h3>1. Responsable</h3><p>El programa es ofrecido por <strong>Doctor CV SAC</strong>, RUC <strong>20603883382</strong>, con domicilio en Jirón Tomasal 820, Departamento 604D, Santiago de Surco, Lima, Perú. Para consultas, escribe a <a href="mailto:contacto@empleagilidad.com">contacto@empleagilidad.com</a>.</p></section>
+        <section class="policy-section" data-title="El programa"><h3>2. El programa</h3><p>Empleagilidad es un programa de enseñanza y asesoría para profesionales con experiencia que buscan estructurar, acelerar o fortalecer su búsqueda y transición laboral.</p><p>Incluye ocho sesiones grupales en vivo, remotas y semanales, de una hora y media cada una; dos mentorías grupales remotas de una hora y media; materiales, grabaciones, recursos, plantillas, comunidad y herramientas tecnológicas, según las condiciones comunicadas para la cohorte.</p><p>El calendario, día y horario final se informarán antes del inicio. La referencia horaria será Lima, Perú (GMT-5), salvo comunicación expresa en contrario.</p></section>
+        <section class="policy-section" data-title="Alcance y límites"><h3>3. Alcance y límites</h3><p>El programa brinda formación, orientación y acompañamiento. No constituye agencia de empleo, intermediación laboral, representación profesional ni asesoría legal, psicológica, tributaria o financiera.</p><p>Doctor CV SAC no garantiza empleo, entrevistas, ofertas, incrementos salariales, presentaciones a headhunters ni resultados específicos. Una eventual presentación ante headhunters, aliados o terceros requerirá consentimiento específico y dependerá de disponibilidad, criterios y condiciones de dichos terceros.</p></section>
+        <section class="policy-section" data-title="Postulación y admisión"><h3>4. Postulación y admisión</h3><p>La postulación puede requerir formulario, entrevista o evaluación. Doctor CV SAC podrá evaluar la idoneidad de cada postulante para procurar una cohorte compatible con los objetivos del programa.</p><p>Enviar una postulación no garantiza admisión. La inscripción queda confirmada al comunicar la admisión y completar el pago, o al aprobarse una modalidad de pago aplicable.</p></section>
+        <section class="policy-section" data-title="Precio y pagos"><h3>5. Precio y pagos</h3><p>El precio es <strong>US$899 (ochocientos noventa y nueve dólares estadounidenses), impuestos incluidos</strong>.</p><p>Los pagos podrán procesarse mediante Mercado Pago, Stripe y Culqi. Excepcionalmente, y con aprobación previa de los representantes del programa, podrá habilitarse una modalidad de cuotas mediante <strong>Power Pay BBVA</strong>.</p><p>Si la pasarela cobra en moneda local, aplicará el tipo de cambio que informe al procesar la transacción. El monto final se mostrará antes de confirmar el pago. Doctor CV SAC no controla variaciones posteriores del tipo de cambio ni cargos del banco o emisor de tarjeta.</p></section>
+        <section class="policy-section" data-title="Pagos atrasados"><h3>6. Pagos atrasados</h3><p>Ante un pago vencido, Doctor CV SAC podrá notificarlo dentro del siguiente día hábil. El participante contará con siete días calendario desde el vencimiento para regularizarlo.</p><p>Si no se regulariza, podrá suspenderse temporalmente el acceso a sesiones, grabaciones, materiales, comunidad y herramientas. Una vez confirmado el pago, el acceso se restablecerá dentro de un plazo razonable, normalmente no mayor de dos días hábiles.</p></section>
+        <section class="policy-section" data-title="Cancelaciones y cambios"><h3>7. Cancelaciones, cambios y devoluciones</h3><p>La inscripción es personal y no transferible. Salvo obligación legal aplicable, no se realizan devoluciones por cambio de opinión, falta de asistencia, incompatibilidad horaria sobreviniente o falta de aprovechamiento individual.</p><p>Doctor CV SAC podrá reprogramar una sesión por fuerza mayor, feriado, contingencia técnica o causa operativa razonable, procurando avisar con anticipación y ofrecer una alternativa que no altere materialmente la experiencia. Si cancela definitivamente el programa o un cambio sustancial impide prestar el servicio ofrecido, podrá proponer reprogramación, crédito para otra cohorte o la devolución que corresponda.</p><div class="notice">Nada de esta sección limita los derechos irrenunciables que correspondan al consumidor conforme a la legislación aplicable.</div></section>
+        <section class="policy-section" data-title="Materiales y convivencia"><h3>8. Materiales, grabaciones y convivencia</h3><p>Los materiales, grabaciones y recursos estarán disponibles durante las ocho semanas del programa y un mes adicional, salvo que una condición particular indique otro plazo. Los materiales son para uso personal: no pueden copiarse, compartirse, grabarse, venderse ni distribuirse sin autorización escrita.</p><p>Se exige una conducta respetuosa y profesional. Están prohibidos el acoso, discriminación, amenazas, fraude, suplantación, divulgación de información confidencial, uso ilegal y cualquier conducta que perjudique gravemente a la cohorte. Doctor CV SAC podrá advertir, restringir, suspender o cancelar la participación ante una falta grave o reiterada.</p></section>
+      </section>
+      <section class="panel" id="privacidad" role="tabpanel" aria-labelledby="tab-privacidad" hidden>
+        <h2>Política de privacidad</h2><p class="panel-lead">Cómo recopilamos, utilizamos, protegemos y compartimos tu información.</p>
+        <section class="policy-section" data-title="Responsable y norma"><h3>1. Responsable y normativa</h3><p>Doctor CV SAC es responsable del tratamiento de los datos personales recopilados mediante formularios, diagnósticos, entrevistas, pagos, comunicaciones y participación en el programa. El tratamiento se realiza conforme a la Ley N.º 29733, Ley de Protección de Datos Personales, su reglamento y demás normativa peruana aplicable.</p></section>
+        <section class="policy-section" data-title="Datos que recopilamos"><h3>2. Datos que podemos recopilar</h3><ul><li>Nombre completo, correo electrónico y <strong>número telefónico</strong> o de WhatsApp.</li><li>Información sobre experiencia profesional, búsqueda laboral, expectativas, dificultades y objetivos.</li><li>Respuestas a formularios, diagnósticos o entrevistas de admisión.</li><li>Información relacionada con pagos, sin almacenar datos completos de tarjetas procesadas por las pasarelas.</li><li>Registros de asistencia, interacción y participación.</li><li>Imagen y voz cuando participes en sesiones grabadas, conforme a los consentimientos aplicables.</li></ul></section>
+        <section class="policy-section" data-title="Para qué los usamos"><h3>3. Finalidades</h3><ul><li>Evaluar postulaciones, gestionar admisiones, inscripciones, pagos y soporte.</li><li>Ejecutar el programa, habilitar accesos y enviar comunicaciones operativas.</li><li>Mejorar la experiencia, metodología, contenidos y operación.</li><li>Atender consultas, reclamos y derechos sobre datos personales.</li><li>Compartir un perfil con headhunters o aliados solo si otorgas consentimiento independiente, específico y previo.</li><li>Enviar comunicaciones comerciales por correo o WhatsApp solo si las autorizas expresamente.</li></ul></section>
+        <section class="policy-section" data-title="Acceso y transferencias"><h3>4. Acceso y transferencias</h3><p>El acceso estará limitado al equipo autorizado de Doctor CV SAC y a proveedores necesarios para operar formularios, CRM, videoconferencias, correo, comunidad, almacenamiento y pagos. Algunas plataformas pueden procesar datos fuera del Perú; procuramos utilizar proveedores con medidas adecuadas de seguridad y confidencialidad.</p><p>No vendemos tus datos personales ni compartimos tu perfil con headhunters, empresas o aliados sin tu autorización específica.</p></section>
+        <section class="policy-section" data-title="Conservación y seguridad"><h3>5. Conservación y seguridad</h3><p>Conservamos los datos durante el tiempo necesario para las finalidades descritas y para cumplir obligaciones legales, tributarias, contractuales o de defensa ante reclamaciones. Luego podrán eliminarse o anonimizarse, salvo conservación permitida o exigida por la ley.</p><p>Adoptamos medidas razonables para prevenir accesos no autorizados, pérdida, alteración, divulgación o uso indebido. Ningún sistema tecnológico puede garantizar seguridad absoluta.</p></section>
+        <section class="policy-section" data-title="Tus derechos"><h3>6. Tus derechos</h3><p>Puedes ejercer tus derechos de acceso, rectificación, cancelación, oposición y los demás que correspondan. Escribe a <a href="mailto:contacto@empleagilidad.com">contacto@empleagilidad.com</a> indicando tu nombre completo, documento de identidad, solicitud concreta e información para verificar tu identidad. Responderemos dentro de los plazos establecidos por la normativa aplicable.</p><div class="contact-card"><div><strong>Canal de privacidad y derechos ARCO</strong><p>Para solicitudes de acceso, rectificación, cancelación u oposición.</p></div><a href="mailto:contacto@empleagilidad.com">contacto@empleagilidad.com</a></div></section>
+        <section class="policy-section" data-title="Cambios"><h3>7. Cambios a esta política</h3><p>Podremos actualizar esta política por razones operativas, legales o de mejora. Las modificaciones relevantes serán comunicadas por los canales disponibles y, cuando corresponda, requerirán una nueva aceptación.</p></section>
+      </section>
+      <section class="panel" id="consentimientos" role="tabpanel" aria-labelledby="tab-consentimientos" hidden>
+        <h2>Consentimientos opcionales</h2><p class="panel-lead">La aceptación de los términos es necesaria para inscribirte. Los siguientes permisos se solicitan por separado y puedes retirarlos cuando corresponda.</p>
+        <article class="consent"><span class="consent__tag">Obligatorio</span><h3>Términos y privacidad</h3><p>He leído y acepto los Términos y Condiciones y la Política de Privacidad del programa Empleagilidad.</p></article>
+        <article class="consent"><span class="consent__tag">Opcional</span><h3>Comunicaciones comerciales</h3><p>Autorizo a Doctor CV SAC a enviarme información comercial y promocional por correo electrónico y WhatsApp. Puedo retirar mi consentimiento en cualquier momento.</p></article>
+        <article class="consent"><span class="consent__tag">Opcional</span><h3>Headhunters y aliados</h3><p>Autorizo a Doctor CV SAC a compartir mi perfil profesional y los datos estrictamente necesarios con headhunters o aliados, cuando exista una oportunidad potencialmente compatible con mi perfil.</p></article>
+        <article class="consent"><span class="consent__tag">Opcional</span><h3>Testimonios e imagen</h3><p>Autorizo a Doctor CV SAC a utilizar mi testimonio, imagen y/o voz con fines promocionales, según las condiciones que se me informen previamente.</p></article>
+        <div class="acceptance"><h3>Tu control sobre los permisos</h3><p>No necesitas aceptar los consentimientos opcionales para postular ni participar. Podrás solicitar el retiro de una autorización escribiendo a contacto@empleagilidad.com.</p></div>
+      </section>
+    </div>
+  </main>
+  <footer><div class="shell"><span>© 2026 Doctor CV SAC · Empleagilidad</span><a href="mailto:contacto@empleagilidad.com">contacto@empleagilidad.com</a></div></footer>
+  <script>
+    (() => {
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      const panels = [...document.querySelectorAll('[role="tabpanel"]')];
+      const toc = document.querySelector('#toc-links');
+      function populateToc(panel) { toc.replaceChildren(); panel.querySelectorAll('.policy-section').forEach((section, index) => { const id = `${panel.id}-section-${index + 1}`; section.id = id; const link = document.createElement('a'); link.href = `#${id}`; link.textContent = section.dataset.title; toc.append(link); }); }
+      function activate(tab, focus = false) { const panel = document.getElementById(tab.getAttribute('aria-controls')); tabs.forEach(item => { const selected = item === tab; item.setAttribute('aria-selected', selected); item.tabIndex = selected ? 0 : -1; }); panels.forEach(item => { const selected = item === panel; item.hidden = !selected; item.classList.toggle('is-active', selected); }); populateToc(panel); if (focus) tab.focus(); }
+      tabs.forEach((tab, index) => { tab.addEventListener('click', () => activate(tab)); tab.addEventListener('keydown', event => { if (!['ArrowRight','ArrowLeft','Home','End'].includes(event.key)) return; event.preventDefault(); let next = index; if (event.key === 'ArrowRight') next = (index + 1) % tabs.length; if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length; if (event.key === 'Home') next = 0; if (event.key === 'End') next = tabs.length - 1; activate(tabs[next], true); }); });
+      const initial = document.querySelector(`[aria-controls="${location.hash.slice(1)}"]`) || tabs[0]; activate(initial); window.requestAnimationFrame(() => window.scrollTo(0, 0));
+    })();
+  </script>
+</body>
+</html>
