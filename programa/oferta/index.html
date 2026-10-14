@@ -1532,14 +1532,113 @@
   </script>
   <script>
     (() => {
-      const mercadoPagoUrl = 'https://mpago.la/2FKwAjM';
+      // ==========================================================
+      // CONFIGURACIÓN DE INTEGRACIÓN Y CHECKOUT DINÁMICO
+      // ==========================================================
+      const CONFIG = {
+        apiBaseDomain: 'https://beta.testing.doctor-cv.pro',
+
+        checkoutPathPattern: '/api/v1/compras/orders/{UID}/checkout-link/',
+
+        // Parámetros de URL admitidos para extraer el UID de la orden
+        queryParamNames: ['order_uid', 'uid'],
+
+        // Texto que se mostrará en los botones si NO se recibe el UID de la orden
+        noUidButtonText: 'QUIERO RESERVAR MI LUGAR',
+
+        // Enlace de chat de WhatsApp placeholder si NO se recibe el UID de la orden
+        mpagoPlaceholder: 'https://mpago.la/1G6mDHf'
+      };
+
+      // 1. Extraer el UID de los query params de la URL actual
+      const urlParams = new URLSearchParams(window.location.search);
+      let orderUid = null;
+      for (const paramKey of CONFIG.queryParamNames) {
+        const val = urlParams.get(paramKey);
+        if (val && val.trim()) {
+          orderUid = val.trim();
+          break;
+        }
+      }
+
+      // 2. Seleccionar todos los botones de reserva / CTA
       const reserveButtons = document.querySelectorAll('.reserve-cta');
-      reserveButtons.forEach((btn) => {
-        btn.href = mercadoPagoUrl;
-        btn.target = '_blank';
-        btn.rel = 'noopener noreferrer';
-        btn.textContent = 'QUIERO RESERVAR MI LUGAR';
-      });
+      if (!reserveButtons.length) return;
+
+      if (orderUid) {
+        const base = CONFIG.apiBaseDomain.replace(/\/+$/, '');
+        const path = CONFIG.checkoutPathPattern.replace('{UID}', encodeURIComponent(orderUid));
+        const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+        const checkoutUrl = `${base}${normalizedPath}`;
+
+        let isSubmitting = false;
+
+        reserveButtons.forEach((btn) => {
+          btn.href = '#';
+          btn.removeAttribute('target');
+          btn.removeAttribute('rel');
+
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (isSubmitting) return;
+
+            isSubmitting = true;
+            const originalTexts = new Map();
+            reserveButtons.forEach((b) => {
+              originalTexts.set(b, b.textContent);
+              b.style.pointerEvents = 'none';
+              b.style.opacity = '0.7';
+              b.textContent = 'Generando pago...';
+            });
+
+            try {
+              const response = await fetch(checkoutUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify({ order_uid: orderUid })
+              });
+
+              if (!response.ok) {
+                const errorData = await response.json().catch(() => null);
+                const errorMsg = errorData?.detail || errorData?.message || `Error del servidor (${response.status}).`;
+                throw new Error(errorMsg);
+              }
+
+              const data = await response.json();
+              const paymentUrl = data.payment_url;
+
+              if (!paymentUrl) {
+                throw new Error('No se recibió la URL de pago desde el servidor.');
+              }
+
+              reserveButtons.forEach((b) => {
+                b.textContent = 'Redirigiendo a Mercado Pago...';
+              });
+
+              window.location.href = paymentUrl;
+            } catch (err) {
+              console.error('[Checkout] Error al generar link de pago:', err);
+              alert(err.message || 'Ocurrió un error al conectar con la pasarela de pago. Por favor intenta nuevamente.');
+              isSubmitting = false;
+              reserveButtons.forEach((b) => {
+                b.style.pointerEvents = '';
+                b.style.opacity = '';
+                b.textContent = originalTexts.get(b) || 'RESERVAR MI LUGAR';
+              });
+            }
+          });
+        });
+      } else {
+        reserveButtons.forEach((btn) => {
+          btn.href = CONFIG.mpagoPlaceholder;
+          btn.textContent = CONFIG.noUidButtonText;
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+        });
+      }
     })();
   </script>
 </body>
