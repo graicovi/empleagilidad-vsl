@@ -156,15 +156,15 @@
     <section class="thank-you" id="thank-you" aria-labelledby="thank-you-title">
       <div class="message">
         <h1 id="thank-you-title">¡Te damos la <span>Bienvenida!</span></h1>
-        <section class="transaction-summary" aria-labelledby="transaction-title">
-          <h2 id="transaction-title">Resumen de tu transacción</h2>
+        <section class="transaction-summary" id="transaction-summary" aria-labelledby="transaction-title" hidden style="display: none;">
+          <h2 id="transaction-title">Resumen de tu orden de pago</h2>
           <dl class="transaction-details">
-            <div><dt>Fecha</dt><dd id="transaction-date">Pendiente de confirmación</dd></div>
-            <div><dt>Hora</dt><dd id="transaction-time">Pendiente de confirmación</dd></div>
-            <div><dt>Monto</dt><dd id="transaction-amount">US$899 · impuestos incluidos</dd></div>
-            <div><dt>Operación</dt><dd id="transaction-id">Se enviará por correo</dd></div>
+            <div><dt>Código de orden</dt><dd id="order-uid">Cargando...</dd></div>
+            <div><dt>Monto</dt><dd id="order-amount">Cargando...</dd></div>
+            <div><dt>Moneda</dt><dd id="order-currency">Cargando...</dd></div>
+            <div><dt>Método de pago</dt><dd id="order-payment-method">Cargando...</dd></div>
           </dl>
-          <p class="transaction-status" id="transaction-status">Recibirás la constancia definitiva en tu correo de confirmación.</p>
+          <p class="transaction-status" id="transaction-status">Confirmación registrada con éxito. Conserva tu código de orden como referencia.</p>
         </section>
         <div class="copy">
           <p>Tu inscripción al programa Empleagilidad ha quedado registrada correctamente.</p>
@@ -185,24 +185,135 @@
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const stage = document.getElementById('thank-you');
-      const transactionParams = new URLSearchParams(window.location.search);
-      const getTransactionValue = (...keys) => keys.map((key) => transactionParams.get(key)).find((value) => value && value.trim())?.trim() || '';
-      const transactionDate = getTransactionValue('transaction_date', 'payment_date', 'date');
-      const transactionTime = getTransactionValue('transaction_time', 'payment_time', 'time');
-      const transactionAmount = getTransactionValue('transaction_amount', 'amount', 'monto');
-      const transactionId = getTransactionValue('transaction_id', 'payment_id', 'operation_id', 'id');
-      const setTransactionText = (id, value) => { const element = document.getElementById(id); if (element && value) element.textContent = value; };
-      setTransactionText('transaction-date', transactionDate);
-      setTransactionText('transaction-time', transactionTime);
-      setTransactionText('transaction-amount', transactionAmount);
-      setTransactionText('transaction-id', transactionId);
-      if (transactionId) document.getElementById('transaction-status').textContent = 'Transacción registrada. Conserva este identificador como referencia.';
+
+      // ==========================================================
+      // CONFIGURACIÓN DE INTEGRACIÓN Y DETALLE DE ORDEN
+      // ==========================================================
+      const CONFIG = {
+        apiBaseDomain: 'http://omega.localhost:8000',
+        // Patrón para el endpoint que devuelve los datos de la orden
+        // Reemplaza {UID} por el uid de la orden
+        orderDetailPathPattern: '/api/v1/compras/order-details/{UID}/',
+        defaultCurrency: 'USD'
+      };
+
+      // Mapeo amigable para códigos comunes de métodos de pago
+      const formatPaymentMethod = (method) => {
+        if (!method) return 'Mercado Pago';
+        const map = {
+          'account_money': 'Saldo en Mercado Pago',
+          'credit_card': 'Tarjeta de Crédito',
+          'debit_card': 'Tarjeta de Débito',
+          'ticket': 'Efectivo / PagoEfectivo',
+          'bank_transfer': 'Transferencia bancaria'
+        };
+        return map[method] || method;
+      };
+
+      // 1. Extraer identificadores de la URL que retorna Mercado Pago
+      const urlParams = new URLSearchParams(window.location.search);
+      const summarySection = document.getElementById('transaction-summary');
+
+      // Verificar si llegaron parámetros de Mercado Pago en la URL
+      const hasMercadoPagoParams = Boolean(
+        urlParams.get('external_reference') ||
+        urlParams.get('payment_id') ||
+        urlParams.get('collection_id') ||
+        urlParams.get('preference_id') ||
+        urlParams.get('merchant_order_id') ||
+        urlParams.get('order_uid') ||
+        urlParams.get('uid')
+      );
+
+      const orderUid = urlParams.get('external_reference') || urlParams.get('order_uid') || urlParams.get('uid');
+      const urlPaymentType = urlParams.get('payment_type');
+
+      const elUid = document.getElementById('order-uid');
+      const elAmount = document.getElementById('order-amount');
+      const elCurrency = document.getElementById('order-currency');
+      const elPaymentMethod = document.getElementById('order-payment-method');
+      const elStatus = document.getElementById('transaction-status');
+
+      // 2. Mostrar el cuadro SOLO si hay parámetros de Mercado Pago
+      if (hasMercadoPagoParams && summarySection) {
+        summarySection.hidden = false;
+        summarySection.style.display = '';
+
+        // Pre-poblar de inmediato con los datos que ya vienen en la URL
+        if (orderUid && elUid) elUid.textContent = orderUid;
+        if (urlPaymentType && elPaymentMethod) elPaymentMethod.textContent = formatPaymentMethod(urlPaymentType);
+
+        // Si existe UID de la orden, consultar al backend para obtener los datos oficiales
+        if (orderUid) {
+          const base = CONFIG.apiBaseDomain.replace(/\/+$/, '');
+          const path = CONFIG.orderDetailPathPattern.replace('{UID}', encodeURIComponent(orderUid));
+          const endpointUrl = `${base}${path.startsWith('/') ? path : `/${path}`}`;
+
+          fetch(endpointUrl, {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json'
+            }
+          })
+            .then(async (response) => {
+              if (!response.ok) throw new Error(`HTTP ${response.status}`);
+              return response.json();
+            })
+            .then((data) => {
+              // Asignar exclusivamente los campos solicitados (sin mostrar status)
+              if (elUid && data.uid) elUid.textContent = data.uid;
+              if (elAmount && data.amount != null) {
+                const num = Number(data.amount);
+                elAmount.textContent = isNaN(num) ? data.amount : num.toFixed(2);
+              }
+              if (elCurrency && data.currency) elCurrency.textContent = data.currency;
+              if (elPaymentMethod && (data.payment_method || urlPaymentType)) {
+                elPaymentMethod.textContent = formatPaymentMethod(data.payment_method || urlPaymentType);
+              }
+              if (elStatus) {
+                elStatus.textContent = 'Transacción confirmada. Conserva este identificador como referencia.';
+              }
+
+              // Atribución / GA4: Disparar evento de compra completada en dataLayer
+              try {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                  event: 'purchase',
+                  transaction_id: data.uid || orderUid,
+                  value: data.amount,
+                  currency: data.currency || CONFIG.defaultCurrency
+                });
+              } catch (_) {}
+            })
+            .catch((err) => {
+              console.warn('[Gracias] No se pudo obtener el detalle de la orden desde el backend:', err);
+              // Fallback con datos disponibles
+              if (elUid && (!elUid.textContent || elUid.textContent === 'Cargando...')) elUid.textContent = orderUid;
+              if (elAmount && elAmount.textContent === 'Cargando...') elAmount.textContent = '899.00';
+              if (elCurrency && elCurrency.textContent === 'Cargando...') elCurrency.textContent = CONFIG.defaultCurrency;
+              if (elPaymentMethod && elPaymentMethod.textContent === 'Cargando...') {
+                elPaymentMethod.textContent = formatPaymentMethod(urlPaymentType);
+              }
+            });
+        }
+      } else if (summarySection) {
+        // Si NO hay parámetros de Mercado Pago, mantener oculto el cuadro
+        summarySection.hidden = true;
+        summarySection.style.display = 'none';
+      }
+
+      // Animación GSAP existente (solo anima el cuadro si está visible)
       if (!reduceMotion && window.gsap) {
-        gsap.timeline({defaults:{ease:'power2.out'}})
-          .fromTo('.message',{y:34,scale:.975,autoAlpha:0,filter:'blur(12px)'},{y:0,scale:1,autoAlpha:1,filter:'blur(0px)',duration:1.1})
-          .fromTo('.transaction-summary',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.58},'-=.52')
-          .fromTo('.copy p',{y:18,autoAlpha:0},{y:0,autoAlpha:1,duration:.72,stagger:.09},'-=.55')
+        const tl = gsap.timeline({defaults:{ease:'power2.out'}})
+          .fromTo('.message',{y:34,scale:.975,autoAlpha:0,filter:'blur(12px)'},{y:0,scale:1,autoAlpha:1,filter:'blur(0px)',duration:1.1});
+
+        if (hasMercadoPagoParams && summarySection) {
+          tl.fromTo('.transaction-summary',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.58},'-=.52');
+        }
+
+        tl.fromTo('.copy p',{y:18,autoAlpha:0},{y:0,autoAlpha:1,duration:.72,stagger:.09},'-=.55')
           .fromTo('footer',{autoAlpha:0},{autoAlpha:1,duration:.8},'-=.35');
+
         stage?.addEventListener('pointermove',(event) => {
           if (event.pointerType !== 'mouse') return;
           const bounds=stage.getBoundingClientRect();
