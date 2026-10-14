@@ -1,0 +1,15 @@
+# ==============================================================================
+# Lista de archivos para despliegue a S3 y CloudFront
+# Proyecto: Empleagilidad VSL
+# Actualización: Atribución (GA4, Meta CAPI), GTM y nuevo checkout POST
+# ==============================================================================
+
+# Páginas actualizadas
+programa/index.html
+programa/formulario/index.html
+programa/gracias/index.html
+programa/oferta/index.html
+programa/politicas/index.html
+
+# Módulo de backend y checkout
+checkout-api.js
