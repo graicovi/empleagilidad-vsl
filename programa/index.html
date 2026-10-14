@@ -1150,7 +1150,9 @@
       }
       const heroVideo = document.getElementById('hero-video');
       const videoUnmute = document.getElementById('video-unmute');
-      if (heroVideo?.dataset.src) {
+      if (window.location.protocol === 'file:') {
+        window.location.replace('http://localhost:8765/programa/');
+      } else if (heroVideo?.dataset.src) {
         const videoUrl = new URL(heroVideo.dataset.src);
         if (window.location.origin !== 'null') videoUrl.searchParams.set('origin', window.location.origin);
         heroVideo.src = videoUrl.toString();
