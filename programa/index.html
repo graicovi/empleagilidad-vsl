@@ -51,7 +51,9 @@
     .ai-cause strong { color:#2d2c29; font-weight:700; }
     .video-frame { position:relative; width:100%; height:clamp(330px,34vw,410px); min-height:0; max-height:none; flex:0 0 auto; margin:24px auto 14px; overflow:hidden; border-radius:18px; background-image:url("../graicovi.jpg"); background-repeat:no-repeat; background-size:cover; background-position:center; box-shadow:var(--shadow); }
     .video-frame.is-video { background:none; }
-    .video-frame iframe { display:block; width:100%; height:100%; border:0; }
+    .video-frame iframe { position:absolute; inset:0; display:block; width:100%; height:100%; border:0; }
+    .video-unmute { position:absolute; z-index:3; inset:0; border:0; background:transparent; cursor:pointer; }
+    .video-unmute[hidden] { display:none; }
     .video-play { position:absolute; z-index:1; left:50%; top:59%; display:grid; place-items:center; width:clamp(74px,7vw,104px); padding:0; aspect-ratio:1; border:2px solid rgba(255,255,255,.94); border-radius:50%; background:linear-gradient(135deg,#f47922,#df5007); box-shadow:0 12px 28px rgba(23,15,9,.32); cursor:pointer; transform:translate(-50%,-50%); }
     .video-play:focus-visible { outline:3px solid #fff; outline-offset:5px; }
     .video-play::before { content:""; width:28%; aspect-ratio:1; margin-left:8%; background:#fff; clip-path:polygon(0 0,100% 50%,0 100%); }
@@ -364,9 +366,7 @@
       transition:filter .7s ease,transform .7s cubic-bezier(.2,.75,.25,1);
     }
     .hero .video-frame:hover { filter:saturate(.9) contrast(1.04) brightness(.9); }
-    .hero .video-frame.is-video { filter:none; }
-    .hero-audio { position:absolute; z-index:3; left:50%; bottom:28px; display:block; width:min(760px,calc(100% - 48px)); transform:translateX(-50%); color-scheme:dark; }
-    .hero-audio[hidden] { display:none; }
+    .hero .video-frame.is-video { background:#000; filter:none; }
     .hero .video-play {
       top:50%;
       width:82px;
@@ -948,15 +948,11 @@
           <p class="ai-cause">La <strong>inteligencia artificial</strong> está transformando tu profesión<br /> y las reglas por las que las empresas contratan.</p>
         </div>
 
-        <div class="hero-video-shell" id="audio">
-          <div class="video-frame audio-frame" id="audio-frame" aria-label="Audio VSL: mercado, dirección y ejecución">
-            <button class="video-play" id="audio-play" type="button" aria-label="Reproducir el audio de presentación de Empleagilidad"></button>
-            <audio class="hero-audio" id="hero-audio" controls preload="metadata" hidden>
-              <source src="../vsl_nocturna_audio.mp3" type="audio/mpeg" />
-              Tu navegador no puede reproducir este audio.
-            </audio>
+        <div class="hero-video-shell" id="video">
+          <div class="video-frame is-video" id="video-frame" aria-label="Video de presentación de Empleagilidad">
+            <iframe class="hero-video" id="hero-video" title="Presentación de Empleagilidad" data-src="https://www.youtube-nocookie.com/embed/ouY3gSWTSvE?autoplay=1&amp;mute=1&amp;controls=1&amp;rel=0&amp;playsinline=1&amp;hl=es&amp;cc_load_policy=0&amp;vq=hd1080&amp;enablejsapi=1" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <button class="video-unmute" id="video-unmute" type="button" aria-label="Activar el sonido del video"></button>
           </div>
-          <p class="hero-video-caption" id="audio-caption">Descubre por qué las reglas tradicionales ya no bastan</p>
         </div>
         <div class="section-end-cta hero-end-cta"><a class="button form-link" href="formulario/">Quiero postular a Empleagilidad</a></div>
         <div class="hero-trust" aria-label="Ecosistema Empleagilidad">
@@ -1152,15 +1148,26 @@
         const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (!entry.isIntersecting) return; const sequence = sequences.find(({ triggerElement }) => triggerElement === entry.target); if (!sequence) return; sequence.elements.forEach((element, index) => { window.setTimeout(() => { element.classList.add('is-visible'); window.setTimeout(() => element.classList.remove('motion-reveal', 'is-visible'), 780); }, index * 85); }); observer.unobserve(entry.target); }); }, { threshold: .12 });
         sequences.forEach(({ triggerElement }) => observer.observe(triggerElement));
       }
-      const audioPlay = document.getElementById('audio-play');
-      const heroAudio = document.getElementById('hero-audio');
-      const audioCaption = document.getElementById('audio-caption');
-      audioPlay.addEventListener('click', async () => {
-        audioPlay.hidden = true;
-        if (audioCaption) audioCaption.hidden = true;
-        heroAudio.hidden = false;
-        heroAudio.focus();
-        try { await heroAudio.play(); } catch (_) { /* Los controles quedan disponibles si el navegador bloquea el inicio automático. */ }
+      const heroVideo = document.getElementById('hero-video');
+      const videoUnmute = document.getElementById('video-unmute');
+      if (heroVideo?.dataset.src) {
+        const videoUrl = new URL(heroVideo.dataset.src);
+        if (window.location.origin !== 'null') videoUrl.searchParams.set('origin', window.location.origin);
+        heroVideo.src = videoUrl.toString();
+      }
+      const sendVideoCommand = (func, args = []) => {
+        heroVideo?.contentWindow?.postMessage(JSON.stringify({ event:'command', func, args }), 'https://www.youtube-nocookie.com');
+      };
+      videoUnmute?.addEventListener('click', () => {
+        sendVideoCommand('pauseVideo');
+        videoUnmute.disabled = true;
+        window.setTimeout(() => {
+          sendVideoCommand('seekTo', [0, true]);
+          sendVideoCommand('setVolume', [65]);
+          sendVideoCommand('unMute');
+          sendVideoCommand('playVideo');
+          videoUnmute.hidden = true;
+        }, 1000);
       }, { once:true });
       const modal = document.getElementById('exit-modal');
       const modalCard = modal.querySelector('.exit-card');
