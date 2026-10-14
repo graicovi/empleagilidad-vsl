@@ -109,6 +109,15 @@
     p:last-child { margin-bottom:0; color:#fff; font-weight:650; }
     .contact { color:#fff; font-weight:600; text-decoration-color:rgba(232,93,12,.72); text-decoration-thickness:1px; text-underline-offset:4px; }
     .contact:hover,.contact:focus-visible { color:#f18a4f; }
+    .transaction-summary { margin:30px 0 34px; padding:22px 24px; border-radius:14px; color:#171717; background:#fff; box-shadow:0 16px 42px rgba(0,0,0,.18); }
+    .transaction-summary h2 { margin:0 0 18px; color:#171717; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    .transaction-details { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); margin:0; }
+    .transaction-details > div { min-width:0; padding:0 16px; border-left:1px solid rgba(23,23,23,.12); }
+    .transaction-details > div:first-child { padding-left:0; border-left:0; }
+    .transaction-details > div:last-child { padding-right:0; }
+    .transaction-details dt { margin:0 0 6px; color:#747474; font-size:10px; font-weight:650; letter-spacing:.08em; text-transform:uppercase; }
+    .transaction-details dd { margin:0; overflow-wrap:anywhere; color:#191919; font-size:13px; font-weight:650; line-height:1.35; }
+    .transaction-status { margin:16px 0 0; color:#6a6a6a; font-size:11px; line-height:1.4; }
     footer {
       display:flex;
       justify-content:space-between;
@@ -129,6 +138,10 @@
       .message { padding:38px 26px; border-radius:18px; }
       h1 { margin-bottom:28px; font-size:clamp(44px,13vw,62px); }
       p { font-size:17px; }
+      .transaction-summary { margin:26px 0 30px; padding:20px 18px; }
+      .transaction-details { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 0; }
+      .transaction-details > div:nth-child(3) { padding-left:0; border-left:0; }
+      .transaction-details > div:nth-child(even) { padding-right:0; }
       footer { min-height:123px; align-items:flex-start; flex-direction:column; gap:12px; padding:32px 24px; }
     }
     @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; } }
@@ -143,6 +156,16 @@
     <section class="thank-you" id="thank-you" aria-labelledby="thank-you-title">
       <div class="message">
         <h1 id="thank-you-title">¡Te damos la <span>Bienvenida!</span></h1>
+        <section class="transaction-summary" aria-labelledby="transaction-title">
+          <h2 id="transaction-title">Resumen de tu transacción</h2>
+          <dl class="transaction-details">
+            <div><dt>Fecha</dt><dd id="transaction-date">Pendiente de confirmación</dd></div>
+            <div><dt>Hora</dt><dd id="transaction-time">Pendiente de confirmación</dd></div>
+            <div><dt>Monto</dt><dd id="transaction-amount">US$899 · impuestos incluidos</dd></div>
+            <div><dt>Operación</dt><dd id="transaction-id">Se enviará por correo</dd></div>
+          </dl>
+          <p class="transaction-status" id="transaction-status">Recibirás la constancia definitiva en tu correo de confirmación.</p>
+        </section>
         <div class="copy">
           <p>Tu inscripción al programa Empleagilidad ha quedado registrada correctamente.</p>
           <p>En los próximos minutos recibirás un correo de confirmación con los detalles de tu compra. Además, nos pondremos en contacto contigo para indicarte los siguientes pasos y acompañarte en el inicio de tu proceso.</p>
@@ -162,9 +185,22 @@
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const stage = document.getElementById('thank-you');
+      const transactionParams = new URLSearchParams(window.location.search);
+      const getTransactionValue = (...keys) => keys.map((key) => transactionParams.get(key)).find((value) => value && value.trim())?.trim() || '';
+      const transactionDate = getTransactionValue('transaction_date', 'payment_date', 'date');
+      const transactionTime = getTransactionValue('transaction_time', 'payment_time', 'time');
+      const transactionAmount = getTransactionValue('transaction_amount', 'amount', 'monto');
+      const transactionId = getTransactionValue('transaction_id', 'payment_id', 'operation_id', 'id');
+      const setTransactionText = (id, value) => { const element = document.getElementById(id); if (element && value) element.textContent = value; };
+      setTransactionText('transaction-date', transactionDate);
+      setTransactionText('transaction-time', transactionTime);
+      setTransactionText('transaction-amount', transactionAmount);
+      setTransactionText('transaction-id', transactionId);
+      if (transactionId) document.getElementById('transaction-status').textContent = 'Transacción registrada. Conserva este identificador como referencia.';
       if (!reduceMotion && window.gsap) {
         gsap.timeline({defaults:{ease:'power2.out'}})
           .fromTo('.message',{y:34,scale:.975,autoAlpha:0,filter:'blur(12px)'},{y:0,scale:1,autoAlpha:1,filter:'blur(0px)',duration:1.1})
+          .fromTo('.transaction-summary',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.58},'-=.52')
           .fromTo('.copy p',{y:18,autoAlpha:0},{y:0,autoAlpha:1,duration:.72,stagger:.09},'-=.55')
           .fromTo('footer',{autoAlpha:0},{autoAlpha:1,duration:.8},'-=.35');
         stage?.addEventListener('pointermove',(event) => {

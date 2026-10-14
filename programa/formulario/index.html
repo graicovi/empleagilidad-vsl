@@ -348,6 +348,12 @@
     }
     .group-info { color:#3f3f3f; font-size:13px; }
     .privacy { color:#777; font-size:12px; }
+    .consent-fields { display:grid; gap:12px; margin:22px 0 20px; }
+    .consent-field { display:grid; grid-template-columns:18px minmax(0,1fr); gap:10px; align-items:start; }
+    .consent-field input[type="checkbox"] { width:18px; min-width:18px; min-height:18px; height:18px; margin:2px 0 0; padding:0; accent-color:#161616; }
+    .consent-field label { margin:0; color:#565656; font-size:11px; font-weight:500; line-height:1.45; }
+    .consent-field a { color:#1b1b1b; font-weight:650; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
+    .consent-field input[type="checkbox"].is-invalid { outline:2px solid #dc2626; outline-offset:2px; }
     footer { border-color:rgba(19,19,19,.11); color:#686868; background:#fff; }
     @media (max-width:560px) {
       .brand { font-size:24px; }
@@ -404,7 +410,18 @@
           </select>
         </div>
 
-        <button class="button" type="submit">Ver el programa completo</button>
+        <div class="consent-fields">
+          <div class="consent-field">
+            <input id="acepta-politicas" name="acepta_politicas" type="checkbox" required />
+            <label for="acepta-politicas">Acepto los <a href="../../politicas/" target="_blank" rel="noopener noreferrer">Términos y Condiciones</a> y la <a href="../../politicas/" target="_blank" rel="noopener noreferrer">Política de Privacidad</a> del programa Empleagilidad.</label>
+          </div>
+          <div class="consent-field">
+            <input id="autoriza-comunicaciones" name="autoriza_comunicaciones" type="checkbox" />
+            <label for="autoriza-comunicaciones">Autorizo a Doctor CV SAC a enviarme información comercial y promocional. Puedo retirar mi consentimiento en cualquier momento.</label>
+          </div>
+        </div>
+
+        <button class="button" type="submit" disabled>Ver el programa completo</button>
         <div id="form-status-msg" class="form-status-msg" role="alert"></div>
         <p class="group-info">Grupo de 15 · inicio Noviembre 2026</p>
         <p class="privacy">Tus datos no se comparten con terceros.</p>
@@ -576,6 +593,12 @@
       const correoInput = document.getElementById('correo');
       const whatsappInput = document.getElementById('whatsapp');
       const situacionSelect = document.getElementById('situacion');
+      const aceptaPoliticasInput = document.getElementById('acepta-politicas');
+      const autorizaComunicacionesInput = document.getElementById('autoriza-comunicaciones');
+
+      const updateSubmitAvailability = () => {
+        if (submitBtn) submitBtn.disabled = !Boolean(aceptaPoliticasInput?.checked);
+      };
 
       const showMessage = (msg, isError = true) => {
         if (!statusMsg) return;
@@ -604,6 +627,12 @@
           });
         }
       });
+      aceptaPoliticasInput?.addEventListener('change', () => {
+        aceptaPoliticasInput.classList.remove('is-invalid');
+        updateSubmitAvailability();
+        clearMessage();
+      });
+      updateSubmitAvailability();
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -613,6 +642,8 @@
         const correo = correoInput ? correoInput.value.trim() : '';
         const whatsapp = whatsappInput ? whatsappInput.value.trim() : '';
         const situacion = situacionSelect ? situacionSelect.value : '';
+        const aceptaPoliticas = Boolean(aceptaPoliticasInput?.checked);
+        const autorizaComunicaciones = Boolean(autorizaComunicacionesInput?.checked);
 
         let hasError = false;
         if (!nombre) {
@@ -626,6 +657,10 @@
         }
         if (!whatsapp) {
           whatsappInput?.classList.add('is-invalid');
+          hasError = true;
+        }
+        if (!aceptaPoliticas) {
+          aceptaPoliticasInput?.classList.add('is-invalid');
           hasError = true;
         }
 
@@ -657,6 +692,8 @@
             whatsapp,
             phone: whatsapp,
             situacion: situacion || '',
+            acepta_politicas: aceptaPoliticas,
+            autoriza_comunicaciones: autorizaComunicaciones,
             tag_name: CONFIG.tagName,
             success_url: successUrl,
 
@@ -734,7 +771,7 @@
           console.error('[Application Form] Error al enviar postulación:', err);
           showMessage(err.message || 'Ocurrió un error al procesar tu postulación. Por favor intenta nuevamente.');
           if (submitBtn) {
-            submitBtn.disabled = false;
+            submitBtn.disabled = !Boolean(aceptaPoliticasInput?.checked);
             submitBtn.textContent = originalBtnText;
           }
         }
